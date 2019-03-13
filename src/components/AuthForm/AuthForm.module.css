@@ -1,0 +1,36 @@
+.content {
+  text-align: center;
+  /* background-image: url('../../assets/images/maid.jpg');
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+.content .img {
+  margin-right: 90px;
+  margin-top: 80px;
+  margin-bottom: 110px;
+}
+
+.container {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header {
+  float: left;
+  font-size: 18px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.registerSwitch {
+  float: right;
+  margin-top: -5px;
+  line-height: normal;
+}
+
+.checkBox {
+  padding-top: 8px;
+}
