@@ -1,110 +1,70 @@
 import React, { Component } from 'react';
 
-import styles from './AuthForm.module.css';
+import {Button, Form, FormGroup, Label, Input, Alert } from 'reactstrap';
 import cx from 'classnames';
-import globalStyles from '../../assets/global-styles/bootstrap.min.module.css';
-import authPageImg from '../../assets/images/sign-in-boulder.png';
+import styles from './AuthForm.module.css';
 
-
-const authForm = (props) => {
-  return (
-    <div className={styles.content}>
-      <img
-        className={styles.img}
-        src={authPageImg}
-        alt="authPageImage" />
-      <div
-        className={styles.container}>
-        <div
-          className={styles.loginPart}>
-          {/* {
-            (props.responseMessage) && (
-              <div className={cx(globalStyles.alert, globalStyles[props.colorAler], styles.alert) }>
-                {props.responseMessage}
-              </div>
-            )
-          } */}
-          <div
-            className={cx(globalStyles.clearfix)}>
-            <div
-              className={styles.header}>Sign in</div>
-            <div
-              className={styles.registerSwitch}>
-              <button
-                className={cx(globalStyles.btn,
-                              globalStyles['btn-link'],
-                              styles.switchButton)}
-                >
-                {/* // onClick={props.switchedAuth}
-                // { props.isSignup ? 'Sign in' : 'create an account' } */}
-              </button>
-            </div>
+class AuthForm extends Component {
+  render() {
+    return (
+      <div className={styles['root-form']}>
+        <section>
+          <div className={styles.widget}>
+            <h4 className={'mt-0'}>Login to DNMaids</h4>
+            {/* <p className="fs-sm text-muted">
+              User your username and password to sign in<br />
+              Don&#39;t have an account? Sign up now!
+            </p> */}
+            <Form
+              // onSubmit={this.doLogin}
+            >
+              {this.props.errorMessage && (
+                <Alert size="sm" color="danger">
+                  {this.props.errorMessage}
+                </Alert>
+              )}
+              <FormGroup className={cx('form-group', styles['input-form'])}>
+                <Input
+                  // className={styles.}
+                  // value={this.state.login}
+                  // onChange={this.changeLogin}
+                  type="text"
+                  required
+                  name="username"
+                  placeholder="Username"
+                />
+              </FormGroup>
+              <FormGroup className={cx('form-group', styles['input-form'])}>
+                <Input
+                  // className={'no-border'}
+                  // value={this.state.password}
+                  // onChange={this.changePassword}
+                  type="password"
+                  required
+                  name="password"
+                  placeholder="Password"
+                />
+              </FormGroup>
+                <div className={styles['login-btn']}>
+                  {/* <Button color="default" size="sm">
+                    Create an account
+                  </Button> */}
+                  <Button color="success" size="sm" type="submit">
+                    {/* {this.props.isFetching ? 'Loading...' : 'Login'} */}
+                    Login
+                  </Button>
+                </div>
+              {/* <div className="d-flex justify-content-between align-items-center">
+                <a href="#" className="fs-sm">Trouble with account?</a> eslint-disable-line
+              </div> */}
+            </Form>
           </div>
-          <div>
-            <div
-              className={styles.LoginForm}>
-              <form 
-              // onSubmit={props.submitted}
-              >
-                <div
-                  className={globalStyles['form-group']} >
-                  <input
-                    type="email"
-                    className={globalStyles['form-control']}
-                    aria-describedby="emailHelp"
-                    placeholder="Email"
-                    name="email"
-                    // onChange={props.changed}
-                  />
-                </div>
-                <div
-                  className={globalStyles['form-group']}
-                >
-                  <input
-                    type="password"
-                    className={globalStyles['form-control']}
-                    placeholder="Password"
-                    name="password"
-                    // onChange={props.changed}
-                  />
-                </div>
-                <div
-                  className={cx(globalStyles['form-group'],
-                                globalStyles['form-check'],
-                                globalStyles['float-left'],
-                                styles.checkBox)}
-                >
-                  <input
-                    type="checkbox"
-                    className={globalStyles['form-check-input']}
-                  />
-                  <label
-                    className={globalStyles['form-check-label']}
-                    for="exampleCheck1"
-                  >
-                    Check me out
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className={cx(globalStyles.btn,
-                                globalStyles['btn-primary'],
-                                globalStyles['float-right'],
-                                styles.buttonSubmit)}
-                >
-                Sign in
-                {/* {props.authTitle} */}
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-        <div className={styles.RegisterPart}>
-
-        </div>
+   
+          {/* <Footer className="text-center" /> */}
+        </section>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default authForm;
+export default AuthForm;

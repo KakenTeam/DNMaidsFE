@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import './App.css';
 
 import Auth from './containers/Auth/Auth';
+
+import './App.css';
 
 class App extends Component {
   render() {
