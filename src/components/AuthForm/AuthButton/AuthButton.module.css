@@ -1,0 +1,19 @@
+.login-btn {
+  width: 81%;
+  margin-left: 9.5%;
+  margin-top: 30px;
+  margin-bottom: 55px;
+}
+
+.login-btn .change-auth-btn {
+  float: left;
+  border: none;
+  border-radius: 0;
+}
+
+.login-btn .submit-btn {
+  /* margin-left: 255px; */
+  float: right;
+  border: none;
+  border-radius: 0;
+}
