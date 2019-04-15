@@ -1,7 +1,6 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
-
 const initialState = {
   loading: false,
   isAuthenticated: false,
@@ -25,12 +24,11 @@ const authRequest = (state, action) => updateObject(state, {
 
 const authSuccess = (state, action) => {
   return updateObject(state, {
-    token: action.access_token,
+    token: action.accessToken,
     loading: false,
     isAuthenticated: true,
     isSignup: true,
     message: action.message,
-    responseMessage: 'Sign up success!'
   });
 }
 
@@ -38,7 +36,7 @@ const authFailed = (state, action) => {
   return updateObject(state, {
     loading: false,
     isSignup: false,
-    responseMessage: action.error
+    message: action.error
   });
 };
 
@@ -47,18 +45,13 @@ const authLogout = (state, action) => updateObject(state, {
   token: null
 });
 
-const setAuthRedirectPath = (state, action) => updateObject(state, {
-  authRedirectPath: action.path
-});
-
 const auth = (state = initialState, action) => {
   switch (action.type) {
-    // case actionTypes.CLOSE_ALERT_AUTH: return closeAlertAuth(state, action);
+    case actionTypes.CLOSE_ALERT_AUTH: return closeAlertAuth(state, action);
     case actionTypes.AUTH.START: return authRequest(state, action);
     case actionTypes.AUTH.SUCCESS: return authSuccess(state, action);
     case actionTypes.AUTH.FAIL: return authFailed(state, action);
-    // case actionTypes.LOGOUT.SUCCESS: return authLogout(state, action);
-    // case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state, action);
+    case actionTypes.LOGOUT.SUCCESS: return authLogout(state, action);
     default: return state;
   }
 };

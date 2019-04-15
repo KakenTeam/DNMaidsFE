@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Form } from 'reactstrap';
 
 import * as actions from '../../store/actions/index';
-// import AuthForm from '../../components/AuthForm/AuthFrom';
 import LoginForm from '../../components/AuthForm/Login/Login';
-import SignUpForm from '../../components/AuthForm/SignUp/SignUp';
 import AuthButton from '../../components/AuthForm/AuthButton/AuthButton';
 
 import styles from './Auth.module.css';
@@ -35,7 +34,7 @@ class Auth extends Component {
         ...this.state.dataAuth,
         [nameEvent]: event.target.value
       }
-    }, () => console.log(this.state));
+    });
   }
 
   changeAuthButton = () => {
@@ -46,20 +45,12 @@ class Auth extends Component {
 
   submitHandler = event => {
     event.preventDefault();
-    this.props.onAuth(this.state.dataAuth, this.state.isSignUp);
+    this.props.onAuth(this.state.dataAuth);
   }
 
   render() {
-    const authName = (this.state.isSignUp ? this.state.signUpName : this.state.loginName);
-
     const loginForm = (
       <LoginForm
-        changed={(event) => this.dataAuthChangedHandler(event)}
-      />
-    );
-
-    const signUpForm = (
-      <SignUpForm
         changed={(event) => this.dataAuthChangedHandler(event)}
       />
     );
@@ -74,17 +65,15 @@ class Auth extends Component {
     );
 
     return (
+
       <div className={styles['root-form']}>
         <section>
           <div className={styles.widget}>
-            <h4 className={'mt-0'}>{authName} to DNMaids</h4>
+            <h4 className={'mt-0'}>Login to DNMaids</h4>
             <Form
               onSubmit={this.submitHandler}
             >
               {loginForm}
-              {/* {
-                this.state.isSignUp ? signUpForm : null
-              } */}
               {authButton}
             </Form>
           </div>
@@ -95,7 +84,7 @@ class Auth extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onAuth: (data, isSignUp) => dispatch(actions.auth(data, isSignUp))
+  onAuth: (data) => dispatch(actions.auth(data))
 });
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default withRouter(connect(null, mapDispatchToProps)(Auth));

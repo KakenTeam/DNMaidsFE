@@ -22,20 +22,22 @@ const authFail = (err) => ({
   error: err
 });
 
-export const auth = (data, isSignup) => {
-	console.log(data);
+export const logout = () => {
+	localStorage.clear();
+	return {
+		type: actionTypes.LOGOUT.SUCCESS,
+		isAuthenticated: false,
+	};
+};
+
+export const auth = data => {
   return dispatch => {
     dispatch(authStart());
 
     const requestData = JSON.stringify(data);
 		let token = null;
 		let path = 'auth/login';
-		let message = 'Login success';
-
-		if (isSignup === true) {
-			path = 'auth/signup'
-			message = 'Sign up success';
-		}
+		let message = null;
 
 		axios.post(path, requestData, {
 			headers: {
@@ -43,18 +45,16 @@ export const auth = (data, isSignup) => {
 			}
 		})
 			.then(response => {
-				if (isSignup) {
-					dispatch(authSuccess(token, message));
-					return;
-				}
 				console.log(response);
-				// token = response.headers.authorization;
+				token = response.data.token.access_token;
+				message = response.data.message;
 				const expirationDate = new Date(new  Date().getTime() + 3600 * 1000);
 				localStorage.setItem('accessToken', token);
 				localStorage.setItem('expirationDate', expirationDate);
 				dispatch(authSuccess(token, message));
 			})
 			.catch(err => {
+				console.log(err.message);
 				dispatch(authFail(err));
 			});
   };

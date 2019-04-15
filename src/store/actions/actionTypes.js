@@ -6,6 +6,6 @@ const statusTypes = (status) => ({
 
 // auth action types
 export const AUTH = statusTypes('AUTH');
-export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const CLOSE_ALERT_AUTH = 'CLOSE_ALERT_AUTH';
 
 export const LOGOUT = statusTypes('LOGOUT');
