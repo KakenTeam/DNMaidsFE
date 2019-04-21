@@ -3,7 +3,6 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Auth from './containers/Auth/Auth';
-import Slidebar from './components/SlideBar/SlideBar';
 import Layout from './components/Layout/Layout';
 
 import './App.css';

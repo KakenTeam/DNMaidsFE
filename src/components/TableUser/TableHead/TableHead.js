@@ -8,11 +8,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const rows = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'order', numeric: false, label: 'Order' },
+  { id: 'email', numeric: false, label: 'Email' },
+  { id: 'name', numeric: false, label: 'Name' },
+  { id: 'phone', numeric: true, label: 'Phone number' },
+  { id: 'address', numeric: false, label: 'Address' },
+  { id: 'gender', numeric: true, label: 'Gender' },
+  { id: 'birthday', numeric: true, label: 'Birthday' },
+  { id: 'permission', numeric: true, label: 'Permission' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -26,8 +29,9 @@ class EnhancedTableHead extends React.Component {
     const users = rows.map(row => (
       <TableCell
         key={row.id}
-        align={row.numeric ? 'right' : 'left'}
-        padding={row.disablePadding ? 'none' : 'default'}
+        // align={row.numeric ? 'right' : 'left'}
+        align={'right'}
+        padding={'default'}
         sortDirection={orderBy === row.id ? order : false}
       >
         <Tooltip

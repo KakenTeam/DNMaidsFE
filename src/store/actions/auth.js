@@ -47,9 +47,11 @@ export const auth = data => {
 			.then(response => {
 				console.log(response);
 				token = response.data.token.access_token;
+				let tokenType = response.data.token.token_type;
 				message = response.data.message;
 				const expirationDate = new Date(new  Date().getTime() + 3600 * 1000);
 				localStorage.setItem('accessToken', token);
+				localStorage.setItem('tokenType', tokenType);
 				localStorage.setItem('expirationDate', expirationDate);
 				dispatch(authSuccess(token, message));
 			})

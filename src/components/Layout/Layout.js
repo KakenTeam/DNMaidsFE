@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-import Header from './Header/Header';
+import * as actions from '../../store/actions/index';
+
 import Aside from './Aside/Aside';
 
 import styles from './Layout.module.css';
 
 class Layout extends Component {
+
   render() {
     return (
-      <div>
+      <div className={styles.LayoutContent}>
         <Aside />
       </div>
     );
   }
 }
 
-export default Layout;
+const mapDispatchToProps = dispatch => ({
+	getUsers: () => dispatch(actions.getUsers()),
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(Layout));

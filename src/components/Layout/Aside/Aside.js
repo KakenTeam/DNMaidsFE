@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 import * as actions from '../../../store/actions/index';
 
@@ -27,75 +27,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Paper from '@material-ui/core/Paper';
 
+import styles from './Styles';
 import EnhancedTable from '../../TableUser/EnhancedTable';
-
-const drawerWidth = 240;
-
-const styles = theme => ({
-	root: {
-		display: 'flex',
-	},
-	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-	},
-	appBarShift: {
-		marginLeft: drawerWidth,
-		width: `calc(100% - ${drawerWidth}px)`,
-		transition: theme.transitions.create(['width', 'margin'], {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	menuButton: {
-		marginLeft: 12,
-		marginRight: 36,
-	},
-	hide: {
-		display: 'none',
-	},
-	drawer: {
-		width: drawerWidth,
-		flexShrink: 0,
-		whiteSpace: 'nowrap',
-	},
-	drawerOpen: {
-		width: drawerWidth,
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-	},
-	drawerClose: {
-		transition: theme.transitions.create('width', {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		overflowX: 'hidden',
-		width: theme.spacing.unit * 7 + 1,
-		[theme.breakpoints.up('sm')]: {
-			width: theme.spacing.unit * 9 + 1,
-		},
-	},
-	toolbar: {
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'flex-end',
-		padding: '0 8px',
-		...theme.mixins.toolbar,
-	},
-	content: {
-		flexGrow: 1,
-		padding: theme.spacing.unit * 3,
-	},
-	accountButton: {
-		position: 'absolute',
-		right: 20
-	}
-});
+import AddUser from '../../UI/Button/AddButton/AddButton';
+import CreateUser from '../../Admin/CreateUser/CreateUser';
 
 class Aside extends React.Component {
 	state = {
@@ -103,8 +38,7 @@ class Aside extends React.Component {
 		anchorEl: null,
 	};
 
-	componentDidMount = () => {
-
+	componentWillMount = () => {
 	}
 
 	handleDrawerOpen = () => {
@@ -122,6 +56,7 @@ class Aside extends React.Component {
 	handleLogout = () => {
 		this.setState({ anchorEl: null });
 		this.props.onLogout();
+		return <Redirect to="/login" />;
 	};
 	
 	handleClose = () => {
@@ -213,10 +148,19 @@ class Aside extends React.Component {
 					</List>
 				</Drawer>
 				<main className={classes.content}>
-				  <Paper>
-						<Typography>
-							<EnhancedTable />
-						</Typography>
+					{/* <div className={classes.addButton}>
+						<AddUser
+							nameButton='Add User'
+						/>
+					</div> */}
+					<div>
+						<CreateUser
+							nameButton='Add User'
+
+						/>
+					</div>
+				  <Paper className={classes.tableWrapper}>
+						<EnhancedTable />
 					</Paper>
 				</main>
 			</div>
@@ -225,7 +169,7 @@ class Aside extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	onLogout: () => dispatch(actions.logout())
+	onLogout: () => dispatch(actions.logout()),
 });
 
 Aside.propTypes = {
