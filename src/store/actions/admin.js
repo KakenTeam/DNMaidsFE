@@ -12,10 +12,11 @@ const createUserStart = () => ({
   isFetching: true,
 });
 
-const createUserSuccess = (mess) => ({
+const createUserSuccess = (mess, data) => ({
   type: actionTypes.CREATE_USER.SUCCESS,
   isFetching: false,
   message: mess,
+  user: data,
 });
 
 const createUserFail = (err) => ({
@@ -94,7 +95,7 @@ export const createUser = data => {
     })
       .then(response => {
         console.log(response);
-        dispatch(createUserSuccess(response.data));
+        dispatch(createUserSuccess(response.data.message, response.data.info));
       })
       .catch(error => {
         console.log(error);
