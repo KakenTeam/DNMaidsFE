@@ -4,6 +4,7 @@ export {
 } from './auth';
 
 export {
+  createUser,
   getUsers,
   getGroups,
 } from './admin';

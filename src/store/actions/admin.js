@@ -7,6 +7,23 @@ const getAccessToken = () => {
   return `${tokenType} ${token}`;
 };
 
+const createUserStart = () => ({
+  type: actionTypes.CREATE_USER.START,
+  isFetching: true,
+});
+
+const createUserSuccess = (mess) => ({
+  type: actionTypes.CREATE_USER.SUCCESS,
+  isFetching: false,
+  message: mess,
+});
+
+const createUserFail = (err) => ({
+  type: actionTypes.CREATE_USER.FAIL,
+  isFetching: false,
+  error: err,
+});
+
 const getUsersStart = () => ({
   type: actionTypes.GET_USERS.START,
   isFetching: true,
@@ -58,6 +75,30 @@ export const getGroups = () => {
       .catch(err => {
         console.log(err.response);
         dispatch(getGroupFail());
+      });
+  };
+};
+
+export const createUser = data => {
+  console.log(data);
+  return async dispatch => {
+    await dispatch(createUserStart());
+    const path = '/users';
+    await axios.post(path, data,{
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': getAccessToken(),
+      },
+    })
+      .then(response => {
+        console.log(response);
+        dispatch(createUserSuccess(response.data));
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch(createUserFail(error.response));
       });
   };
 };

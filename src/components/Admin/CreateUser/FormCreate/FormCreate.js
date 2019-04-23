@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import DialogContent from '@material-ui/core/DialogContent';
-import MenuItem from '@material-ui/core/MenuItem';
 import DialogContentText from '@material-ui/core/DialogContentText';
 
 import styles from './styles';
@@ -49,7 +48,7 @@ const formCreate = props => {
 
         <TextField
           label="Confirm password"
-          name="comfirmPassword"
+          name="password_confirmation"
           value={confirmPassword}
           onChange={props.changeHandler}
           className={classes.textField}
@@ -91,15 +90,22 @@ const formCreate = props => {
           name="gender"
           label="Gender"
           className={classes.textField}
+          defaultValue='0'
           value={gender}
           onChange={props.changeHandler}
+          SelectProps={{
+            native: false,
+            MenuProps: {
+              className: classes.menu,
+            },
+          }}
           margin="normal"
         >
-          {genderDefault.map(option => (
-            <MenuItem key={option.value} value={option.value}>
+          { genderDefault ? genderDefault.map((option, index) => (
+            <option key={index} value={option.value}>
               {option.label}
-            </MenuItem>
-          ))}
+            </option>
+          )) : null }
         </TextField>
 
         <TextField
@@ -110,18 +116,18 @@ const formCreate = props => {
           value={group}
           onChange={props.changeHandler}
           SelectProps={{
-            native: true,
+            native: false,
             MenuProps: {
               className: classes.menu,
             },
           }}
           margin="normal"
         >
-          {groupsDefault.map(option => (
-            <option key={option.value} value={option.id}>
+          { groupsDefault ? groupsDefault.map((option, index) => (
+            <option key={index} value={option.id}>
               {option.groupName}
             </option>
-          ))}
+          )) : null }
         </TextField>
       </form>
     </DialogContent>

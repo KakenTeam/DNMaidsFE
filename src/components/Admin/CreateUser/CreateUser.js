@@ -12,6 +12,8 @@ import cssStyles from './CreateUser.module.css';
 import styles from './Styles';
 import FormCreate from './FormCreate/FormCreate';
 
+import * as actions from '../../../store/actions/index';
+
 class CreateUser extends React.Component {
   state = {
     open: false,
@@ -19,12 +21,12 @@ class CreateUser extends React.Component {
       email: null,
       name: null,
       password: null,
-      confirmPassword: null,
+      password_confirmation: null,
       birthday: null,
       phone: null,
       address: null,
-      gender: null,
-      group: null,
+      gender: '',
+      group: '',
     },
     genderDefault: [
       {
@@ -45,8 +47,6 @@ class CreateUser extends React.Component {
   };
 
   componentDidMount = () => {
-    // console.log('groups--', groupsSelect);
-
   }
 
   changeUserHandleCreate = event => {
@@ -56,7 +56,7 @@ class CreateUser extends React.Component {
           ...this.state.user,
           [event.target.name]: event.target.value,
         }
-      }, () => console.log(this.state.user));
+      });
     }
   }
 
@@ -67,17 +67,30 @@ class CreateUser extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  
+  handleCreateUser = () => {
+    this.setState({ open: false });
+    this.props.onCreateUser(this.state.user);
+  };
+
+  checkValidForm = () => {
+    const valueUser = Object.values(this.state.user);
+
+    let checkUser = valueUser.filter(value => {
+      return !value;
+    });
+    return checkUser.length === 0;
+    // return true if form valid 
+  }
 
   render() {
     const { nameButton, classes, groups }  = this.props;
 
     const groupsSelect = groups.map(option => {
-      return [
-        {
-          id: option.id,
-          groupName: option.group_name,
-        },
-      ];
+      return {
+        id: option.id,
+        groupName: option.group_name,
+      }
     });
 
     return (
@@ -102,7 +115,10 @@ class CreateUser extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button
+              disabled={!this.checkValidForm()}
+              onClick={this.handleCreateUser} 
+              color="primary">
               Add
             </Button>
           </DialogActions>
@@ -116,4 +132,8 @@ const mapStateToProps = state => ({
   groups: state.admin.groups,
 });
 
-export default withRouter(connect(mapStateToProps, null)(withStyles(styles, { withTheme: true })(CreateUser)));
+const mapDispatchToProps = dispatch => ({
+  onCreateUser: data => dispatch(actions.createUser(data)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(CreateUser)));
