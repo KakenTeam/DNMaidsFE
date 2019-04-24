@@ -22,7 +22,7 @@ const createUserSuccess = (mess, data) => ({
 const createUserFail = (err) => ({
   type: actionTypes.CREATE_USER.FAIL,
   isFetching: false,
-  error: err,
+  errors: err,
 });
 
 const getUsersStart = () => ({
@@ -42,6 +42,28 @@ const getUsersFail = (err) => ({
   error: err,
 });
 
+const deleteUserStart = () => ({
+  type: actionTypes.DELETE_USERS.START,
+  isDelete: false,
+  isFetching: true,
+});
+
+const deleteUserSuccess = (id, message) => ({
+  type: actionTypes.DELETE_USERS.SUCCESS,
+  isDelete: true,
+  isFetching: false,
+  id: id,
+  message: message,
+});
+
+const deleteUserFail = err => ({
+  type: actionTypes.DELETE_USERS.FAIL,
+  isDelete: false,
+  isFetching: false,
+  error: err,
+});
+
+
 const getGroupStart = () => ({
   type: actionTypes.GET_GROUPS.START,
   isFetching: true,
@@ -57,6 +79,18 @@ const getGroupFail = (err) => ({
   type: actionTypes.GET_GROUPS.FAIL,
   error: err,
 });
+
+export const addSelected = () => {
+  return {
+    type: actionTypes.ADD_SELECTED,
+  };
+}
+
+export const removeSelected = () => {
+  return {
+    type: actionTypes.REMOVE_SELECTED,
+  };
+}
 
 export const getGroups = () => {
   return async dispatch => {
@@ -80,12 +114,11 @@ export const getGroups = () => {
   };
 };
 
-export const createUser = data => {
-  console.log(data);
+export const deleteUser = id => {
   return async dispatch => {
-    await dispatch(createUserStart());
-    const path = '/users';
-    await axios.post(path, data,{
+    dispatch(deleteUserStart());
+    const path = `/users/${id}`;
+    await axios.delete(path, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
         'Content-Type': 'application/json',
@@ -95,11 +128,39 @@ export const createUser = data => {
     })
       .then(response => {
         console.log(response);
-        dispatch(createUserSuccess(response.data.message, response.data.info));
+        const message = 'Delete successfull';
+        dispatch(deleteUserSuccess(id, message));
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(deleteUserFail(err));
+      })
+  };
+};
+
+export const createUser = data => {
+  console.log(data);
+  return async dispatch => {
+    dispatch(createUserStart());
+    const path = '/users';
+    axios.post(path, data,{
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': getAccessToken(),
+      },
+    })
+      .then(response => {
+        console.log(response);
+        const message = response.data.message;
+        console.log("message sucess--", message);
+        const info = response.data.info;
+        dispatch(createUserSuccess(message, info));
       })
       .catch(error => {
-        console.log(error);
-        dispatch(createUserFail(error.response));
+        console.log((error.message));
+        dispatch(createUserFail(error.message));
       });
   };
 };

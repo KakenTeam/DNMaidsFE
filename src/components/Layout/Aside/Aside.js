@@ -29,16 +29,18 @@ import Paper from '@material-ui/core/Paper';
 
 import styles from './Styles';
 import EnhancedTable from '../../TableUser/EnhancedTable';
-import AddUser from '../../UI/Button/AddButton/AddButton';
 import CreateUser from '../../Admin/CreateUser/CreateUser';
+import EditUser from '../../Admin/EditUser/FormEdit/FormEdit';
 
 class Aside extends React.Component {
 	state = {
 		open: false,
 		anchorEl: null,
+		openEdit: false,
 	};
 
 	componentWillMount = () => {
+		console.log('open-----', this.state.open);
 	}
 
 	handleDrawerOpen = () => {
@@ -148,19 +150,17 @@ class Aside extends React.Component {
 					</List>
 				</Drawer>
 				<main className={classes.content}>
-					{/* <div className={classes.addButton}>
-						<AddUser
-							nameButton='Add User'
-						/>
-					</div> */}
 					<div>
 						<CreateUser
 							nameButton='Add User'
-
+							open={this.state.open}
 						/>
 					</div>
 				  <Paper className={classes.tableWrapper}>
 						<EnhancedTable />
+					</Paper>
+					<Paper>
+						<EditUser />
 					</Paper>
 				</main>
 			</div>

@@ -58,6 +58,7 @@ class EnhancedTable extends React.Component {
     order: 'asc',
     orderBy: 'calories',
     selected: [],
+    idSelected: null,
     page: 0,
     rowsPerPage: 5,
   };
@@ -65,7 +66,10 @@ class EnhancedTable extends React.Component {
   async componentDidMount() {
     await this.props.getUsers();
     await this.props.getGroups();
-    await console.log(this.props.users.length);
+  }
+
+  setSelected = () => {
+    this.setState({ selected: [] });
   }
 
   handleRequestSort = (event, property) => {
@@ -104,8 +108,17 @@ class EnhancedTable extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
+      
+    this.setState({ 
+      selected: newSelected, 
+      idSelected: id,
+    });
 
-    this.setState({ selected: newSelected });
+    if (event.target.checked) {
+      this.props.onAddSelected();
+    } else {
+      this.props.onRemmoveSelected();
+    }
   };
 
   handleChangePage = (event, page) => {
@@ -120,16 +133,17 @@ class EnhancedTable extends React.Component {
 
   render() {
     const { classes, users } = this.props;
-    const { order, orderBy, selected, rowsPerPage, page } = this.state;
+    const { order, orderBy, idSelected, rowsPerPage, page } = this.state;
     const totalUsers = this.props.users.length;
 
     return (
       <Paper className={classes.root}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          idSelected={idSelected}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
-              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
@@ -190,11 +204,14 @@ class EnhancedTable extends React.Component {
 
 const mapStateToProps = state => ({
   users: state.admin.users,
+  isDeleted: state.admin.isDelete,
 });
 
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(actions.getUsers()),
   getGroups: () => dispatch(actions.getGroups()),
+  onAddSelected: () => dispatch(actions.addSelected()),
+  onRemmoveSelected: () => dispatch(actions.removeSelected()),
 });
 
 EnhancedTable.propTypes = {

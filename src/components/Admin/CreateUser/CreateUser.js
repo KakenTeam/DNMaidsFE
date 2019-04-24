@@ -60,9 +60,13 @@ class CreateUser extends React.Component {
     }
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
+  // handleClickToggle = (prevState) => {
+  //   this.setState({ 
+  //     open: !prevState 
+  //   }, () => {
+  //     console.log('open ---', this.state.open);
+  //   });
+  // };
 
   handleClose = () => {
     this.setState({ open: false });
@@ -95,23 +99,27 @@ class CreateUser extends React.Component {
 
     return (
       <div className={cssStyles.AddButton}>
-        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
+        <Button variant="contained" color="primary" onClick={this.handleClickToggle}>
           {nameButton}
           <AddIcon className={classes.rightIcon} />
         </Button>
-        <Dialog
+        {/* <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
-        >
-          <FormCreate
-            gender={this.state.user.gender}
-            genderDefault={this.state.genderDefault}
-            changeHandler={this.changeUserHandleCreate}
-            group={this.state.user.group}
-            groupsDefault={groupsSelect}
-          />
-          <DialogActions>
+        > */}
+        {
+          this.state.open ? 
+            <FormCreate
+              gender={this.state.user.gender}
+              genderDefault={this.state.genderDefault}
+              changeHandler={this.changeUserHandleCreate}
+              group={this.state.user.group}
+              groupsDefault={groupsSelect}
+            />
+            : null
+        }
+          {/* <DialogActions>
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
@@ -121,8 +129,8 @@ class CreateUser extends React.Component {
               color="primary">
               Add
             </Button>
-          </DialogActions>
-        </Dialog>
+          </DialogActions> */}
+        {/* </Dialog> */}
       </div>
     );
   }

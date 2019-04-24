@@ -11,8 +11,17 @@ export const LOGOUT = statusTypes('LOGOUT');
 
 // admin CRUD
 // CRUD users
-export const GET_USERS = statusTypes('GET_USERS');
 export const CREATE_USER = statusTypes('CREATE_USER');
+export const GET_USERS = statusTypes('GET_USERS');
+export const DELETE_USERS = statusTypes('DELETE_USERS');
+
+// selected user 
+export const ADD_SELECTED = 'ADD_SELECTED';
+export const REMOVE_SELECTED = 'REMOVE_SELECTED';
 
 // CRUD group
 export const GET_GROUPS = statusTypes('GET_GROUPS');
+
+// snackbar
+export const ENQUEUE_SNACKBAR = 'ENQUEUE_SNACKBAR';
+export const REMOVE_SNACKBAR = 'REMOVE_SNACKBAR';

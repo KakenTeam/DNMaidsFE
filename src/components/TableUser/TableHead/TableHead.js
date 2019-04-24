@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
@@ -67,6 +69,10 @@ class EnhancedTableHead extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  numSelected: state.admin.numSelected,
+});
+
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
@@ -76,4 +82,4 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-export default EnhancedTableHead;
+export default connect(mapStateToProps, null)(EnhancedTableHead);
