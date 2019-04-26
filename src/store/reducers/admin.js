@@ -4,6 +4,7 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
   loading: true,
   users: [],
+  toggleCreate: false,
   groups: [],
   message: [],
   notifications: [],
@@ -68,6 +69,12 @@ const getUsersSuccess = (state, action) => {
 const getUsersFail = (state, action) => {
   return updateObject(state, {
     message: action.error,
+  });
+};
+
+const toggleCreate = (state, action) => {
+  return updateObject(state, {
+    toggleCreate: action.openCreate,
   });
 };
 
@@ -147,6 +154,7 @@ const admin = (state = initialState, action) => {
     case actionTypes.GET_USERS.FAIL: return getUsersFail(state, action);
     case actionTypes.DELETE_USERS.START: return deleteUserStart(state, action);
     case actionTypes.DELETE_USERS.SUCCESS: return deleteUserSuccess(state, action);
+    case actionTypes.TOGGLE_CREATE: return toggleCreate(state, action);
     case actionTypes.ADD_SELECTED: return addSelected(state, action);
     case actionTypes.REMOVE_SELECTED: return removedSelected(state, action);
     case actionTypes.DELETE_USERS.FAIL: return deleteUserFail(state, action);

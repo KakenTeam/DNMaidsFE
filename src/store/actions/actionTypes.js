@@ -14,6 +14,7 @@ export const LOGOUT = statusTypes('LOGOUT');
 export const CREATE_USER = statusTypes('CREATE_USER');
 export const GET_USERS = statusTypes('GET_USERS');
 export const DELETE_USERS = statusTypes('DELETE_USERS');
+export const TOGGLE_CREATE = 'TOGGLE_CREATE';
 
 // selected user 
 export const ADD_SELECTED = 'ADD_SELECTED';

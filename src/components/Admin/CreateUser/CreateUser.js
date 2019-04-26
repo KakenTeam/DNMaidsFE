@@ -5,9 +5,6 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-
 import cssStyles from './CreateUser.module.css';
 import styles from './Styles';
 import FormCreate from './FormCreate/FormCreate';
@@ -46,50 +43,53 @@ class CreateUser extends React.Component {
     ]
   };
 
-  componentDidMount = () => {
-  }
-
   changeUserHandleCreate = event => {
-    if (event.target.value) {
-      this.setState({
-        user: {
-          ...this.state.user,
-          [event.target.name]: event.target.value,
-        }
-      });
-    }
+    this.setState({
+      user: {
+        ...this.state.user,
+        [event.target.name]: event.target.value,
+      }
+    }, () => {
+      console.log(this.state.user);
+    });
   }
 
-  // handleClickToggle = (prevState) => {
-  //   this.setState({ 
-  //     open: !prevState 
-  //   }, () => {
-  //     console.log('open ---', this.state.open);
-  //   });
-  // };
+  handleClickToggle = () => {
+    this.setState((prevState, props) => ({
+      open: !prevState.open,
+    }), () => {
+      console.log('open ---', this.state.open);
+      this.props.onToggle(this.state.open);
+    });
+  };
 
   handleClose = () => {
     this.setState({ open: false });
   };
   
   handleCreateUser = () => {
-    this.setState({ open: false });
     this.props.onCreateUser(this.state.user);
+    this.handleClickToggle();
   };
 
-  checkValidForm = () => {
-    const valueUser = Object.values(this.state.user);
+  // checkValidForm = () => {
+  //   const valueUser = Object.values(this.state.user);
+  //   // return valueUser;
 
-    let checkUser = valueUser.filter(value => {
-      return !value;
-    });
-    return checkUser.length === 0;
-    // return true if form valid 
-  }
+  //   // let checkUser = valueUser.filter(value => {
+  //   //   return value !== null;
+  //   // });
+  //   // console.log(checkUser);
+  //   // if (checkUser.length === 9) {
+  //   //   return true;
+  //   // }
+  //   // return false;
+  //   // return true if form valid 
+  // }
 
   render() {
     const { nameButton, classes, groups }  = this.props;
-
+    
     const groupsSelect = groups.map(option => {
       return {
         id: option.id,
@@ -103,34 +103,20 @@ class CreateUser extends React.Component {
           {nameButton}
           <AddIcon className={classes.rightIcon} />
         </Button>
-        {/* <Dialog
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
-        > */}
         {
           this.state.open ? 
             <FormCreate
               gender={this.state.user.gender}
               genderDefault={this.state.genderDefault}
               changeHandler={this.changeUserHandleCreate}
-              group={this.state.user.group}
+              user={this.state.user}
               groupsDefault={groupsSelect}
+              toggle={this.handleClickToggle}
+              handleCreateUser={this.handleCreateUser}
+              // checkValidForm={this.checkValidForm}
             />
             : null
         }
-          {/* <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button
-              disabled={!this.checkValidForm()}
-              onClick={this.handleCreateUser} 
-              color="primary">
-              Add
-            </Button>
-          </DialogActions> */}
-        {/* </Dialog> */}
       </div>
     );
   }
@@ -142,6 +128,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onCreateUser: data => dispatch(actions.createUser(data)),
+  onToggle: open => dispatch(actions.toggleCreate(open)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(CreateUser)));

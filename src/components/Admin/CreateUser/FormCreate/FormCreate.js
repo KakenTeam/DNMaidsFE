@@ -1,102 +1,130 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
-import TextField from '@material-ui/core/TextField';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import FormControl from '@material-ui/core/FormControl';
+import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 
 import styles from './styles';
 
-const formCreate = props => {
-  const { classes, email, name, password, confirmPassword, birthday, phone, address, gender, group, genderDefault, groupsDefault } = props;
-  console.log('groups--', props.group);
-  
-  return (
-    // <DialogContent>
-    //   <DialogContentText>
-    //     Add User
-    //   </DialogContentText>
-      <Paper>
-        <form className={classes.container} noValidate autoComplete="off">
-          <TextField
+class FormCreate extends React.Component {
+
+  componentDidMount = () => {
+    // custom rule will have name 'isPasswordMatch'
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+      const { formData } = this.state;
+      if (value !== formData.password) {
+          return false;
+      }
+      return true;
+    });
+  }
+
+  render() {
+
+    const { classes, toggleCreate, user, genderDefault, groupsDefault } = this.props;
+    
+    return (
+      <Paper className={toggleCreate ? classes.editForm : ''}>
+        <ValidatorForm className={classes.container} is autoComplete="off">
+          <TextValidator
+            required
             label="Email"
             name="email"
             className={classes.textField}
-            value={email}
-            onChange={props.changeHandler}
+            onChange={this.props.changeHandler}
+            value={user.email}
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
             margin="normal"
           />
-          <TextField
+          <TextValidator
+            required
             label="Name"
             name="name"
             className={classes.textField}
-            value={name}
-            onChange={props.changeHandler}
+            onChange={this.props.changeHandler}
+            value={user.name}
+            validators={['required']}
+            errorMessages={['this field is required']}
             margin="normal"
             type="text"
             fullWidth
           />
 
-          <TextField
+          <TextValidator
+            required
             label="Password"
+            className={classes.textField}
+            margin="normal"
+            onChange={this.props.changeHandler}
             name="password"
-            value={password}
-            onChange={props.changeHandler}
-            className={classes.textField}
-            margin="normal"
+            type="password"
+            value={user.password}
+            validators={['required']}
+            errorMessages={['this field is required']}
           />
 
-          <TextField
+          <TextValidator
+            required
             label="Confirm password"
-            name="password_confirmation"
-            value={confirmPassword}
-            onChange={props.changeHandler}
-            className={classes.textField}
             margin="normal"
+            className={classes.textField}
+            onChange={this.props.changeHandler}
+            value={user.confirmPassword}
+            name="password_confirmation"
+            type="password"
+            validators={['isPasswordMatch', 'required']}
+            errorMessages={['password mismatch', 'this field is required']}
           />
 
-          <TextField
+          <TextValidator
+            required
             label="Birthday"
             name="birthday"
-            value={birthday}
-            onChange={props.changeHandler}
+            value={user.birthday}
+            onChange={this.props.changeHandler}
             className={classes.textField}
             type="date"
             margin="normal"
           />
 
-          <TextField
+          <TextValidator
+            required
             label="Phone"
             name="phone"
-            value={phone}
-            onChange={props.changeHandler}
+            value={user.phone}
+            onChange={this.props.changeHandler}
             className={classes.textField}
             type="number"
             margin="normal"
           />
 
-          <TextField
+          <TextValidator
+            required
             label="Address"
             name="address"
-            value={address}
-            onChange={props.changeHandler}
+            value={user.address}
+            onChange={this.props.changeHandler}
             className={classNames(classes.textField)}
             type="text"
             margin="normal"
           />
 
-          <TextField
+          <TextValidator
             select
+            required
             name="gender"
             label="Gender"
             className={classes.textField}
             defaultValue='0'
-            value={gender}
-            onChange={props.changeHandler}
+            value={user.gender}
+            onChange={this.props.changeHandler}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -104,21 +132,22 @@ const formCreate = props => {
               },
             }}
             margin="normal"
-          >
+            >
             { genderDefault ? genderDefault.map((option, index) => (
               <option key={index} value={option.value}>
                 {option.label}
               </option>
             )) : null }
-          </TextField>
+          </TextValidator>
 
-          <TextField
+          <TextValidator
+            required
             select
             label="Group"
             name="group"
             className={classes.textField}
-            value={group}
-            onChange={props.changeHandler}
+            value={user.group}
+            onChange={this.props.changeHandler}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -132,25 +161,34 @@ const formCreate = props => {
                 {option.groupName}
               </option>
             )) : null }
-          </TextField>
+          </TextValidator>
+            
+          <Divider />
 
-          <div>
-            <Button 
-              // onClick={this.handleClose}
-              color="primary">
-              Cancel
-            </Button>
-            <Button
-              // disabled={!this.checkValidForm()}
-              // onClick={this.handleCreateUser} 
-              color="primary">
-              Add
-            </Button>
+          <div className={classes.buttonWrapper}>
+            <FormControl className={classes.buttons}>
+              <Button 
+                onClick={this.props.toggle}
+                color="primary">
+                Cancel
+              </Button>
+              <Button
+                // disabled={!this.checkValidForm}
+                onClick={this.props.handleCreateUser} 
+                color="primary">
+                Add
+              </Button>
+            </FormControl>
           </div>
-        </form>
+        </ValidatorForm>
       </Paper>
-    // </DialogContent>
-  );
+    );
+  }
 };
 
-export default (withStyles(styles, { withTheme: true })(formCreate));
+const mapStateToProps = state => ({
+  toggleCreate: state.admin.toggleCreate,
+});
+
+
+export default connect(mapStateToProps, null)(withStyles(styles, { withTheme: true })(FormCreate));

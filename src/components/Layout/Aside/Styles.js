@@ -66,7 +66,10 @@ const styles = theme => ({
 	},
 	tableWrapper: {
 		width: '90%',
-  },
+	},
+	tableWrapperEdit: {
+		width: '55%',
+	},
   addButton: {
     position: 'absolute',
     top: '75px',

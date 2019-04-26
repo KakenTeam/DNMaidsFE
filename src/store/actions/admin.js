@@ -84,13 +84,20 @@ export const addSelected = () => {
   return {
     type: actionTypes.ADD_SELECTED,
   };
-}
+};
 
 export const removeSelected = () => {
   return {
     type: actionTypes.REMOVE_SELECTED,
   };
-}
+};
+
+export const toggleCreate = (open) => {
+  return {
+    type: actionTypes.TOGGLE_CREATE,
+    openCreate: open,
+  };
+};
 
 export const getGroups = () => {
   return async dispatch => {
@@ -159,7 +166,8 @@ export const createUser = data => {
         dispatch(createUserSuccess(message, info));
       })
       .catch(error => {
-        console.log((error.message));
+        let me = error['errors'];
+        console.log(me);
         dispatch(createUserFail(error.message));
       });
   };
@@ -181,7 +189,6 @@ export const getUsers = () => {
         dispatch(getUsersSuccess(response.data.data, response.message));
       })
       .catch(err => {
-        console.log(err);
         dispatch(getUsersFail(err));
       });
   };

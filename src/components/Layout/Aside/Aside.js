@@ -66,7 +66,7 @@ class Aside extends React.Component {
 	}
 
 	render() {
-		const { classes, theme } = this.props;
+		const { classes, theme, toggleCreate } = this.props;
 		const { anchorEl } = this.state;
 		const open = Boolean(anchorEl);
 
@@ -156,17 +156,21 @@ class Aside extends React.Component {
 							open={this.state.open}
 						/>
 					</div>
-				  <Paper className={classes.tableWrapper}>
+				  <Paper className={toggleCreate ? classes.tableWrapperEdit : classes.tableWrapper}>
 						<EnhancedTable />
 					</Paper>
-					<Paper>
+					{/* <Paper>
 						<EditUser />
-					</Paper>
+					</Paper> */}
 				</main>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	toggleCreate: state.admin.toggleCreate,
+});
 
 const mapDispatchToProps = dispatch => ({
 	onLogout: () => dispatch(actions.logout()),
@@ -177,4 +181,4 @@ Aside.propTypes = {
 	theme: PropTypes.object.isRequired,
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Aside)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Aside)));
