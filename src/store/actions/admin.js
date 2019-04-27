@@ -99,6 +99,24 @@ export const toggleCreate = (open) => {
   };
 };
 
+const showUserStart = () => ({
+  type: actionTypes.SHOW_USER.START,
+  isFetching: true,
+});
+
+const showUserSuccess = (data, mess) => ({
+  type: actionTypes.SHOW_USER.SUCCESS,
+  isFetching: false,
+  user: data,
+  message: mess,
+});
+
+const showUserFail = (err) => ({
+  type: actionTypes.SHOW_USER.FAIL,
+  isFetching: false,
+  error: err,
+});
+
 export const getGroups = () => {
   return async dispatch => {
     await dispatch(getGroupStart());
@@ -121,9 +139,33 @@ export const getGroups = () => {
   };
 };
 
+export const showUser = id => {
+  console.log('id show ', id);
+  return async dispatch => {
+    await dispatch(showUserStart());
+    const path = `/users/${id}`;
+    await axios.get(path, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': getAccessToken(),
+      },
+    })
+      .then(response => {
+        console.log('show user response', response);
+        dispatch(showUserSuccess(response.data.info, response.data.message));
+      })
+      .catch(err => {
+        console.log(err);
+        dispatch(showUserFail(err));
+      });
+  };
+}
+
 export const deleteUser = id => {
   return async dispatch => {
-    dispatch(deleteUserStart());
+    await dispatch(deleteUserStart());
     const path = `/users/${id}`;
     await axios.delete(path, {
       headers: {
@@ -189,6 +231,8 @@ export const getUsers = () => {
         dispatch(getUsersSuccess(response.data.data, response.message));
       })
       .catch(err => {
+        const er = JSON.parse('err');
+        console.log(er);
         dispatch(getUsersFail(err));
       });
   };

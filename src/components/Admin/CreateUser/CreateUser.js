@@ -43,6 +43,10 @@ class CreateUser extends React.Component {
     ]
   };
 
+  componentWillMount() {
+    this.initialState = this.state
+  }
+
   changeUserHandleCreate = event => {
     this.setState({
       user: {
@@ -70,22 +74,24 @@ class CreateUser extends React.Component {
   handleCreateUser = () => {
     this.props.onCreateUser(this.state.user);
     this.handleClickToggle();
+    this.setState(this.initialState)
   };
 
-  // checkValidForm = () => {
-  //   const valueUser = Object.values(this.state.user);
-  //   // return valueUser;
+  checkPassword = () => {
+    return this.state.user.password === this.state.user.password_confirmation;
+  }
 
-  //   // let checkUser = valueUser.filter(value => {
-  //   //   return value !== null;
-  //   // });
-  //   // console.log(checkUser);
-  //   // if (checkUser.length === 9) {
-  //   //   return true;
-  //   // }
-  //   // return false;
-  //   // return true if form valid 
-  // }
+  countValidFields = () => {
+    let count = 0;
+    const valueUser = Object.values(this.state.user);
+    valueUser.forEach(element => {
+      if (element) {
+        count += 1;
+      }
+    });
+    console.log('count--', count);
+    return count === 9;
+  }
 
   render() {
     const { nameButton, classes, groups }  = this.props;
@@ -113,7 +119,7 @@ class CreateUser extends React.Component {
               groupsDefault={groupsSelect}
               toggle={this.handleClickToggle}
               handleCreateUser={this.handleCreateUser}
-              // checkValidForm={this.checkValidForm}
+              disableAddButton={this.countValidFields() && this.checkPassword() ? true : false}
             />
             : null
         }

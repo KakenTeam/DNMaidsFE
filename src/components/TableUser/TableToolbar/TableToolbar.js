@@ -44,7 +44,9 @@ class EnhancedTableToolbar extends React.Component {
               <DeleteUser
                 id={idSelected}
               />
-              <EditUser />
+              <EditUser
+                id={idSelected}
+              />
             </div>
           ) : (
             <Tooltip title="Filter list">

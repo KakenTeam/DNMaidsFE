@@ -34,6 +34,9 @@ const styles = theme => ({
     marginRight: '60px',
     marginBottom: '16px',
   },
+  submitBtn: {
+    marginLeft: '5px',
+  }
 });
 
 export default styles;

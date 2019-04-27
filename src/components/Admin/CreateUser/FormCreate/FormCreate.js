@@ -19,7 +19,7 @@ class FormCreate extends React.Component {
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       const { formData } = this.state;
       if (value !== formData.password) {
-          return false;
+        return false;
       }
       return true;
     });
@@ -27,11 +27,13 @@ class FormCreate extends React.Component {
 
   render() {
 
-    const { classes, toggleCreate, user, genderDefault, groupsDefault } = this.props;
-    
+    const { classes, toggleCreate, user, genderDefault, groupsDefault, disableAddButton } = this.props;
+    console.log('check--', disableAddButton);
     return (
       <Paper className={toggleCreate ? classes.editForm : ''}>
-        <ValidatorForm className={classes.container} is autoComplete="off">
+        <ValidatorForm
+          className={classes.container}
+          autoComplete="off">
           <TextValidator
             required
             label="Email"
@@ -93,17 +95,18 @@ class FormCreate extends React.Component {
             type="date"
             margin="normal"
           />
-
-          <TextValidator
-            required
-            label="Phone"
-            name="phone"
-            value={user.phone}
-            onChange={this.props.changeHandler}
-            className={classes.textField}
-            type="number"
-            margin="normal"
-          />
+          <div>
+            <TextValidator
+              required
+              label="Phone"
+              name="phone"
+              value={user.phone}
+              onChange={this.props.changeHandler}
+              className={classes.textField}
+              type="number"
+              margin="normal"
+            />
+          </div>
 
           <TextValidator
             required
@@ -122,22 +125,25 @@ class FormCreate extends React.Component {
             name="gender"
             label="Gender"
             className={classes.textField}
-            defaultValue='0'
+            defaultValue=''
             value={user.gender}
             onChange={this.props.changeHandler}
             SelectProps={{
               native: false,
               MenuProps: {
-                className: classes.menu,
+                  className: classes.menu,
               },
             }}
             margin="normal"
             >
-            { genderDefault ? genderDefault.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            )) : null }
+            { 
+              genderDefault ? 
+              genderDefault.map((option, index) => (
+                <option key={index} value={option.value}>
+                    {option.label}
+                  </option>
+                )) : null 
+              }
           </TextValidator>
 
           <TextValidator
@@ -146,6 +152,7 @@ class FormCreate extends React.Component {
             label="Group"
             name="group"
             className={classes.textField}
+            defaultValue=''
             value={user.group}
             onChange={this.props.changeHandler}
             SelectProps={{
@@ -167,15 +174,13 @@ class FormCreate extends React.Component {
 
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
-              <Button 
-                onClick={this.props.toggle}
-                color="primary">
+              <Button onClick={this.props.toggle} color="primary">
                 Cancel
               </Button>
               <Button
-                // disabled={!this.checkValidForm}
-                onClick={this.props.handleCreateUser} 
-                color="primary">
+                onClick={this.props.handleCreateUser}
+                disabled={!disableAddButton}
+                className={classes.submitBtn} variant="contained" type="submit" color="primary">
                 Add
               </Button>
             </FormControl>

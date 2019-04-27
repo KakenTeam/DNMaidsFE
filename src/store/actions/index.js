@@ -9,6 +9,7 @@ export {
   removeSelected,
   createUser,
   getUsers,
+  showUser,
   deleteUser,
   getGroups,
 } from './admin';

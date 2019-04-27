@@ -12,9 +12,10 @@ export const LOGOUT = statusTypes('LOGOUT');
 // admin CRUD
 // CRUD users
 export const CREATE_USER = statusTypes('CREATE_USER');
+export const TOGGLE_CREATE = 'TOGGLE_CREATE';
 export const GET_USERS = statusTypes('GET_USERS');
 export const DELETE_USERS = statusTypes('DELETE_USERS');
-export const TOGGLE_CREATE = 'TOGGLE_CREATE';
+export const SHOW_USER = statusTypes('SHOW_USER');
 
 // selected user 
 export const ADD_SELECTED = 'ADD_SELECTED';

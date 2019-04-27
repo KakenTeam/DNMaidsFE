@@ -159,9 +159,9 @@ class Aside extends React.Component {
 				  <Paper className={toggleCreate ? classes.tableWrapperEdit : classes.tableWrapper}>
 						<EnhancedTable />
 					</Paper>
-					{/* <Paper>
+					<div>
 						<EditUser />
-					</Paper> */}
+					</div>
 				</main>
 			</div>
 		);

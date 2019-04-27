@@ -4,6 +4,7 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
   loading: true,
   users: [],
+  user: {},
   toggleCreate: false,
   groups: [],
   message: [],
@@ -116,6 +117,39 @@ const deleteUserFail = (state, action) => {
   });
 };
 
+const showUserStart = (state, action) => updateObject(state, {
+  loading: true,
+});
+
+const showUserSuccess = (state, action) => {
+  const newNotification = [
+    ...state.notifications,
+    {
+      notification: action.message,
+    }
+  ];
+
+  return updateObject(state, {
+    loading: action.isFetching,
+    user: action.user,
+    notifications: newNotification,
+  });
+};
+
+const showUserFail = (state, action) => {
+  const newNotification = [
+    ...state.notifications,
+    {
+      notification: action.error,
+    }
+  ];
+
+  return updateObject(state, {
+    loading: action.isFetching,
+    notifications: newNotification,
+  });
+};
+
 const addSelected = (state, action) => {
   const newNumSelected = state.numSelected + 1;
   return updateObject(state, {
@@ -149,6 +183,9 @@ const admin = (state = initialState, action) => {
     case actionTypes.CREATE_USER.START: return createUserStart(state, action);
     case actionTypes.CREATE_USER.SUCCESS: return createUserSuccess(state, action);
     case actionTypes.CREATE_USER.FAIL: return createUserFail(state, action);
+    case actionTypes.SHOW_USER.START: return showUserStart(state, action);
+    case actionTypes.SHOW_USER.SUCCESS: return showUserSuccess(state, action);
+    case actionTypes.SHOW_USER.FAIL: return showUserFail(state, action);
     case actionTypes.GET_USERS.START: return getUsersStart(state, action);
     case actionTypes.GET_USERS.SUCCESS: return getUsersSuccess(state, action);
     case actionTypes.GET_USERS.FAIL: return getUsersFail(state, action);
