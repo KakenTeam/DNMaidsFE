@@ -5,16 +5,31 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
+import * as actions from '../../../../store/actions/index';
 
 import styles from './Styles';
 
 class FormEdit extends React.Component {
 
+  state = {
+    editData: {
+      name: this.props.user.name,
+      password: null,
+      birthday: this.props.user.birthday,
+      phone: this.props.user.phone,
+      address: this.props.user.address,
+      gender: this.props.user.gender,
+      group: null,
+    },
+    isEdit: false,
+  }
+
   componentDidMount = () => {
+    console.log('data edit dfaallkjj', this.props.user);
+
     // custom rule will have name 'isPasswordMatch'
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       const { formData } = this.state;
@@ -23,36 +38,48 @@ class FormEdit extends React.Component {
       }
       return true;
     });
+
+  }
+  
+  changeEditHandle = event => {
+    this.setState({
+      editData: {
+        ...this.state.editData,
+        [event.target.name]: event.target.value,
+      }
+    }, () => {
+      console.log('change edit data', this.state.editData);
+    });
+  }
+
+  handleEditUser = () => {
+    let open = this.props.toggleEdit;
+    this.props.onEditUser(this.props.user.id, this.state.editData);
+    this.props.onToggleEdit(!open);
+    this.props.getUsers();
+    this.props.onRemmoveSelected();
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 3000);
   }
 
   render() {
 
-    // const { classes, toggleCreate, user, genderDefault, groupsDefault, disableAddButton } = this.props;
-    const { classes, toggleCreate } = this.props;
-    // console.log('check--', disableAddButton);
+    const { classes, toggleEdit, user, genderDefault, groupsDefault, changeHandler, editToggle} = this.props;
+    const { editData } = this.state;
     return (
-      <Paper className={toggleCreate ? classes.editForm : ''}>
+      <Paper className={toggleEdit ? classes.editForm : ''}>
         <ValidatorForm
+          onSubmit={this.props.handleEdit}
           className={classes.container}
           autoComplete="off">
-          <TextValidator
-            required
-            label="Email"
-            name="email"
-            className={classes.textField}
-            // onChange={this.props.changeHandler}
-            // value={user.email}
-            validators={['required', 'isEmail']}
-            errorMessages={['this field is required', 'email is not valid']}
-            margin="normal"
-          />
           <TextValidator
             required
             label="Name"
             name="name"
             className={classes.textField}
-            // onChange={this.props.changeHandler}
-            // value={user.name}
+            onChange={this.changeEditHandle}
+            value={editData.name}
             validators={['required']}
             errorMessages={['this field is required']}
             margin="normal"
@@ -65,33 +92,21 @@ class FormEdit extends React.Component {
             label="Password"
             className={classes.textField}
             margin="normal"
-            // onChange={this.props.changeHandler}
+            onChange={this.changeEditHandle}
             name="password"
             type="password"
-            // value={user.password}
+            value={editData.password}
             validators={['required']}
             errorMessages={['this field is required']}
           />
 
           <TextValidator
             required
-            label="Confirm password"
-            margin="normal"
-            className={classes.textField}
-            // onChange={this.props.changeHandler}
-            // value={user.confirmPassword}
-            name="password_confirmation"
-            type="password"
-            validators={['isPasswordMatch', 'required']}
-            errorMessages={['password mismatch', 'this field is required']}
-          />
-
-          <TextValidator
-            required
             label="Birthday"
             name="birthday"
-            // value={user.birthday}
-            // onChange={this.props.changeHandler}
+            value={editData.birthday}
+            onChange={this.changeEditHandle}
+            defaultValue={editData.birthday}
             className={classes.textField}
             type="date"
             margin="normal"
@@ -101,8 +116,9 @@ class FormEdit extends React.Component {
               required
               label="Phone"
               name="phone"
-              // value={user.phone}
-              // onChange={this.props.changeHandler}
+              value={editData.phone}
+              onChange={this.changeEditHandle}
+              defaultValue={editData.phone}
               className={classes.textField}
               type="number"
               margin="normal"
@@ -113,8 +129,8 @@ class FormEdit extends React.Component {
             required
             label="Address"
             name="address"
-            // value={user.address}
-            // onChange={this.props.changeHandler}
+            value={editData.address}
+            onChange={this.changeEditHandle}
             className={classNames(classes.textField)}
             type="text"
             margin="normal"
@@ -126,9 +142,8 @@ class FormEdit extends React.Component {
             name="gender"
             label="Gender"
             className={classes.textField}
-            defaultValue=''
-            // value={user.gender}
-            // onChange={this.props.changeHandler}
+            value={editData.gender}
+            onChange={this.changeEditHandle}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -137,14 +152,14 @@ class FormEdit extends React.Component {
             }}
             margin="normal"
             >
-            {/* { 
+            { 
               genderDefault ? 
               genderDefault.map((option, index) => (
                 <option key={index} value={option.value}>
                     {option.label}
                   </option>
                 )) : null 
-              } */}
+              }
           </TextValidator>
 
           <TextValidator
@@ -153,9 +168,8 @@ class FormEdit extends React.Component {
             label="Group"
             name="group"
             className={classes.textField}
-            defaultValue=''
-            // value={user.group}
-            // onChange={this.props.changeHandler}
+            value={editData.group}
+            onChange={this.changeEditHandle}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -164,25 +178,23 @@ class FormEdit extends React.Component {
             }}
             margin="normal"
           >
-            {/* { groupsDefault ? groupsDefault.map((option, index) => (
+            { groupsDefault ? groupsDefault.map((option, index) => (
               <option key={index} value={option.id}>
                 {option.groupName}
               </option>
-            )) : null } */}
+            )) : null }
           </TextValidator>
-            
-          <Divider />
 
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
-              <Button onClick={this.props.toggle} color="primary">
+              <Button onClick={editToggle} color="primary">
                 Cancel
               </Button>
               <Button
-                // onClick={this.props.handleCreateUser}
+                onClick={this.handleEditUser}
                 // disabled={!disableAddButton}
                 className={classes.submitBtn} variant="contained" type="submit" color="primary">
-                Add
+                Edit
               </Button>
             </FormControl>
           </div>
@@ -194,7 +206,19 @@ class FormEdit extends React.Component {
 
 const mapStateToProps = state => ({
   toggleCreate: state.admin.toggleCreate,
+  openEdit: state.admin.openEdit,
+  toggleEdit: state.admin.toggleEdit,
+  // showUser: state.admin.user,
 });
 
+const mapDispatchToProps = dispatch => ({
+  getUsers: () => dispatch(actions.getUsers()),
+  onEditUser: (id, data) => dispatch(actions.editUser(id, data)),
+  onToggle: open => dispatch(actions.toggleCreate(open)),
+  onToggleEdit: open => dispatch(actions.toggleEdit(open)),
+  onRemmoveSelected: () => dispatch(actions.removeSelected()),
+  onCloseAlert: () => dispatch(actions.closeAlert()),
+  onShowUser: (id) => dispatch(actions.showUser(id)),
+});
 
-export default connect(mapStateToProps, null)(withStyles(styles, { withTheme: true })(FormEdit));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(FormEdit));

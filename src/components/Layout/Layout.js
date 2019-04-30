@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Switch, Route } from 'react-router-dom';
 
+import { withStyles } from '@material-ui/core/styles';
 import * as actions from '../../store/actions/index';
 
 import Aside from './Aside/Aside';
@@ -10,9 +11,13 @@ import styles from './Layout.module.css';
 
 class Layout extends Component {
 
+  componentWillMount() {
+    // this.props.onGetAdmin();
+  }
+
   render() {
     return (
-      <div className={styles.LayoutContent}>
+      <div>
         <Aside />
       </div>
     );
@@ -20,7 +25,8 @@ class Layout extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-	getUsers: () => dispatch(actions.getUsers()),
+  getUsers: () => dispatch(actions.getUsers()),
+  onGetAdmin: () => dispatch(actions.getAdmin()),
 });
 
-export default withRouter(connect(null, mapDispatchToProps)(Layout));
+export default withRouter(connect(null, mapDispatchToProps)(withStyles(styles, { withTheme: true })(Layout)));

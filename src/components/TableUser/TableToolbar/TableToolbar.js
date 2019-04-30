@@ -40,7 +40,7 @@ class EnhancedTableToolbar extends React.Component {
         <div className={classes.spacer} />
         <div className={classes.actions}>
           {numSelected > 0 ? (
-            <div>
+            <div className={classes.wrapperAction}>
               <DeleteUser
                 id={idSelected}
               />

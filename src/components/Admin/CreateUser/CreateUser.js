@@ -3,17 +3,20 @@ import { withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
+import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import cssStyles from './CreateUser.module.css';
 import styles from './Styles';
 import FormCreate from './FormCreate/FormCreate';
+import FormEdit from '../EditUser/FormEdit/FormEdit';
 
 import * as actions from '../../../store/actions/index';
 
 class CreateUser extends React.Component {
   state = {
     open: false,
+    openEditForm: this.props.toggleEdit,
     user: {
       email: null,
       name: null,
@@ -44,7 +47,14 @@ class CreateUser extends React.Component {
   };
 
   componentWillMount() {
-    this.initialState = this.state
+    this.initialState = this.state;
+  }
+
+  componentDidUpdate() {
+    const { notifications } = this.props;
+    notifications.forEach((notification) => {
+      this.props.enqueueSnackbar(notification.notification, {variant: notification.variant});
+    });
   }
 
   changeUserHandleCreate = event => {
@@ -53,8 +63,6 @@ class CreateUser extends React.Component {
         ...this.state.user,
         [event.target.name]: event.target.value,
       }
-    }, () => {
-      console.log(this.state.user);
     });
   }
 
@@ -62,21 +70,35 @@ class CreateUser extends React.Component {
     this.setState((prevState, props) => ({
       open: !prevState.open,
     }), () => {
-      console.log('open ---', this.state.open);
       this.props.onToggle(this.state.open);
     });
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-  
+  handleEditToggle = () => {
+    let open = this.props.toggleEdit;
+    this.props.onToggleEdit(!open);
+  }
+
   handleCreateUser = () => {
     this.props.onCreateUser(this.state.user);
     this.handleClickToggle();
     this.setState(this.initialState)
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 3000);
   };
-
+  
+  // handleEditUser = () => {
+  //   let open = this.props.toggleEdit;
+  //   this.props.onEditUser(this.props.showUser.id, this.state.editData);
+  //   this.props.onToggleEdit(!open);
+  //   this.props.getUsers();
+  //   this.props.onRemmoveSelected();
+  //   setTimeout(() => {
+  //     this.props.onCloseAlert();
+  //   }, 3000);
+  // }
+  
   checkPassword = () => {
     return this.state.user.password === this.state.user.password_confirmation;
   }
@@ -89,7 +111,6 @@ class CreateUser extends React.Component {
         count += 1;
       }
     });
-    console.log('count--', count);
     return count === 9;
   }
 
@@ -121,7 +142,22 @@ class CreateUser extends React.Component {
               handleCreateUser={this.handleCreateUser}
               disableAddButton={this.countValidFields() && this.checkPassword() ? true : false}
             />
-            : null
+          : null
+        }
+        {
+          this.props.toggleEdit ?
+            <div>
+              <FormEdit
+                groupsDefault={groupsSelect}
+                genderDefault={this.state.genderDefault}
+                // group={this.state.editData.group}
+                user={this.props.showUser}
+                changeHandler={this.changeEditHandle}
+                handleEdit={this.handleEditUser}
+                editToggle={this.handleEditToggle}
+              />
+            </div>
+          : null
         }
       </div>
     );
@@ -130,11 +166,20 @@ class CreateUser extends React.Component {
 
 const mapStateToProps = state => ({
   groups: state.admin.groups,
+  toggleEdit: state.admin.toggleEdit,
+  showUser: state.admin.user,
+  notifications: state.admin.notifications,
 });
 
 const mapDispatchToProps = dispatch => ({
+  getUsers: () => dispatch(actions.getUsers()),
   onCreateUser: data => dispatch(actions.createUser(data)),
+  onEditUser: (id, data) => dispatch(actions.editUser(id, data)),
   onToggle: open => dispatch(actions.toggleCreate(open)),
+  onToggleEdit: open => dispatch(actions.toggleEdit(open)),
+  onRemmoveSelected: () => dispatch(actions.removeSelected()),
+  onCloseAlert: () => dispatch(actions.closeAlert()),
+  onShowUser: (id) => dispatch(actions.showUser(id)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(CreateUser)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(withSnackbar(CreateUser))));

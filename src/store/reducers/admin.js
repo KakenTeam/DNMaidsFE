@@ -6,12 +6,21 @@ const initialState = {
   users: [],
   user: {},
   toggleCreate: false,
+  toggleEdit: false,
   groups: [],
   message: [],
   notifications: [],
   errors: [],
   isDelete: false,
+  isShow: false,
   numSelected: 0,
+};
+
+const closeAlert = (state, action) => {
+  const newNoti = state.notifications.splice(1);
+  return updateObject(state, {
+    notifications: newNoti,
+  });
 };
 
 const createUserStart = (state, action) => updateObject(state, {
@@ -30,10 +39,9 @@ const createUserSuccess = (state, action) => {
     ...state.notifications,
     {
       notification: action.message,
+      variant: 'success',
     }
   ];
-
-  console.log(typeof newNotification);
 
   return updateObject(state, {
     loading: action.isFetching,
@@ -47,6 +55,7 @@ const createUserFail = (state, action) => {
     ...state.errors,
     {
       error: action.errors,
+      variant: 'error',
     },
   ];
 
@@ -63,13 +72,13 @@ const getUsersStart = (state, action) => updateObject(state, {
 const getUsersSuccess = (state, action) => {
   return updateObject(state, {
     users: [...action.users.users],
-    message: action.message,
+    // message: action.message,
   });
 };
 
 const getUsersFail = (state, action) => {
   return updateObject(state, {
-    message: action.error,
+    // message: action.error,
   });
 };
 
@@ -78,6 +87,10 @@ const toggleCreate = (state, action) => {
     toggleCreate: action.openCreate,
   });
 };
+
+const toggleEdit = (state, action) => updateObject(state, {
+  toggleEdit: action.openEdit,
+});
 
 const deleteUserStart = (state, action) => updateObject(state, {
   loading: action.isFetching,
@@ -91,6 +104,7 @@ const deleteUserSuccess = (state, action) => {
     ...state.notifications,
     {
       notification: action.message,
+      variant: 'success',
     }
   ];
   
@@ -107,6 +121,7 @@ const deleteUserFail = (state, action) => {
     ...state.notifications,
     {
       notification: action.message,
+      variant: 'error',
     }
   ];
 
@@ -117,8 +132,43 @@ const deleteUserFail = (state, action) => {
   });
 };
 
+const editUserStart = (state, action) => updateObject(state, {
+  loading: action.isFetching,
+});
+
+const editUserSuccess = (state, action) => {
+  const newNotification = [
+    ...state.notifications,
+    {
+      notification: action.message,
+      variant: 'success',
+    },
+  ];
+
+  return updateObject(state, {
+    loading: action.isFetching,
+    notifications: newNotification,
+  });
+};
+
+const editUserFail = (state, action) => {
+  const newNotification = [
+    ...state.notifications,
+    {
+      notification: action.error,
+      variant: 'error',
+    },
+  ];
+
+  return updateObject(state, {
+    loading: action.isFetching,
+    notifications: newNotification,
+  });
+};
+
 const showUserStart = (state, action) => updateObject(state, {
   loading: true,
+  isShow: action.isShow,
 });
 
 const showUserSuccess = (state, action) => {
@@ -126,11 +176,13 @@ const showUserSuccess = (state, action) => {
     ...state.notifications,
     {
       notification: action.message,
+      variant: 'success',
     }
   ];
 
   return updateObject(state, {
     loading: action.isFetching,
+    isShow: action.isShow,
     user: action.user,
     notifications: newNotification,
   });
@@ -141,11 +193,13 @@ const showUserFail = (state, action) => {
     ...state.notifications,
     {
       notification: action.error,
+      variant: 'error',
     }
   ];
 
   return updateObject(state, {
     loading: action.isFetching,
+    isShow: action.isShow,
     notifications: newNotification,
   });
 };
@@ -158,7 +212,10 @@ const addSelected = (state, action) => {
 };
 
 const removedSelected = (state, action) => {
-  const newNumSelected = state.numSelected - 1;
+  let newNumSelected = state.numSelected;
+  if (state.numSelected > 0) {
+    newNumSelected = state.numSelected - 1;
+  }
   return updateObject(state, {
     numSelected: newNumSelected,
   });
@@ -180,6 +237,7 @@ const getGroupsFail = (state, action) => updateObject(state, {
 
 const admin = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.CLOSE_ALERT: return closeAlert(state, action);
     case actionTypes.CREATE_USER.START: return createUserStart(state, action);
     case actionTypes.CREATE_USER.SUCCESS: return createUserSuccess(state, action);
     case actionTypes.CREATE_USER.FAIL: return createUserFail(state, action);
@@ -191,7 +249,11 @@ const admin = (state = initialState, action) => {
     case actionTypes.GET_USERS.FAIL: return getUsersFail(state, action);
     case actionTypes.DELETE_USERS.START: return deleteUserStart(state, action);
     case actionTypes.DELETE_USERS.SUCCESS: return deleteUserSuccess(state, action);
+    case actionTypes.EDIT_USER.START: return editUserStart(state, action);
+    case actionTypes.EDIT_USER.SUCCESS: return editUserSuccess(state, action);
+    case actionTypes.EDIT_USER.FAIL: return editUserFail(state, action);
     case actionTypes.TOGGLE_CREATE: return toggleCreate(state, action);
+    case actionTypes.TOGGLE_EDIT: return toggleEdit(state, action);
     case actionTypes.ADD_SELECTED: return addSelected(state, action);
     case actionTypes.REMOVE_SELECTED: return removedSelected(state, action);
     case actionTypes.DELETE_USERS.FAIL: return deleteUserFail(state, action);

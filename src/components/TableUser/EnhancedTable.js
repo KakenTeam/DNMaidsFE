@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-import TableFooter from '@material-ui/core/TableFooter';
 import TableCell from '@material-ui/core/TableCell';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
@@ -16,6 +15,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import * as actions from '../../store/actions/index';
 import EnhancedTableHead from './TableHead/TableHead';
 import EnhancedTableToolbar from './TableToolbar/TableToolbar';
+
+import styles from './Style';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,19 +42,6 @@ function getSorting(order, orderBy) {
   return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing.unit * 15,
-  },
-  table: {
-    minWidth: 1020,
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-});
-
 class EnhancedTable extends React.Component {
   state = {
     order: 'asc',
@@ -66,7 +54,11 @@ class EnhancedTable extends React.Component {
 
   async componentDidMount() {
     await this.props.getUsers();
+    await this.props.getAdmin();
     await this.props.getGroups();
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 0);
   }
 
   setSelected = () => {
@@ -170,14 +162,14 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="checkbox">
                         <Checkbox checked={isSelected} />
                       </TableCell>
-                      <TableCell component="th" align="right">{user.id}</TableCell>
-                      <TableCell align="right">{user.email}</TableCell>
-                      <TableCell align="right">{user.name}</TableCell>
-                      <TableCell align="right">{user.phone}</TableCell>
-                      <TableCell align="right">{user.address}</TableCell>
-                      <TableCell align="right">{user.gender}</TableCell>
-                      <TableCell align="right">{user.birthday}</TableCell>
-                      <TableCell align="right">{user.permission[0]}</TableCell>
+                      <TableCell padding="dense" component="th" align="right">{user.id}</TableCell>
+                      <TableCell padding="dense" align="right">{user.email}</TableCell>
+                      <TableCell padding="dense" align="right">{user.name}</TableCell>
+                      <TableCell padding="dense" align="right">{user.phone}</TableCell>
+                      <TableCell padding="dense" align="right">{user.address}</TableCell>
+                      <TableCell padding="dense" align="right">{user.gender}</TableCell>
+                      <TableCell padding="dense" align="right">{user.birthday}</TableCell>
+                      <TableCell padding="dense" align="right">{user.permission[0]}</TableCell>
                     </TableRow>
                   );
                 }) : null }
@@ -211,9 +203,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(actions.getUsers()),
+  getAdmin: () => dispatch(actions.getAdmin()),
   getGroups: () => dispatch(actions.getGroups()),
   onAddSelected: () => dispatch(actions.addSelected()),
   onRemmoveSelected: () => dispatch(actions.removeSelected()),
+  onCloseAlert: () => dispatch(actions.closeAlert()),
 });
 
 EnhancedTable.propTypes = {

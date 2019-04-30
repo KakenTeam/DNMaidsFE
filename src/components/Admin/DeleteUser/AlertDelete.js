@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
+import { withSnackbar } from 'notistack';
+import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -12,12 +13,22 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 
+import styles from './Styles';
+
 import * as actions from '../../../store/actions/index';
 
 class AlertDelete extends React.Component {
   state = {
     open: false,
   };
+
+  componentDidMount() {
+    const { notifications } = this.props;
+
+    notifications.forEach((notification) => {
+      this.props.enqueueSnackbar(notification.notification, {variant: notification.variant});
+    });
+  }
 
   handleClickOpen = () => {
     this.setState({ open: !this.state.open });
@@ -27,16 +38,20 @@ class AlertDelete extends React.Component {
     this.setState({ open: !this.state.open });
   };
   
-  deleteHandle = (id) => {
-    this.handleClose();
-    this.props.onDelete(id);
-    this.props.onRemmoveSelected();
+  deleteHandle = async (id) => {
+    await this.handleClose();
+    await this.props.onDelete(id);
+    await this.props.onRemmoveSelected();
+    // await this.props.enqueueSnackbar('fdafads');
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 3000);
   }
 
   render() {
-    const { id } = this.props;
+    const { id, classes } = this.props;
     return (
-      <div>
+      <div className={classes.deleteButton}>
         <Tooltip title="Delete" placement="left">
           <IconButton aria-label="Delete" color="secondary" onClick={this.handleClickOpen}>
             <DeleteIcon />
@@ -69,12 +84,13 @@ class AlertDelete extends React.Component {
 }
 
 const mapStateToProps = state => ({
-
+  notifications: state.admin.notifications,
 });
 
 const mapDispatchToProps = dispatch => ({
   onDelete: id => dispatch(actions.deleteUser(id)),
   onRemmoveSelected: () => dispatch(actions.removeSelected()),
+  onCloseAlert: () => dispatch(actions.closeAlert()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AlertDelete));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(withSnackbar(AlertDelete))));

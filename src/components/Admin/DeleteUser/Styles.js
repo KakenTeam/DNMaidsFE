@@ -17,26 +17,9 @@ const styles = theme => ({
   AddButton: {
     position: 'absolute',
     top: 100,
-  }, 
-  createForm: {
-    position: 'relative',
-    top: '18px',
-    left: '60%',
-    width: '36%',
-    marginRight: '10px',
   },
-  buttonWrapper: {
-    width: '100%',
-  },
-  buttons: {
+  deleteButton: {
     display: 'inline-block',
-    float: 'right',
-    marginTop: '25px',
-    marginRight: '60px',
-    marginBottom: '16px',
-  },
-  submitBtn: {
-    marginLeft: '5px',
   }
 });
 

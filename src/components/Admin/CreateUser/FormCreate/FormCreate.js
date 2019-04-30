@@ -28,10 +28,11 @@ class FormCreate extends React.Component {
   render() {
 
     const { classes, toggleCreate, user, genderDefault, groupsDefault, disableAddButton } = this.props;
-    console.log('check--', disableAddButton);
+
     return (
-      <Paper className={toggleCreate ? classes.editForm : ''}>
+      <Paper className={toggleCreate ? classes.createForm : ''}>
         <ValidatorForm
+          onSubmit={this.props.handleCreateUser}
           className={classes.container}
           autoComplete="off">
           <TextValidator

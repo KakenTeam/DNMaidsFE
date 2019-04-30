@@ -32,8 +32,8 @@ class EnhancedTableHead extends React.Component {
       <TableCell
         key={row.id}
         // align={row.numeric ? 'right' : 'left'}
+        padding="dense"
         align={'right'}
-        padding={'default'}
         sortDirection={orderBy === row.id ? order : false}
       >
         <Tooltip

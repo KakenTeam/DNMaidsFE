@@ -1,4 +1,8 @@
 const styles = theme => ({
+  root: {
+    // position: 'absolute',
+    width: 500,
+  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -15,15 +19,16 @@ const styles = theme => ({
     width: 200,
   },
   AddButton: {
-    position: 'absolute',
-    top: 100,
+    // position: 'absolute',
+    // top: 100,
   }, 
-  createForm: {
-    position: 'relative',
-    top: '18px',
-    left: '60%',
-    width: '36%',
-    marginRight: '10px',
+  editForm: {
+    // position: 'relative',
+    // left: '-29px',
+    // top: '17px',
+    // float: 'right',
+    // width: '36%',
+    // marginRight: '128px',
   },
   buttonWrapper: {
     width: '100%',

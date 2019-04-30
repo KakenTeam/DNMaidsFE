@@ -2,31 +2,30 @@ import React, { Component } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import Auth from './containers/Auth/Auth';
 import Layout from './components/Layout/Layout';
+import Aside from './components/Layout/Aside/Aside';
+import Auth from './containers/Auth/Auth';
+import ProfileContainer from './components/Admin/Profile/ProfileContainer';
 
 import './App.css';
 
 class App extends Component {
-
-  componentDidMount = () => {
-    
-  }
-
   render() {
     let routes = (
       <Switch>
-        <Route path="/login" exact component={Auth} />
-        <Redirect to="/login" />
+        <Route path="/" exact component={Auth} />
+        <Redirect to="/" />
       </Switch>
     );
     
     if (localStorage.getItem('accessToken') || this.props.isAuthenticated) {
       routes = (
         <Switch>
-          {/* <Route path="/login" exact component={Auth} /> */}
-          <Route path="/admin" exact component={Layout} />
+          <Route path="/admin" component={Layout} />
           <Redirect to="/admin" />
+          <Redirect to="/" />
+          {/* <Route path="/" exact render={() => <Redirect to="/admin" />} /> */}
+          {/* <Route path="/admin/profile" exact component={} /> */}
         </Switch>
       );
     }

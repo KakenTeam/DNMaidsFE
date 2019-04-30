@@ -8,6 +8,9 @@ const statusTypes = (status) => ({
 export const AUTH = statusTypes('AUTH');
 export const CLOSE_ALERT_AUTH = 'CLOSE_ALERT_AUTH';
 export const LOGOUT = statusTypes('LOGOUT');
+export const GET_ADMIN = statusTypes('GET_ADMIN');
+
+export const CLOSE_ALERT = 'CLOSE_ALERT';
 
 // admin CRUD
 // CRUD users
@@ -16,6 +19,8 @@ export const TOGGLE_CREATE = 'TOGGLE_CREATE';
 export const GET_USERS = statusTypes('GET_USERS');
 export const DELETE_USERS = statusTypes('DELETE_USERS');
 export const SHOW_USER = statusTypes('SHOW_USER');
+export const EDIT_USER = statusTypes('EDIT_USER');
+export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 
 // selected user 
 export const ADD_SELECTED = 'ADD_SELECTED';

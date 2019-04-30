@@ -15,6 +15,7 @@ const createUserStart = () => ({
 const createUserSuccess = (mess, data) => ({
   type: actionTypes.CREATE_USER.SUCCESS,
   isFetching: false,
+  variant: 'success',
   message: mess,
   user: data,
 });
@@ -22,6 +23,7 @@ const createUserSuccess = (mess, data) => ({
 const createUserFail = (err) => ({
   type: actionTypes.CREATE_USER.FAIL,
   isFetching: false,
+  variant: 'error',
   errors: err,
 });
 
@@ -52,6 +54,7 @@ const deleteUserSuccess = (id, message) => ({
   type: actionTypes.DELETE_USERS.SUCCESS,
   isDelete: true,
   isFetching: false,
+  variant: 'success',
   id: id,
   message: message,
 });
@@ -60,9 +63,9 @@ const deleteUserFail = err => ({
   type: actionTypes.DELETE_USERS.FAIL,
   isDelete: false,
   isFetching: false,
+  variant: 'error',
   error: err,
 });
-
 
 const getGroupStart = () => ({
   type: actionTypes.GET_GROUPS.START,
@@ -99,21 +102,50 @@ export const toggleCreate = (open) => {
   };
 };
 
+export const toggleEdit = open => ({
+  type: actionTypes.TOGGLE_EDIT,
+  openEdit: open,
+});
+
 const showUserStart = () => ({
   type: actionTypes.SHOW_USER.START,
   isFetching: true,
+  isShow: false,
 });
 
 const showUserSuccess = (data, mess) => ({
   type: actionTypes.SHOW_USER.SUCCESS,
   isFetching: false,
+  isShow: true,
   user: data,
+  variant: 'success',
   message: mess,
 });
 
 const showUserFail = (err) => ({
   type: actionTypes.SHOW_USER.FAIL,
   isFetching: false,
+  isShow: false,
+  variant: 'error',
+  error: err,
+});
+
+const editUserStart = () => ({
+  type: actionTypes.EDIT_USER.START,
+  isFetching: true,
+});
+
+const editUserSuccess = (mess) => ({
+  type: actionTypes.EDIT_USER.SUCCESS,
+  isFetching: false,
+  variant: 'success',
+  message: mess,
+});
+
+const editUserFail = (err) => ({
+  type: actionTypes.EDIT_USER.FAIL,
+  isFetching: false,
+  variant: 'error',
   error: err,
 });
 
@@ -129,17 +161,16 @@ export const getGroups = () => {
       }
     })
       .then(response => {
-        console.log(response);
         dispatch(getGroupSuccess(response.data));
       })
       .catch(err => {
         console.log(err.response);
-        dispatch(getGroupFail());
+        dispatch(getGroupFail(err.message));
       });
   };
 };
 
-export const showUser = id => {
+export const showUser = (id) => {
   console.log('id show ', id);
   return async dispatch => {
     await dispatch(showUserStart());
@@ -150,16 +181,39 @@ export const showUser = id => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': getAccessToken(),
-      },
+      }
     })
-      .then(response => {
-        console.log('show user response', response);
-        dispatch(showUserSuccess(response.data.info, response.data.message));
-      })
-      .catch(err => {
-        console.log(err);
-        dispatch(showUserFail(err));
+    .then(response => {
+      dispatch(showUserSuccess(response.data.info, response.data.message));
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch(showUserFail(err.message));
       });
+    };
+  }
+  
+  export const editUser = (id, data) => {
+    console.log('id, data', id, data);
+    return async dispatch => {
+      dispatch(editUserStart());
+      const path = `/users/${id}`;
+      await axios.patch(path, data, {
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': getAccessToken(),
+        },
+      })
+        .then(response => {
+          console.log('edit sussess',response);
+          dispatch(editUserSuccess(response.data.message));
+        })
+        .catch(err => {
+          console.log(err.response);
+          dispatch(editUserFail(err.response.data.message));
+        })
   };
 }
 
@@ -181,8 +235,8 @@ export const deleteUser = id => {
         dispatch(deleteUserSuccess(id, message));
       })
       .catch(err => {
-        console.log(err);
-        dispatch(deleteUserFail(err));
+        console.log(err.message);
+        dispatch(deleteUserFail(err.message));
       })
   };
 };
@@ -231,9 +285,11 @@ export const getUsers = () => {
         dispatch(getUsersSuccess(response.data.data, response.message));
       })
       .catch(err => {
-        const er = JSON.parse('err');
-        console.log(er);
-        dispatch(getUsersFail(err));
+        console.log(err);
+        dispatch(getUsersFail(err.message));
       });
   };
 };
+export const closeAlert = () => ({
+	type: actionTypes.CLOSE_ALERT,
+});

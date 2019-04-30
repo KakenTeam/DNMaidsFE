@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../shared/api';
 
+const getAccessToken = () => {
+  const token = localStorage.getItem('accessToken');
+  const tokenType = localStorage.getItem('tokenType');
+  return `${tokenType} ${token}`;
+};
+
 const authStart = () => ({
   type: actionTypes.AUTH.START,
   isFetching: true,
@@ -27,6 +33,47 @@ export const logout = () => {
 	return {
 		type: actionTypes.LOGOUT.SUCCESS,
 		isAuthenticated: false,
+	};
+};
+
+const getAdminStart = () => ({
+	type: actionTypes.GET_ADMIN.START,
+	isFetching: true,
+});
+
+const getAdminSuccess = data => ({
+	type: actionTypes.GET_ADMIN.SUCCESS,
+	isFetching: false,
+	adminInfo: data,
+});
+
+const getAdminFail = err => ({
+	type: actionTypes.GET_ADMIN.FAIL,
+	isFetching: false,
+	error: err,
+});
+
+export const getAdmin = () => {
+	return dispatch => {
+		dispatch(getAdminStart());
+		const path = 'auth/user';
+		axios.get(path, {
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Authorization': getAccessToken(),
+			},
+		})
+			.then(response => {
+				console.log(response);
+				localStorage.setItem('avatar', response.data.info.image);
+				dispatch(getAdminSuccess(response.data.info));
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch(getAdminFail(err));
+			});
 	};
 };
 

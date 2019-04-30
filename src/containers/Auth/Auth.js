@@ -85,7 +85,6 @@ class Auth extends Component {
 
 const mapDispatchToProps = dispatch => ({
   onAuth: data => dispatch(actions.auth(data)),
-  getUsers: () => dispatch(actions.getUsers()),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(Auth));

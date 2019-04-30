@@ -65,17 +65,11 @@ const styles = theme => ({
 		position: 'absolute',
 		right: 20
 	},
-	tableWrapper: {
-		// width: '90%',
-	},
-	tableWrapperEdit: {
-		width: '55%',
-	},
-  addButton: {
-    position: 'absolute',
-    top: '75px',
-    marginLeft: '-8px',
-  }
+	bigAvatar: {
+    margin: 10,
+    width: 40,
+    height: 40,
+  },
 });
 
 export default styles;

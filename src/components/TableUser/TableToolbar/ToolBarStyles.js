@@ -23,6 +23,9 @@ const toolbarStyles = theme => ({
   title: {
     flex: '0 0 auto',
   },
+  wrapperAction: {
+    width: '140px',
+  }
 });
 
 export default toolbarStyles;

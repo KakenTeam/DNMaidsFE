@@ -4,12 +4,12 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
   loading: false,
   isAuthenticated: false,
-  isSignup: false,
+  adminInfo: {},
   token: null,
   error: null,
   message: null,
   authRedirectPath: '/',
-  responseMessage: null
+  notifications: null,
 };
 
 const closeAlertAuth = (state, action) => {
@@ -18,7 +18,7 @@ const closeAlertAuth = (state, action) => {
   });
 };
 
-const authRequest = (state, action) => updateObject(state, {
+const authStart = (state, action) => updateObject(state, {
   loading: true,
 });
 
@@ -27,16 +27,15 @@ const authSuccess = (state, action) => {
     token: action.accessToken,
     loading: false,
     isAuthenticated: true,
-    isSignup: true,
-    message: action.message,
+    notifications: action.message,
   });
 }
 
-const authFailed = (state, action) => {
+const authFail = (state, action) => {
   return updateObject(state, {
     loading: false,
     isSignup: false,
-    message: action.error
+    notifications: action.error
   });
 };
 
@@ -45,12 +44,31 @@ const authLogout = (state, action) => updateObject(state, {
   token: null
 });
 
+const getAdminStart = (state, action) => ({
+  loading: action.isFetching,
+});
+
+const getAdminSuccess = (state, action) => {
+  return updateObject(state, {
+    loading: action.isFetching,
+    adminInfo: action.adminInfo,
+  });
+};
+
+const getAdminFail = (state, action) => ({
+  loading: action.isFetching,
+  notifications: action.error,
+});
+
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CLOSE_ALERT_AUTH: return closeAlertAuth(state, action);
-    case actionTypes.AUTH.START: return authRequest(state, action);
+    case actionTypes.AUTH.START: return authStart(state, action);
     case actionTypes.AUTH.SUCCESS: return authSuccess(state, action);
-    case actionTypes.AUTH.FAIL: return authFailed(state, action);
+    case actionTypes.AUTH.FAIL: return authFail(state, action);
+    case actionTypes.GET_ADMIN.START: return getAdminStart(state, action);
+    case actionTypes.GET_ADMIN.SUCCESS: return getAdminSuccess(state, action);
+    case actionTypes.GET_ADMIN.FAIL: return getAdminFail(state, action);
     case actionTypes.LOGOUT.SUCCESS: return authLogout(state, action);
     default: return state;
   }

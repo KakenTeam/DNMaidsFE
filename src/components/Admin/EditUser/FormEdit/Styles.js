@@ -19,10 +19,12 @@ const styles = theme => ({
     top: 100,
   }, 
   editForm: {
-    width: '40%',
+    position: 'relative',
+    left: '-29px',
+    top: '17px',
     float: 'right',
-    marginTop: '54px',
-    marginRight: '10px',
+    width: '36%',
+    // marginRight: '128px',
   },
   buttonWrapper: {
     width: '100%',
