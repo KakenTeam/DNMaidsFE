@@ -8,6 +8,7 @@ const initialState = {
   toggleCreate: false,
   toggleEdit: false,
   groups: [],
+  skills: [],
   message: [],
   notifications: [],
   errors: [],
@@ -235,6 +236,10 @@ const getGroupsFail = (state, action) => updateObject(state, {
   message: action.error,
 });
 
+const getSkillSuccess = (state, action) => updateObject(state, {
+  skills: [...action.skills],
+});
+
 const admin = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CLOSE_ALERT: return closeAlert(state, action);
@@ -260,6 +265,7 @@ const admin = (state = initialState, action) => {
     case actionTypes.GET_GROUPS.START: return getGroupsStart(state, action);
     case actionTypes.GET_GROUPS.SUCCESS: return getGroupsSuccess(state, action);
     case actionTypes.GET_GROUPS.FAIL: return getGroupsFail(state, action);
+    case actionTypes.GET_SKILLS.SUCCESS: return getSkillSuccess(state, action);
     default: return state;
   }
 };

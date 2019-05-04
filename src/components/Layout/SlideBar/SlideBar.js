@@ -15,7 +15,6 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
@@ -88,7 +87,7 @@ class SlideBar extends Component {
 								<MenuIcon />
 							</IconButton>
 							<Typography variant="h6" color="inherit" className={classes.grow}>
-								DNMails
+								DNMaids
 							</Typography>
 							<IconButton
 								className={classes.accountButton}
@@ -97,7 +96,6 @@ class SlideBar extends Component {
 								onClick={this.handleMenu}
 								color="inherit"
 							>
-								{/* <AccountCircle /> */}
 								<Avatar alt="Remy Sharp" src={localStorage.getItem('avatar')} className={classes.bigAvatar} />
 							</IconButton>
 							<Menu

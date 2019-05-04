@@ -149,6 +149,32 @@ const editUserFail = (err) => ({
   error: err,
 });
 
+const getSkillsSuccess = (data) => ({
+  type: actionTypes.GET_SKILLS.SUCCESS,
+  skills: data,
+});
+
+export const getSkills = () => {
+  return dispatch => {
+    const path = '/skills';
+    axios.get(path, {
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': getAccessToken(),
+      }
+    })
+      .then(response => {
+        console.log(response);
+        dispatch(getSkillsSuccess(response.data.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+};
+
 export const getGroups = () => {
   return async dispatch => {
     await dispatch(getGroupStart());
@@ -255,9 +281,7 @@ export const createUser = data => {
       },
     })
       .then(response => {
-        console.log(response);
         const message = response.data.message;
-        console.log("message sucess--", message);
         const info = response.data.info;
         dispatch(createUserSuccess(message, info));
       })
@@ -290,6 +314,7 @@ export const getUsers = () => {
       });
   };
 };
+
 export const closeAlert = () => ({
 	type: actionTypes.CLOSE_ALERT,
 });

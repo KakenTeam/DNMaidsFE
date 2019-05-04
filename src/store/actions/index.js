@@ -2,6 +2,9 @@ export {
   auth,
   logout,
   getAdmin,
+  updateProfileAdmin,
+  updatePasswordAdmin,
+  closeAuthAlert,
 } from './auth';
 
 export {
@@ -16,4 +19,5 @@ export {
   editUser,
   getGroups,
   closeAlert,
+  getSkills,
 } from './admin';

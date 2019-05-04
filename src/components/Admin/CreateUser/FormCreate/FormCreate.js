@@ -7,8 +7,11 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-
 
 import styles from './styles';
 
@@ -27,8 +30,9 @@ class FormCreate extends React.Component {
 
   render() {
 
-    const { classes, toggleCreate, user, genderDefault, groupsDefault, disableAddButton } = this.props;
-
+    const { classes, toggleCreate, user, genderDefault, roleDefault, groupsDefault, disableAddButton, changeHandler } = this.props;
+    console.log('role ', roleDefault);
+    console.log('user----data', user);
     return (
       <Paper className={toggleCreate ? classes.createForm : ''}>
         <ValidatorForm
@@ -40,7 +44,7 @@ class FormCreate extends React.Component {
             label="Email"
             name="email"
             className={classes.textField}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             value={user.email}
             validators={['required', 'isEmail']}
             errorMessages={['this field is required', 'email is not valid']}
@@ -51,7 +55,7 @@ class FormCreate extends React.Component {
             label="Name"
             name="name"
             className={classes.textField}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             value={user.name}
             validators={['required']}
             errorMessages={['this field is required']}
@@ -65,7 +69,7 @@ class FormCreate extends React.Component {
             label="Password"
             className={classes.textField}
             margin="normal"
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             name="password"
             type="password"
             value={user.password}
@@ -78,7 +82,7 @@ class FormCreate extends React.Component {
             label="Confirm password"
             margin="normal"
             className={classes.textField}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             value={user.confirmPassword}
             name="password_confirmation"
             type="password"
@@ -91,7 +95,7 @@ class FormCreate extends React.Component {
             label="Birthday"
             name="birthday"
             value={user.birthday}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             className={classes.textField}
             type="date"
             margin="normal"
@@ -102,7 +106,7 @@ class FormCreate extends React.Component {
               label="Phone"
               name="phone"
               value={user.phone}
-              onChange={this.props.changeHandler}
+              onChange={changeHandler}
               className={classes.textField}
               type="number"
               margin="normal"
@@ -114,7 +118,7 @@ class FormCreate extends React.Component {
             label="Address"
             name="address"
             value={user.address}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             className={classNames(classes.textField)}
             type="text"
             margin="normal"
@@ -128,7 +132,7 @@ class FormCreate extends React.Component {
             className={classes.textField}
             defaultValue=''
             value={user.gender}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -148,6 +152,27 @@ class FormCreate extends React.Component {
           </TextValidator>
 
           <TextValidator
+            select
+            required
+            name="role"
+            label="Role"
+            className={classes.textField}
+            value={user.role}
+            onChange={changeHandler}
+            margin="normal"
+            >
+            { 
+              roleDefault ? 
+                roleDefault.map((option, index) => (
+                  <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
+                  )) 
+              : null 
+            }
+          </TextValidator>
+
+          <TextValidator
             required
             select
             label="Group"
@@ -155,7 +180,7 @@ class FormCreate extends React.Component {
             className={classes.textField}
             defaultValue=''
             value={user.group}
-            onChange={this.props.changeHandler}
+            onChange={changeHandler}
             SelectProps={{
               native: false,
               MenuProps: {
@@ -170,6 +195,30 @@ class FormCreate extends React.Component {
               </option>
             )) : null }
           </TextValidator>
+
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="select-multiple-chip">Chip</InputLabel>
+            <Select
+              multiple
+              // value={this.state.name}
+              // onChange={this.handleChange}
+              input={<Input id="select-multiple-chip" />}
+              // renderValue={selected => (
+              //   <div className={classes.chips}>
+              //     {selected.map(value => (
+              //       <Chip key={value} label={value} className={classes.chip} />
+              //     ))}
+              //   </div>
+              // )}
+              // MenuProps={MenuProps}
+            >
+              {/* {names.map(name => (
+                <MenuItem key={name} value={name} style={getStyles(name, this)}>
+                  {name}
+                </MenuItem>
+              ))} */}
+            </Select>
+          </FormControl>
             
           <Divider />
 

@@ -53,6 +53,92 @@ const getAdminFail = err => ({
 	error: err,
 });
 
+const updateProfileStart = () => ({
+	type: actionTypes.UPDATE_PROFILE_ADMIN.START,
+	isFetching: true,
+});
+
+const updateProfileSuccess = (mess, data) => ({
+	type: actionTypes.UPDATE_PROFILE_ADMIN.SUCCESS,
+	isFetching: false,
+	message: mess,
+	newProfile: data,
+	variant: 'success',
+});
+
+const updateProfileFail = (err) => ({
+	type: actionTypes.UPDATE_PROFILE_ADMIN.FAIL,
+	isFetching: false,
+	error: err,
+	variant: 'error',
+});
+
+const updatePasswordStart = () => ({
+	type: actionTypes.UPDATE_PASSWORD_ADMIN.START,
+	isFetching: true,
+});
+
+const updatePasswordSuccess = (mess) => ({
+	type: actionTypes.UPDATE_PASSWORD_ADMIN.SUCCESS,
+	isFetching: false,
+	message: mess,
+	variant: 'success',
+});
+
+const updatePasswordFail = err => ({
+	type: actionTypes.UPDATE_PASSWORD_ADMIN.FAIL,
+	isFetching: false,
+	error: err,
+	variant: 'error',
+});
+
+export const updatePasswordAdmin = (data) => {
+	return dispatch => {
+		dispatch(updatePasswordStart());
+		const path = 'auth/password';
+		axios.put(path, data, {
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Authorization': getAccessToken(),
+			},
+		})
+			.then(response => {
+				console.log(response);
+				dispatch(updatePasswordSuccess(response.data.message));
+			})
+			.catch(err => {
+				console.log(err.response);
+				dispatch(updatePasswordFail(err.response.data.message));
+			});
+	};
+};
+
+export const updateProfileAdmin = (data) => {
+	console.log('data update --', data);
+	return dispatch => {
+		dispatch(updateProfileStart());
+		const path = 'auth/profile';
+		axios.patch(path, data, {
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest',
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+				'Authorization': getAccessToken(),
+			},
+		})
+			.then(response => {
+				console.log('response update', response.data.message);
+				dispatch(updateProfileSuccess(response.data.message, data));
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch(updateProfileFail(err));
+			});
+	};
+};
+
 export const getAdmin = () => {
 	return dispatch => {
 		dispatch(getAdminStart());
@@ -66,7 +152,6 @@ export const getAdmin = () => {
 			},
 		})
 			.then(response => {
-				console.log(response);
 				localStorage.setItem('avatar', response.data.info.image);
 				dispatch(getAdminSuccess(response.data.info));
 			})
@@ -108,3 +193,7 @@ export const auth = data => {
 			});
   };
 };
+
+export const closeAuthAlert = () => ({
+	type: actionTypes.CLOSE_ALERT_AUTH,
+});

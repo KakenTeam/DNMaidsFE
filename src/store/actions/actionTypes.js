@@ -10,6 +10,10 @@ export const CLOSE_ALERT_AUTH = 'CLOSE_ALERT_AUTH';
 export const LOGOUT = statusTypes('LOGOUT');
 export const GET_ADMIN = statusTypes('GET_ADMIN');
 
+// update profile, password admin
+export const UPDATE_PROFILE_ADMIN = statusTypes('UPDATE_PROFILE_ADMIN');
+export const UPDATE_PASSWORD_ADMIN = statusTypes('UPDATE_PASSWORD_ADMIN');
+
 export const CLOSE_ALERT = 'CLOSE_ALERT';
 
 // admin CRUD
@@ -21,6 +25,9 @@ export const DELETE_USERS = statusTypes('DELETE_USERS');
 export const SHOW_USER = statusTypes('SHOW_USER');
 export const EDIT_USER = statusTypes('EDIT_USER');
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
+
+// get skills
+export const GET_SKILLS = statusTypes('GET_SKILLS');
 
 // selected user 
 export const ADD_SELECTED = 'ADD_SELECTED';

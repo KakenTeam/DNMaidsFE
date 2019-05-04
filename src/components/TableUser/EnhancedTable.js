@@ -55,6 +55,7 @@ class EnhancedTable extends React.Component {
   async componentDidMount() {
     await this.props.getUsers();
     await this.props.getAdmin();
+    await this.props.getSkills();
     await this.props.getGroups();
     setTimeout(() => {
       this.props.onCloseAlert();
@@ -205,6 +206,7 @@ const mapDispatchToProps = dispatch => ({
   getUsers: () => dispatch(actions.getUsers()),
   getAdmin: () => dispatch(actions.getAdmin()),
   getGroups: () => dispatch(actions.getGroups()),
+  getSkills: () => dispatch(actions.getSkills()),
   onAddSelected: () => dispatch(actions.addSelected()),
   onRemmoveSelected: () => dispatch(actions.removeSelected()),
   onCloseAlert: () => dispatch(actions.closeAlert()),

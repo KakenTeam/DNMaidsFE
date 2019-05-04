@@ -42,7 +42,10 @@ const styles = theme => ({
   },
   submitBtn: {
     marginLeft: '5px',
-  }
+  },
+  uploadFile: {
+
+  },
 });
 
 export default styles;

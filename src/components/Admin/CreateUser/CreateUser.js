@@ -26,16 +26,28 @@ class CreateUser extends React.Component {
       phone: null,
       address: null,
       gender: '',
+      role: '',
+      skill: '',
       group: '',
     },
     genderDefault: [
       {
         label: 'men',
-        value: '0',
+        value: '1',
       },
       {
         label: 'women',
-        value: '1',
+        value: '0',
+      },
+    ],
+    roleDefault: [
+      {
+        label: 'admin',
+        value: 0,
+      },
+      {
+        label: 'helper',
+        value: 1,
       },
     ],
     groupsDefault: [
@@ -88,17 +100,6 @@ class CreateUser extends React.Component {
     }, 3000);
   };
   
-  // handleEditUser = () => {
-  //   let open = this.props.toggleEdit;
-  //   this.props.onEditUser(this.props.showUser.id, this.state.editData);
-  //   this.props.onToggleEdit(!open);
-  //   this.props.getUsers();
-  //   this.props.onRemmoveSelected();
-  //   setTimeout(() => {
-  //     this.props.onCloseAlert();
-  //   }, 3000);
-  // }
-  
   checkPassword = () => {
     return this.state.user.password === this.state.user.password_confirmation;
   }
@@ -111,18 +112,22 @@ class CreateUser extends React.Component {
         count += 1;
       }
     });
-    return count === 9;
+    return count === 10;
   }
 
   render() {
-    const { nameButton, classes, groups }  = this.props;
+    const { nameButton, classes, groups, skills }  = this.props;
     
-    const groupsSelect = groups.map(option => {
+    const groupsSelect = groups ? groups.map(option => {
       return {
         id: option.id,
         groupName: option.group_name,
       }
-    });
+    }) : null;
+
+    const skillsSelect = skills ? skills.map(option => {
+      return option;
+    }) : null;
 
     return (
       <div className={cssStyles.AddButton}>
@@ -138,6 +143,8 @@ class CreateUser extends React.Component {
               changeHandler={this.changeUserHandleCreate}
               user={this.state.user}
               groupsDefault={groupsSelect}
+              skillsDefault={skillsSelect}
+              roleDefault={this.state.roleDefault}
               toggle={this.handleClickToggle}
               handleCreateUser={this.handleCreateUser}
               disableAddButton={this.countValidFields() && this.checkPassword() ? true : false}
@@ -166,6 +173,7 @@ class CreateUser extends React.Component {
 
 const mapStateToProps = state => ({
   groups: state.admin.groups,
+  skills: state.admin.skills,
   toggleEdit: state.admin.toggleEdit,
   showUser: state.admin.user,
   notifications: state.admin.notifications,
