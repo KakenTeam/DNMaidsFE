@@ -13,6 +13,7 @@ const initialState = {
   notifications: [],
   errors: [],
   isDelete: false,
+  isEdit: false,
   isShow: false,
   numSelected: 0,
 };
@@ -135,6 +136,7 @@ const deleteUserFail = (state, action) => {
 
 const editUserStart = (state, action) => updateObject(state, {
   loading: action.isFetching,
+  isEdit: false,
 });
 
 const editUserSuccess = (state, action) => {
@@ -146,9 +148,21 @@ const editUserSuccess = (state, action) => {
     },
   ];
 
+  const newUsers = state.users.map(user => {
+    if (user.id === action.id) {
+      return {
+        ...user,
+        ...action.data,
+      };
+    }
+    return user;
+  });
+
   return updateObject(state, {
     loading: action.isFetching,
     notifications: newNotification,
+    isEdit: true,
+    users: newUsers,
   });
 };
 
@@ -164,6 +178,7 @@ const editUserFail = (state, action) => {
   return updateObject(state, {
     loading: action.isFetching,
     notifications: newNotification,
+    isEdit: false,
   });
 };
 

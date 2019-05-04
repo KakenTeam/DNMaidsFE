@@ -6,6 +6,11 @@ import classNames from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import * as actions from '../../../../store/actions/index';
@@ -23,6 +28,7 @@ class FormEdit extends React.Component {
       address: this.props.user.address,
       gender: this.props.user.gender,
       group: null,
+      skill: this.props.valueSkills,
     },
     isEdit: false,
   }
@@ -38,7 +44,6 @@ class FormEdit extends React.Component {
       }
       return true;
     });
-
   }
   
   changeEditHandle = event => {
@@ -55,7 +60,9 @@ class FormEdit extends React.Component {
   handleEditUser = () => {
     let open = this.props.toggleEdit;
     this.props.onEditUser(this.props.user.id, this.state.editData);
-    this.props.onToggleEdit(!open);
+    if (this.props.isEdit) {
+      this.props.onToggleEdit(!open);
+    }
     this.props.getUsers();
     this.props.onRemmoveSelected();
     setTimeout(() => {
@@ -65,8 +72,11 @@ class FormEdit extends React.Component {
 
   render() {
 
-    const { classes, toggleEdit, user, genderDefault, groupsDefault, changeHandler, editToggle} = this.props;
+    const { classes, toggleEdit, genderDefault, groupsDefault, skillsDefault, editToggle} = this.props;
     const { editData } = this.state;
+
+    console.log('user slikkfds', this.props.editData);
+
     return (
       <Paper className={toggleEdit ? classes.editForm : ''}>
         <ValidatorForm
@@ -185,6 +195,40 @@ class FormEdit extends React.Component {
             )) : null }
           </TextValidator>
 
+          {
+            editData.skill ?
+              <FormControl className={classes.formControl} 
+                // disabled={user.role === 0 || !user.role}
+                >
+                <InputLabel htmlFor="select-multiple-chip">Skills</InputLabel>
+                <Select
+                  // select
+                  label="Skills"
+                  multiple
+                  name="skill"
+                  value={editData.skill ? editData.skill : null}
+                  onChange={this.changeEditHandle}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip key={value} label={value} className={classes.chip} />
+                      ))}
+                    </div>
+                  )}
+                  // MenuProps={MenuProps}
+                >
+                  { skillsDefault ? skillsDefault.map(skill => (
+                    <MenuItem key={skill.id} value={skill.id}>
+                      {/* {skill.name} */}
+                      <Chip key={skill.id} label={skill.name} className={classes.chip} />
+                    </MenuItem>
+                  )) : null }
+                </Select>
+              </FormControl>
+            : null
+          }
+
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
               <Button onClick={editToggle} color="primary">
@@ -208,6 +252,7 @@ const mapStateToProps = state => ({
   toggleCreate: state.admin.toggleCreate,
   openEdit: state.admin.openEdit,
   toggleEdit: state.admin.toggleEdit,
+  isEdit: state.admin.isEdit,
   // showUser: state.admin.user,
 });
 

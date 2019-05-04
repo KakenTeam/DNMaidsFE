@@ -3,6 +3,10 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  formControl: {
+    width: 200,
+    marginLeft: 8,
+  },
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
@@ -37,7 +41,14 @@ const styles = theme => ({
   },
   submitBtn: {
     marginLeft: '5px',
-  }
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: theme.spacing.unit / 4,
+  },
 });
 
 export default styles;

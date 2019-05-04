@@ -135,11 +135,13 @@ const editUserStart = () => ({
   isFetching: true,
 });
 
-const editUserSuccess = (mess) => ({
+const editUserSuccess = (mess, id, data) => ({
   type: actionTypes.EDIT_USER.SUCCESS,
   isFetching: false,
   variant: 'success',
   message: mess,
+  id: id,
+  data: data,
 });
 
 const editUserFail = (err) => ({
@@ -234,7 +236,7 @@ export const showUser = (id) => {
       })
         .then(response => {
           console.log('edit sussess',response);
-          dispatch(editUserSuccess(response.data.message));
+          dispatch(editUserSuccess(response.data.message, id, data));
         })
         .catch(err => {
           console.log(err.response);

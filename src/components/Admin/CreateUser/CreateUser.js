@@ -27,8 +27,11 @@ class CreateUser extends React.Component {
       address: null,
       gender: '',
       role: '',
-      skill: '',
+      skill: [],
       group: '',
+    },
+    skills: {
+      skill: [],
     },
     genderDefault: [
       {
@@ -70,11 +73,19 @@ class CreateUser extends React.Component {
   }
 
   changeUserHandleCreate = event => {
+    console.log(event.target);
     this.setState({
       user: {
         ...this.state.user,
         [event.target.name]: event.target.value,
-      }
+      },
+      skill: {
+        ...this.state.skills,
+        [event.target.name]: event.target,
+      },
+    }, () => {
+      console.log(this.state.user);
+      console.log(this.state.skills);
     });
   }
 
@@ -129,6 +140,16 @@ class CreateUser extends React.Component {
       return option;
     }) : null;
 
+    console.log('usre cerafdaskjlj', this.props.showUser.skill);
+
+    const valueSkills = this.props.showUser.skill ? this.props.showUser.skill.map(skill => {
+      // let values = [];
+      // values = values.push(skill.id);
+      return skill.id;
+    }) : null;
+
+    console.log('values skills', valueSkills);
+
     return (
       <div className={cssStyles.AddButton}>
         <Button variant="contained" color="primary" onClick={this.handleClickToggle}>
@@ -141,6 +162,7 @@ class CreateUser extends React.Component {
               gender={this.state.user.gender}
               genderDefault={this.state.genderDefault}
               changeHandler={this.changeUserHandleCreate}
+              changeMuiltipleSkills={this.changeMultipleHandle}
               user={this.state.user}
               groupsDefault={groupsSelect}
               skillsDefault={skillsSelect}
@@ -157,8 +179,10 @@ class CreateUser extends React.Component {
               <FormEdit
                 groupsDefault={groupsSelect}
                 genderDefault={this.state.genderDefault}
+                skillsDefault={skillsSelect}
                 // group={this.state.editData.group}
                 user={this.props.showUser}
+                valueSkills={valueSkills}
                 changeHandler={this.changeEditHandle}
                 handleEdit={this.handleEditUser}
                 editToggle={this.handleEditToggle}

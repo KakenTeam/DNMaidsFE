@@ -8,6 +8,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit,
     width: 200,
   },
+  formControl: {
+    width: 200,
+    marginLeft: 8,
+  },
   dense: {
     marginTop: 19,
   },
@@ -38,7 +42,14 @@ const styles = theme => ({
   },
   submitBtn: {
     marginLeft: '5px',
-  }
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: theme.spacing.unit / 4,
+  },
 });
 
 export default styles;

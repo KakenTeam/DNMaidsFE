@@ -20,7 +20,7 @@ class EditUser extends Component {
 
   toggleEdit = () => {
     let open = this.props.toggleEdit;
-    this.props.onShowUser(this.props.id);
+    // this.props.onShowUser(this.props.id);
     this.props.onToggleEdit(!open);
     setTimeout(() => {
       this.props.onCloseAlert();
