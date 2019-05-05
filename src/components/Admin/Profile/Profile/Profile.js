@@ -28,8 +28,7 @@ class Profile extends Component {
         { adminInfo ?
             <Paper>
               <Grid >
-              {/* <img className={classes.avt} src={adminInfo.image} alt="adminAvatar" /> */}
-                <Avatar alt="Remy Sharp" src={adminInfo.image} className={classes.bigAvatar} />
+                <Avatar alt="Avatar" src={adminInfo.image} className={classes.bigAvatar} />
                 <div>
                   <Table>
                     <TableBody>
@@ -38,27 +37,27 @@ class Profile extends Component {
                         <TableCell align="right">{adminInfo.email}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell >Name</TableCell>
+                        <TableCell>Tên</TableCell>
                         <TableCell align="right">{adminInfo.name}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Phone</TableCell>
+                        <TableCell>Số điện thoại</TableCell>
                         <TableCell align="right">{adminInfo.phone}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Address</TableCell>
+                        <TableCell>Địa chỉ</TableCell>
                         <TableCell align="right">{adminInfo.address}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell >gender</TableCell>
+                        <TableCell >Giới tính</TableCell>
                         <TableCell align="right">{adminInfo.gender}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Birthday</TableCell>
+                        <TableCell>Ngày sinh</TableCell>
                         <TableCell align="right">{adminInfo.birthday}</TableCell>
                       </TableRow>
                       <TableRow>
-                        <TableCell>Permission</TableCell>
+                        <TableCell>Quyền</TableCell>
                         <TableCell align="right">
                           { adminInfo.permission ? adminInfo.permission.map((per, index) => (
                             <p key={index}>

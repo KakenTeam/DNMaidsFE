@@ -52,7 +52,7 @@ class AlertDelete extends React.Component {
     const { id, classes } = this.props;
     return (
       <div className={classes.deleteButton}>
-        <Tooltip title="Delete" placement="left">
+        <Tooltip title="Xóa" placement="left">
           <IconButton aria-label="Delete" color="secondary" onClick={this.handleClickOpen}>
             <DeleteIcon />
           </IconButton>
@@ -66,15 +66,15 @@ class AlertDelete extends React.Component {
           <DialogTitle id="alert-dialog-title">{"Delete User"}</DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Are you sure?
+              Bạn có chắc muốn xóa người dùng này?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              Hủy
             </Button>
             <Button onClick={() => this.deleteHandle(id)} color="primary" autoFocus>
-              Agree
+              Xóa
             </Button>
           </DialogActions>
         </Dialog>

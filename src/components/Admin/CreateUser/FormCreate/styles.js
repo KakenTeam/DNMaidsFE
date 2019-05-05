@@ -10,7 +10,7 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 235,
   },
   dense: {
     marginTop: 19,
@@ -25,8 +25,8 @@ const styles = theme => ({
   createForm: {
     position: 'relative',
     top: '18px',
-    left: '60%',
-    width: '36%',
+    left: '56%',
+    width: '40%',
     marginRight: '10px',
   },
   buttonWrapper: {

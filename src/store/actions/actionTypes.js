@@ -26,6 +26,11 @@ export const SHOW_USER = statusTypes('SHOW_USER');
 export const EDIT_USER = statusTypes('EDIT_USER');
 export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 
+// CRUD admin contracts
+export const GET_CONTRACTS = statusTypes('GET_CONTRACTS');
+export const SHOW_CONTRACT = statusTypes('SHOW_CONTRACT');
+export const UPDATE_CONTRACT_STATUS = statusTypes('UPDATE_CONTRACT_STATUS');
+
 // get skills
 export const GET_SKILLS = statusTypes('GET_SKILLS');
 

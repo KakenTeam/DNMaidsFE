@@ -13,6 +13,8 @@ import * as actions from '../../../store/actions/index';
 import Users from '../User/Users';
 import SlideBar from '../SlideBar/SlideBar';
 import ProfileContainer from '../../Admin/Profile/ProfileContainer';
+import TableContracts from '../../Contracts/TableContracts/TableContracts';
+import DetailContract from '../../Contracts/DetailContract/DetailContract';
 
 class Aside extends React.Component {
 	state = {
@@ -46,6 +48,8 @@ class Aside extends React.Component {
 						<Switch>
 							<Route path={`${this.props.match.path}/users`} component={(Users)} />
 							<Route path={`${this.props.match.path}/profile`} component={(ProfileContainer)} />
+							<Route path={`${this.props.match.path}/contracts/:id`} component={DetailContract} />
+							<Route path={`${this.props.match.path}/contracts`} component={TableContracts} />
 						</Switch>
 					</main>
 				</div>

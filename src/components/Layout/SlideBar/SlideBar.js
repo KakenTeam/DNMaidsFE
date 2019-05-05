@@ -22,6 +22,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import GroupAdd from '@material-ui/icons/GroupAdd';
 import AccountBox from '@material-ui/icons/AccountBox';
+import Assignment from '@material-ui/icons/Assignment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
@@ -114,10 +115,10 @@ class SlideBar extends Component {
 							>
 								<MenuItem onClick={this.handleGetProfile}>
 									<Link to="/admin/profile">
-										My account
+										Hồ sơ
 									</Link>
 								</MenuItem>
-								<MenuItem onClick={this.handleLogout}>Log out</MenuItem>
+								<MenuItem onClick={this.handleLogout}>Đăng xuất</MenuItem>
 							</Menu>
 						</Toolbar>
 					</AppBar>
@@ -145,13 +146,19 @@ class SlideBar extends Component {
 							<Link to="/admin/users">
 								<ListItem button>
 									<ListItemIcon><GroupAdd /></ListItemIcon>
-									<ListItemText primary="Permission Group" />
+									<ListItemText primary="Quản lí nhóm" />
 								</ListItem>
 							</Link>
 							<Link to="/admin/users">
 								<ListItem button>
 									<ListItemIcon><AccountBox /></ListItemIcon>
-									<ListItemText primary="User" />
+									<ListItemText primary="Quản lí người dùng" />
+								</ListItem>
+							</Link>
+							<Link to="/admin/contracts">
+								<ListItem button>
+									<ListItemIcon><Assignment /></ListItemIcon>
+									<ListItemText primary="Quản lí hợp đồng" />
 								</ListItem>
 							</Link>
 						</List>

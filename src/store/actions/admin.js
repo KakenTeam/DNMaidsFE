@@ -189,7 +189,8 @@ export const getGroups = () => {
       }
     })
       .then(response => {
-        dispatch(getGroupSuccess(response.data));
+        console.log('get group', response.data.data);
+        dispatch(getGroupSuccess(response.data.data));
       })
       .catch(err => {
         console.log(err.response);
@@ -235,7 +236,6 @@ export const showUser = (id) => {
         },
       })
         .then(response => {
-          console.log('edit sussess',response);
           dispatch(editUserSuccess(response.data.message, id, data));
         })
         .catch(err => {

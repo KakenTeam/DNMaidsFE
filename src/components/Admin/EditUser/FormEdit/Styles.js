@@ -6,10 +6,11 @@ const styles = theme => ({
   textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
-    width: 200,
+    width: 235,
   },
   formControl: {
-    width: 200,
+    // width: 200,
+    width: '93%',
     marginLeft: 8,
   },
   dense: {
@@ -27,7 +28,7 @@ const styles = theme => ({
     left: '-29px',
     top: '17px',
     float: 'right',
-    width: '36%',
+    width: '40%',
     // marginRight: '128px',
   },
   buttonWrapper: {

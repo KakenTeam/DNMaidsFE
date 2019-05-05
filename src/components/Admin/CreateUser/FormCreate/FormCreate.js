@@ -74,7 +74,7 @@ class FormCreate extends React.Component {
           />
           <TextValidator
             required
-            label="Name"
+            label="Tên"
             name="name"
             className={classes.textField}
             onChange={changeHandler}
@@ -88,7 +88,7 @@ class FormCreate extends React.Component {
 
           <TextValidator
             required
-            label="Password"
+            label="Mật khẩu"
             className={classes.textField}
             margin="normal"
             onChange={changeHandler}
@@ -101,7 +101,7 @@ class FormCreate extends React.Component {
 
           <TextValidator
             required
-            label="Confirm password"
+            label="Xác nhận mật khẩu"
             margin="normal"
             className={classes.textField}
             onChange={changeHandler}
@@ -114,7 +114,7 @@ class FormCreate extends React.Component {
 
           <TextValidator
             required
-            label="Birthday"
+            label="Ngày sinh"
             name="birthday"
             value={user.birthday}
             onChange={changeHandler}
@@ -125,7 +125,7 @@ class FormCreate extends React.Component {
           <div>
             <TextValidator
               required
-              label="Phone"
+              label="Số điện thoại"
               name="phone"
               value={user.phone}
               onChange={changeHandler}
@@ -137,7 +137,7 @@ class FormCreate extends React.Component {
 
           <TextValidator
             required
-            label="Address"
+            label="Địa chỉ"
             name="address"
             value={user.address}
             onChange={changeHandler}
@@ -149,8 +149,8 @@ class FormCreate extends React.Component {
           <TextValidator
             select
             required
+            label="Giới tính"
             name="gender"
-            label="Gender"
             className={classes.textField}
             defaultValue=''
             value={user.gender}
@@ -176,8 +176,8 @@ class FormCreate extends React.Component {
           <TextValidator
             select
             required
+            label="Vai trò"
             name="role"
-            label="Role"
             className={classes.textField}
             value={user.role}
             onChange={changeHandler}
@@ -197,11 +197,10 @@ class FormCreate extends React.Component {
           <TextValidator
             required
             select
-            disabled={user.role === 1 || !user.role}
-            label="Group"
+            disabled={user.role === 1}
+            label="Nhóm"
             name="group"
             className={classes.textField}
-            defaultValue=''
             value={user.group}
             onChange={changeHandler}
             SelectProps={{
@@ -219,11 +218,11 @@ class FormCreate extends React.Component {
             )) : null }
           </TextValidator>
 
-          <FormControl className={classes.formControl} disabled={user.role === 0 || !user.role}>
-            <InputLabel htmlFor="select-multiple-chip">Skills</InputLabel>
+          <FormControl className={classes.formControl} disabled={user.role === 0}>
+            <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
             <Select
               // select
-              label="Skills"
+              label="Kỹ năng"
               multiple
               name="skill"
               value={user.skill}
@@ -252,13 +251,13 @@ class FormCreate extends React.Component {
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
               <Button onClick={this.props.toggle} color="primary">
-                Cancel
+                Hủy
               </Button>
               <Button
                 onClick={this.props.handleCreateUser}
                 disabled={!disableAddButton}
                 className={classes.submitBtn} variant="contained" type="submit" color="primary">
-                Add
+                Thêm
               </Button>
             </FormControl>
           </div>

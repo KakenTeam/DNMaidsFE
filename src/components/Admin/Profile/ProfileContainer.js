@@ -14,25 +14,6 @@ class ProfileContainer extends Component {
     isToggleProfile: false,
   }
 
-  // handleToggleUpdateProfile = () => {
-  //   this.setState(prevState => ({
-  //     isToggleProfile: !prevState.isToggleProfile,
-  //   }), () => {
-  //     console.log('toggle profile', this.state.isToggleProfile);
-  //   });
-  // }
-
-  // changeHandler = event => {
-  //   this.setState({
-  //     dataProfile: {
-  //       ...this.state.dataProfile,
-  //       [event.target.name]: event.target.value,
-  //     }
-  //   }, () => {
-  //     console.log(this.state.dataProfile);
-  //   });
-  // }
-
   render() {
     const { classes, admin } = this.props;
     return (

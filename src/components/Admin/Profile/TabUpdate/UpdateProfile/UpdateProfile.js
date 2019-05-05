@@ -22,7 +22,7 @@ const updateProfile = props => {
         autoComplete="off">
         <TextValidator
           required
-          label="Name"
+          label="Tên"
           name="name"
           className={classes.textField}
           validators={['required']}
@@ -36,7 +36,7 @@ const updateProfile = props => {
 
         <TextValidator
           required
-          label="Birthday"
+          label="Ngày sinh"
           name="birthday"
           className={classes.textField}
           type="date"
@@ -47,7 +47,7 @@ const updateProfile = props => {
 
         <TextValidator
           required
-          label="Address"
+          label="Địa chỉ"
           name="address"
           className={classNames(classes.textField)}
           type="text"
@@ -58,7 +58,7 @@ const updateProfile = props => {
 
         <TextValidator
           required
-          label="Phone"
+          label="Số điện thoại"
           name="phone"
           className={classes.textField}
           type="number"
@@ -70,8 +70,8 @@ const updateProfile = props => {
         <TextValidator
           select
           required
+          label="Giới tính"
           name="gender"
-          label="Gender"
           className={classes.textField}
           SelectProps={{
             native: false,
@@ -112,16 +112,10 @@ const updateProfile = props => {
 
         <div className={classes.buttonWrapper}>
           <FormControl className={classes.buttons}>
-            {/* <Button 
-              // onClick={editToggle}
-              color="primary">
-              Cancel
-            </Button> */}
             <Button
               onClick={updateHandle}
-              // disabled={!disableAddButton}
               className={classes.submitBtn} variant="contained" type="submit" color="primary">
-              Update
+              Cập nhật
             </Button>
           </FormControl>
         </div>

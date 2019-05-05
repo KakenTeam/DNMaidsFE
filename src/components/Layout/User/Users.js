@@ -23,7 +23,7 @@ class Users extends Component {
       <div>
         <div>
           <CreateUser
-            nameButton='Add User'
+            nameButton='Thêm người dùng'
             open={this.state.open}
           />
         </div>

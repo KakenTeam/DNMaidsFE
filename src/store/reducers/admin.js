@@ -243,7 +243,7 @@ const getGroupsStart = (state, action) => updateObject(state, {
 
 const getGroupsSuccess = (state, action) => updateObject(state, {
   loading: action.isFetching,
-  groups: [...action.groups],
+  groups: action.groups,
 });
 
 const getGroupsFail = (state, action) => updateObject(state, {

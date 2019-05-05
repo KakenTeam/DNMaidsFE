@@ -103,8 +103,8 @@ class ScrollableTabsButtonPrevent extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange} variant="scrollable" scrollButtons="off">
-            <Tab label="Update profile" />
-            <Tab label="Update password" />
+            <Tab label="Cập nhật hồ sơ" />
+            <Tab label="Cập nhật mật khẩu" />
           </Tabs>
         </AppBar>
         {value === 0 && 

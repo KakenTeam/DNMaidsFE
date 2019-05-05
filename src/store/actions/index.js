@@ -21,3 +21,9 @@ export {
   closeAlert,
   getSkills,
 } from './admin';
+
+export {
+  getContracts,
+  showContract,
+  updateContractStatus,
+} from './contracts';

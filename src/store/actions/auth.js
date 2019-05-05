@@ -177,7 +177,6 @@ export const auth = data => {
 			}
 		})
 			.then(response => {
-				console.log(response);
 				token = response.data.token.access_token;
 				let tokenType = response.data.token.token_type;
 				message = response.data.message;

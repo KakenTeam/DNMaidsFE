@@ -32,7 +32,7 @@ class EditUser extends Component {
 
     return (
       <div className={classes.editButton}>
-        <Tooltip title="Edit" placement="left">
+        <Tooltip title="Sửa" placement="left">
           <IconButton aria-label="Edit" onClick={() => this.toggleEdit()}>
             <EditIcon />
           </IconButton>

@@ -20,7 +20,7 @@ const updatePassword = props => {
         autoComplete="off">
         <TextValidator
           required
-          label="Old password"
+          label="Mật khẩu cũ"
           name="old_password"
           className={classes.textField}
           validators={['required']}
@@ -34,7 +34,7 @@ const updatePassword = props => {
 
         <TextValidator
           required
-          label="New password"
+          label="Mật khẩu mới"
           name="password"
           className={classes.textField}
           type="password"
@@ -45,7 +45,7 @@ const updatePassword = props => {
 
         <TextValidator
           required
-          label="Confirm password"
+          label="Xác nhận mật khẩu mới"
           name="password_confirmation"
           className={classNames(classes.textField)}
           type="password"
@@ -60,7 +60,7 @@ const updatePassword = props => {
               onClick={handlePassword}
               // disabled={!disableAddButton}
               className={classes.submitBtn} variant="contained" type="submit" color="primary">
-              Update
+              Cập nhật
             </Button>
           </FormControl>
         </div>

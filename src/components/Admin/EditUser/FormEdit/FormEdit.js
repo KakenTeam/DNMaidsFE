@@ -75,7 +75,7 @@ class FormEdit extends React.Component {
     const { classes, toggleEdit, genderDefault, groupsDefault, skillsDefault, editToggle} = this.props;
     const { editData } = this.state;
 
-    console.log('user slikkfds', this.props.editData);
+    console.log('user slikkfds', this.props.user);
 
     return (
       <Paper className={toggleEdit ? classes.editForm : ''}>
@@ -85,7 +85,7 @@ class FormEdit extends React.Component {
           autoComplete="off">
           <TextValidator
             required
-            label="Name"
+            label="Tên"
             name="name"
             className={classes.textField}
             onChange={this.changeEditHandle}
@@ -99,7 +99,7 @@ class FormEdit extends React.Component {
 
           <TextValidator
             required
-            label="Password"
+            label="Mật khẩu"
             className={classes.textField}
             margin="normal"
             onChange={this.changeEditHandle}
@@ -112,7 +112,7 @@ class FormEdit extends React.Component {
 
           <TextValidator
             required
-            label="Birthday"
+            label="Ngày sinh"
             name="birthday"
             value={editData.birthday}
             onChange={this.changeEditHandle}
@@ -124,7 +124,7 @@ class FormEdit extends React.Component {
           <div>
             <TextValidator
               required
-              label="Phone"
+              label="Số điện thoại"
               name="phone"
               value={editData.phone}
               onChange={this.changeEditHandle}
@@ -137,7 +137,7 @@ class FormEdit extends React.Component {
 
           <TextValidator
             required
-            label="Address"
+            label="Địa chỉ"
             name="address"
             value={editData.address}
             onChange={this.changeEditHandle}
@@ -149,8 +149,8 @@ class FormEdit extends React.Component {
           <TextValidator
             select
             required
+            label="Giới tính"
             name="gender"
-            label="Gender"
             className={classes.textField}
             value={editData.gender}
             onChange={this.changeEditHandle}
@@ -175,7 +175,7 @@ class FormEdit extends React.Component {
           <TextValidator
             required
             select
-            label="Group"
+            label="Nhóm"
             name="group"
             className={classes.textField}
             value={editData.group}
@@ -200,10 +200,10 @@ class FormEdit extends React.Component {
               <FormControl className={classes.formControl} 
                 // disabled={user.role === 0 || !user.role}
                 >
-                <InputLabel htmlFor="select-multiple-chip">Skills</InputLabel>
+                <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
                 <Select
                   // select
-                  label="Skills"
+                  // label="Kỹ năng"
                   multiple
                   name="skill"
                   value={editData.skill ? editData.skill : null}
@@ -216,7 +216,6 @@ class FormEdit extends React.Component {
                       ))}
                     </div>
                   )}
-                  // MenuProps={MenuProps}
                 >
                   { skillsDefault ? skillsDefault.map(skill => (
                     <MenuItem key={skill.id} value={skill.id}>
@@ -232,13 +231,13 @@ class FormEdit extends React.Component {
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
               <Button onClick={editToggle} color="primary">
-                Cancel
+                Hủy
               </Button>
               <Button
                 onClick={this.handleEditUser}
                 // disabled={!disableAddButton}
                 className={classes.submitBtn} variant="contained" type="submit" color="primary">
-                Edit
+                Sửa
               </Button>
             </FormControl>
           </div>

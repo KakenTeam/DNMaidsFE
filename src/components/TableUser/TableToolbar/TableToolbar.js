@@ -29,11 +29,11 @@ class EnhancedTableToolbar extends React.Component {
         <div className={classes.title}>
           {numSelected > 0 ? (
             <Typography color="default" variant="subtitle1">
-              {numSelected} selected
+              {numSelected} được chọn
             </Typography>
           ) : (
             <Typography variant="h6" id="tableTitle">
-              Users
+              Người dùng
             </Typography>
           )}
         </div>

@@ -143,18 +143,14 @@ class CreateUser extends React.Component {
     console.log('usre cerafdaskjlj', this.props.showUser.skill);
 
     const valueSkills = this.props.showUser.skill ? this.props.showUser.skill.map(skill => {
-      // let values = [];
-      // values = values.push(skill.id);
       return skill.id;
     }) : null;
-
-    console.log('values skills', valueSkills);
 
     return (
       <div className={cssStyles.AddButton}>
         <Button variant="contained" color="primary" onClick={this.handleClickToggle}>
           {nameButton}
-          <AddIcon className={classes.rightIcon} />
+          {/* <AddIcon className={classes.rightIcon} /> */}
         </Button>
         {
           this.state.open ? 
