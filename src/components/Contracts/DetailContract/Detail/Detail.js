@@ -6,9 +6,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import GridList from '@material-ui/core/GridList';
-
+import { helpers } from '../../../../shared/utility';
+import ContractStatus from '../../../../shared/ContractStatus'
 import styles from './Styles';
+import Grid from '@material-ui/core/Grid';
 
 const detail = props => {
 
@@ -16,80 +17,124 @@ const detail = props => {
 
     const schedule = detailContract.schedule ? detailContract.schedule.map(info => {
       return (
-        <Typography>
-          <Typography paragraph>Ngày trong tuần:<span>{info.day_of_week}</span></Typography>
-          <Typography paragraph>Thời gian bắt đầu:<span>{info.start_time}</span></Typography>
-          <Typography paragraph>Thời gian kết thúc:<span>{info.end_time}</span></Typography>
-          <Typography paragraph>Ca làm việc:<span>{info.shift}</span></Typography>
-        </Typography>
+        <ul>
+          <li>
+            <strong>Giờ bắt đầu: </strong> {helpers.formatHour(info.start_time)}
+          </li>
+          <li>
+            <strong>Giờ kết thúc: </strong> {helpers.formatHour(info.end_time)}
+          </li>
+          <li>
+            <strong>Ngày làm việc: </strong> {helpers.renderDayOfWeek(info.day_of_week)}
+          </li>
+          <li>
+            <strong>Ca làm việc: </strong> {info.shift}
+          </li>
+        </ul>
+
       );
     }) : null;
 
     const  contract = detailContract ? (
-      <Typography>
-        <Typography paragraph>Loại dịch vụ:<span>{detailContract.service_type}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.address}</span></Typography>
-        <Typography paragraph>Ngày bắt đầu:<span>{detailContract.start_date}</span></Typography>
-        <Typography paragraph>Ngày kết thúc:<span>{detailContract.end_date}</span></Typography>
-        <Typography paragraph>Tình trạng:<span>{detailContract.status}</span></Typography>
-        <Typography paragraph>Giá:<span>{detailContract.fee}</span></Typography>   
-        <Typography paragraph>Ngày tạo:<span>{detailContract.created_at}</span></Typography>   
-        <Typography paragraph>Ngày cập nhật:<span>{detailContract.updated_at}</span></Typography>   
-      </Typography>
+      <ul>
+        <h5>Chi tiết hợp đồng</h5>
+        <li>
+          <strong>Loại dịch vụ: </strong> {helpers.renderServiceType(detailContract.service_type)}
+        </li>
+        <li>
+          <strong>Địa chỉ công việc: </strong>{detailContract.address}
+        </li>
+        <li>
+          <strong>Trạng thái</strong> <ContractStatus status={detailContract.status}></ContractStatus>
+        </li>
+        <li>
+          <strong>Giá trị hợp đồng: </strong> { helpers.formatMoney(detailContract.fee)}
+        </li>
+
+        <li>
+          <strong>Ngày băt đầu hợp đồng: </strong> {helpers.formatDate(detailContract.start_date)}
+        </li>
+
+        <li>
+          <strong>Ngày kết thúc hợp đồng: </strong> {helpers.formatDate(detailContract.end_date)}
+        </li>
+      </ul>
     ) : null;
 
     const customer = detailContract.customer ? (
-      <Typography>
-        <Typography paragraph>Tên:<span>{detailContract.customer.name}</span></Typography>
-        <Typography paragraph>Email:<span>{detailContract.customer.email}</span></Typography>
-        <Typography paragraph>Số điện thoại:<span>{detailContract.customer.phone}</span></Typography>
-        <Typography paragraph>Giới tính:<span>{detailContract.customer.gender}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.customer.address}</span></Typography>   
-      </Typography>
+      <ul>
+        <h5>Khách hàng</h5>
+        <li>
+          <strong>Tên: </strong> {detailContract.customer.name}
+        </li>
+        <li>
+          <strong>Email: </strong>{detailContract.customer.email}
+        </li>
+        <li>
+          <strong>Số điện thoại: </strong> {detailContract.customer.phone}
+        </li>
+        <li>
+          <strong>Giới tính: </strong> {helpers.renderGender(detailContract.customer.gender)}
+        </li>
+        <li>
+          <strong>Địa chỉ: </strong> {detailContract.customer.address}
+        </li>
+      </ul>
     ) : null;
 
     const helper = detailContract.helper ? (
-      <Typography>
-        <Typography paragraph>Tên:<span>{detailContract.helper.name}</span></Typography>
-        <Typography paragraph>Email:<span>{detailContract.helper.email}</span></Typography>
-        <Typography paragraph>Số điện thoại:<span>{detailContract.helper.phone}</span></Typography>
-        <Typography paragraph>Giới tính:<span>{detailContract.helper.gender}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.helper.address}</span></Typography>
-      </Typography>
-    ) : null;
+      <ul>
+      <h5>Người giúp việc</h5>
+      <li>
+        <strong>Tên: </strong> {detailContract.helper.name}
+      </li>
+      <li>
+        <strong>Email: </strong>{detailContract.helper.email}
+      </li>
+      <li>
+        <strong>Số điện thoại: </strong> {detailContract.helper.phone}
+      </li>
+      <li>
+        <strong>Giới tính: </strong> {helpers.renderGender(detailContract.helper.gender)}
+      </li>
+      <li>
+        <strong>Địa chỉ: </strong> {detailContract.helper.address}
+      </li>
+      <li>
+        <strong>Kỹ năng: </strong> {detailContract.helper.skill}
+      </li>
+    </ul>
+    ) : (
+      <ul>
+        <h5>Người giúp việc</h5>
+        Chưa được giao 
+      </ul>
+    );
 
   return (
     <Paper className={classes.contract}>
-      <GridList className={classes.gridList} cols={4}>
-        <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Hợp đồng</Typography>
-          {contract}
-        </Typography>
-
-        <Typography />
-
-        <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Khách hàng</Typography>
+      <Grid container spacing={24}>
+        <Grid item xs={6}>
           {customer}
-        </Typography>
+        </Grid>
 
-        <Typography />
-
-        <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Nguời giúp việc</Typography>
+        <Grid item xs={6}>
           {helper}
-          <Typography />
-          <Typography component="div">
-            <Typography>Lịch làm việc</Typography>
-            {schedule}
-            <Typography></Typography>
-          </Typography>
-        </Typography>
+        </Grid>
 
-        <Typography />
-      </GridList>
+        <Grid item xs={6}>
+          {contract}
+        </Grid>
+
+        <Grid item xs={6}>
+          <h5>Lịch làm việc</h5>
+          {schedule}
+        </Grid>
+        
+      </Grid>
+     
     </Paper>
   );
 };
 
-export default (withStyles(styles, { withTheme: true })(detail));
+export default (withStyles(styles, { withTheme: true })(detail)); 

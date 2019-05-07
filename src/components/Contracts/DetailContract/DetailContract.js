@@ -43,8 +43,9 @@ class DetailContract extends React.Component {
 
     return (
       <div className={classes.root}>
-        {updateStatus}
+        <h2>Chi tiết hợp đồng</h2>
         {detail}
+        {updateStatus}
       </div>
     );
   }
