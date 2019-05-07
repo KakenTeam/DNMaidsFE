@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
-
+import {renderGender} from '../../../../shared/utility';
 import styles from './Styles';
 
 const detail = props => {
@@ -39,13 +39,24 @@ const detail = props => {
     ) : null;
 
     const customer = detailContract.customer ? (
-      <Typography>
-        <Typography paragraph>Tên:<span>{detailContract.customer.name}</span></Typography>
-        <Typography paragraph>Email:<span>{detailContract.customer.email}</span></Typography>
-        <Typography paragraph>Số điện thoại:<span>{detailContract.customer.phone}</span></Typography>
-        <Typography paragraph>Giới tính:<span>{detailContract.customer.gender}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.customer.address}</span></Typography>   
-      </Typography>
+      <ul>
+        <h5>Khách hàng</h5>
+        <li>
+          <strong>Tên: </strong> {detailContract.customer.name}
+        </li>
+        <li>
+          <strong>Email: </strong>{detailContract.customer.email}
+        </li>
+        <li>
+          <strong>Số điện thoại: </strong> {detailContract.customer.phone}
+        </li>
+        <li>
+          <strong>Giới tính: </strong> {renderGender(detailContract.customer.gender)}
+        </li>
+        <li>
+          <strong>Địa chỉ: </strong> {detailContract.customer.address}
+        </li>
+      </ul>
     ) : null;
 
     const helper = detailContract.helper ? (
@@ -69,7 +80,6 @@ const detail = props => {
         <Typography />
 
         <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Khách hàng</Typography>
           {customer}
         </Typography>
 
