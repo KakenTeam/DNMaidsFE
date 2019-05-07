@@ -6,8 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import GridList from '@material-ui/core/GridList';
-import {renderGender} from '../../../../shared/utility';
+import {renderGender, renderServiceType} from '../../../../shared/utility';
+import ContractStatus from '../../../../shared/ContractStatus'
 import styles from './Styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -27,16 +27,28 @@ const detail = props => {
     }) : null;
 
     const  contract = detailContract ? (
-      <Typography>
-        <Typography paragraph>Loại dịch vụ:<span>{detailContract.service_type}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.address}</span></Typography>
-        <Typography paragraph>Ngày bắt đầu:<span>{detailContract.start_date}</span></Typography>
-        <Typography paragraph>Ngày kết thúc:<span>{detailContract.end_date}</span></Typography>
-        <Typography paragraph>Tình trạng:<span>{detailContract.status}</span></Typography>
-        <Typography paragraph>Giá:<span>{detailContract.fee}</span></Typography>   
-        <Typography paragraph>Ngày tạo:<span>{detailContract.created_at}</span></Typography>   
-        <Typography paragraph>Ngày cập nhật:<span>{detailContract.updated_at}</span></Typography>   
-      </Typography>
+      // <Typography>
+      //   <Typography paragraph>Loại dịch vụ:<span>{detailContract.service_type}</span></Typography>
+      //   <Typography paragraph>Địa chỉ:<span>{detailContract.address}</span></Typography>
+      //   <Typography paragraph>Ngày bắt đầu:<span>{detailContract.start_date}</span></Typography>
+      //   <Typography paragraph>Ngày kết thúc:<span>{detailContract.end_date}</span></Typography>
+      //   <Typography paragraph>Tình trạng:<span>{detailContract.status}</span></Typography>
+      //   <Typography paragraph>Giá:<span>{detailContract.fee}</span></Typography>   
+      //   <Typography paragraph>Ngày tạo:<span>{detailContract.created_at}</span></Typography>   
+      //   <Typography paragraph>Ngày cập nhật:<span>{detailContract.updated_at}</span></Typography>   
+      // </Typography>
+      <ul>
+        <h5>Chi tiết hợp đồng</h5>
+        <li>
+          <strong>Loại dịch vụ: </strong> {renderServiceType(detailContract.service_type)}
+        </li>
+        <li>
+          <strong>Địa chỉ công việc: </strong>{detailContract.address}
+        </li>
+        <li>
+          <strong>Trạng thái</strong> <ContractStatus status={detailContract.status}></ContractStatus>
+        </li>
+      </ul>
     ) : null;
 
     const customer = detailContract.customer ? (
@@ -99,14 +111,18 @@ const detail = props => {
         <Grid item xs={6}>
           {helper}
         </Grid>
+
+        <Grid item xs={6}>
+          {contract}
+        </Grid>
       </Grid>
         {/* <Typography component="div" className={classes.infoContract}>
           <Typography paragraph>Hợp đồng</Typography>
           {contract}
         </Typography> */}
 
-
-
+      
+      
       
 
         {/* <Typography component="div" className={classes.infoContract}>
@@ -125,4 +141,4 @@ const detail = props => {
   );
 };
 
-export default (withStyles(styles, { withTheme: true })(detail));
+export default (withStyles(styles, { withTheme: true })(detail)); 
