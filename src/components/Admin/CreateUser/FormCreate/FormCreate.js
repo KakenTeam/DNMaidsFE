@@ -28,14 +28,6 @@ const MenuProps = {
   },
 };
 
-// function getStyles(name, that) {
-//   return {
-//     fontWeight:
-//       that.state.name.indexOf(name) === -1
-//         ? that.props.theme.typography.fontWeightRegular
-//         : that.props.theme.typography.fontWeightMedium,
-//   };
-// }
 class FormCreate extends React.Component {
 
   componentDidMount = () => {
@@ -52,9 +44,8 @@ class FormCreate extends React.Component {
 
   render() {
 
-    const { classes, toggleCreate, user, genderDefault, roleDefault, groupsDefault, skillsDefault, disableAddButton, changeHandler, changeMuiltipleSkills } = this.props;
-    console.log('role ', roleDefault);
-    console.log('user----data', user);
+    const { classes, toggleCreate, user, genderDefault, groupsDefault, skillsDefault, changeHandler } = this.props;
+    const role = localStorage.getItem('role');
     return (
       <Paper className={toggleCreate ? classes.createForm : ''}>
         <ValidatorForm
@@ -173,79 +164,63 @@ class FormCreate extends React.Component {
             }
           </TextValidator>
 
-          <TextValidator
-            select
-            required
-            label="Vai trò"
-            name="role"
-            className={classes.textField}
-            value={user.role}
-            onChange={changeHandler}
-            margin="normal"
-            >
-            { 
-              roleDefault ? 
-                roleDefault.map((option, index) => (
-                  <MenuItem key={index} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                )) 
-              : null 
-            }
-          </TextValidator>
-          
-          <TextValidator
-            required
-            select
-            disabled={user.role === 1}
-            label="Nhóm"
-            name="group"
-            className={classes.textField}
-            value={user.group}
-            onChange={changeHandler}
-            SelectProps={{
-              native: false,
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            margin="normal"
-          >
-            { groupsDefault ? groupsDefault.map((option, index) => (
-              <MenuItem key={index} value={option.id}>
-                {option.groupName}
-              </MenuItem>
-            )) : null }
-          </TextValidator>
-
-          <FormControl className={classes.formControl} disabled={user.role === 0}>
-            <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
-            <Select
-              // select
-              label="Kỹ năng"
-              multiple
-              name="skill"
-              value={user.skill}
+          { role === '0' ? 
+            <TextValidator
+              required
+              select
+              disabled={user.role === 1}
+              label="Nhóm"
+              name="group"
+              className={classes.textField}
+              value={user.group}
               onChange={changeHandler}
-              input={<Input id="select-multiple-chip" />}
-              renderValue={selected => (
-                <div className={classes.chips}>
-                  {selected.map(value => (
-                    <Chip key={value} label={value} className={classes.chip} />
-                  ))}
-                </div>
-              )}
-              MenuProps={MenuProps}
+              SelectProps={{
+                native: false,
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
             >
-              { skillsDefault ? skillsDefault.map(skill => (
-                <MenuItem key={skill.id} value={skill.id}>
-                  {/* {skill.name} */}
-                  <Chip key={skill.id} label={skill.name} className={classes.chip} />
+              { groupsDefault ? groupsDefault.map((option, index) => (
+                <MenuItem key={index} value={option.id}>
+                  {option.groupName}
                 </MenuItem>
               )) : null }
-            </Select>
-          </FormControl>
-            
+            </TextValidator>
+            : null
+          }
+          
+          {
+            role === '1' ? 
+              <FormControl className={classes.formControl} disabled={user.role === 0}>
+                <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
+                <Select
+                  label="Kỹ năng"
+                  multiple
+                  name="skill"
+                  value={user.skill}
+                  onChange={changeHandler}
+                  input={<Input id="select-multiple-chip" />}
+                  renderValue={selected => (
+                    <div className={classes.chips}>
+                      {selected.map(value => (
+                        <Chip key={value} label={value} className={classes.chip} />
+                      ))}
+                    </div>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  { skillsDefault ? skillsDefault.map(skill => (
+                    <MenuItem key={skill.id} value={skill.id}>
+                      {/* {skill.name} */}
+                      <Chip key={skill.id} label={skill.name} className={classes.chip} />
+                    </MenuItem>
+                  )) : null }
+                </Select>
+              </FormControl>
+            : null
+          } 
           <Divider />
 
           <div className={classes.buttonWrapper}>
@@ -255,7 +230,7 @@ class FormCreate extends React.Component {
               </Button>
               <Button
                 onClick={this.props.handleCreateUser}
-                disabled={!disableAddButton}
+                // disabled={!disableAddButton}
                 className={classes.submitBtn} variant="contained" type="submit" color="primary">
                 Thêm
               </Button>

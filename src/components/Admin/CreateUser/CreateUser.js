@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import cssStyles from './CreateUser.module.css';
 import styles from './Styles';
 import FormCreate from './FormCreate/FormCreate';
@@ -26,7 +25,7 @@ class CreateUser extends React.Component {
       phone: null,
       address: null,
       gender: '',
-      role: '',
+      role: localStorage.getItem('role'),
       skill: [],
       group: '',
     },
@@ -65,7 +64,7 @@ class CreateUser extends React.Component {
     this.initialState = this.state;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const { notifications } = this.props;
     notifications.forEach((notification) => {
       this.props.enqueueSnackbar(notification.notification, {variant: notification.variant});
@@ -73,7 +72,6 @@ class CreateUser extends React.Component {
   }
 
   changeUserHandleCreate = event => {
-    console.log(event.target);
     this.setState({
       user: {
         ...this.state.user,
@@ -85,7 +83,6 @@ class CreateUser extends React.Component {
       },
     }, () => {
       console.log(this.state.user);
-      console.log(this.state.skills);
     });
   }
 
@@ -127,7 +124,9 @@ class CreateUser extends React.Component {
   }
 
   render() {
-    const { nameButton, classes, groups, skills }  = this.props;
+    const { nameButton, groups, skills }  = this.props;
+    const { user } = this.state;
+
     
     const groupsSelect = groups ? groups.map(option => {
       return {
@@ -139,8 +138,6 @@ class CreateUser extends React.Component {
     const skillsSelect = skills ? skills.map(option => {
       return option;
     }) : null;
-
-    console.log('usre cerafdaskjlj', this.props.showUser.skill);
 
     const valueSkills = this.props.showUser.skill ? this.props.showUser.skill.map(skill => {
       return skill.id;
@@ -155,6 +152,7 @@ class CreateUser extends React.Component {
         {
           this.state.open ? 
             <FormCreate
+              role={user.role}
               gender={this.state.user.gender}
               genderDefault={this.state.genderDefault}
               changeHandler={this.changeUserHandleCreate}

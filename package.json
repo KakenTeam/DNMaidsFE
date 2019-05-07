@@ -11,6 +11,7 @@
     "classnames": "^2.2.6",
     "notistack": "^0.7.0",
     "parse-json": "^4.0.0",
+    "query-string": "^6.5.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-material-ui-form-validator": "^2.0.8",

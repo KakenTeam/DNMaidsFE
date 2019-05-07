@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormGroup, Input, Label, Col } from 'reactstrap';
+import { FormGroup, Input } from 'reactstrap';
 import cx from 'classnames';
 import styles from './Login.module.css';
 

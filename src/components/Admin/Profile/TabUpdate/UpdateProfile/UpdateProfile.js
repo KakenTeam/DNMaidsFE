@@ -12,7 +12,6 @@ import styles from './Styles';
 const updateProfile = props => {
 
   const { classes, genderDefault, change, dataProfile, updateHandle } = props;
-  console.log('data profile--', dataProfile);
   
   return (
     <Paper className={classes.root}>

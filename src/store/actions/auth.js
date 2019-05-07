@@ -105,18 +105,15 @@ export const updatePasswordAdmin = (data) => {
 			},
 		})
 			.then(response => {
-				console.log(response);
 				dispatch(updatePasswordSuccess(response.data.message));
 			})
 			.catch(err => {
-				console.log(err.response);
 				dispatch(updatePasswordFail(err.response.data.message));
 			});
 	};
 };
 
 export const updateProfileAdmin = (data) => {
-	console.log('data update --', data);
 	return dispatch => {
 		dispatch(updateProfileStart());
 		const path = 'auth/profile';
@@ -129,11 +126,9 @@ export const updateProfileAdmin = (data) => {
 			},
 		})
 			.then(response => {
-				console.log('response update', response.data.message);
 				dispatch(updateProfileSuccess(response.data.message, data));
 			})
 			.catch(err => {
-				console.log(err);
 				dispatch(updateProfileFail(err));
 			});
 	};
@@ -156,7 +151,6 @@ export const getAdmin = () => {
 				dispatch(getAdminSuccess(response.data.info));
 			})
 			.catch(err => {
-				console.log(err);
 				dispatch(getAdminFail(err));
 			});
 	};
@@ -187,7 +181,6 @@ export const auth = data => {
 				dispatch(authSuccess(token, message));
 			})
 			.catch(err => {
-				console.log(err.message);
 				dispatch(authFail(err));
 			});
   };

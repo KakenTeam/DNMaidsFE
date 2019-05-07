@@ -168,11 +168,9 @@ export const getSkills = () => {
       }
     })
       .then(response => {
-        console.log(response);
         dispatch(getSkillsSuccess(response.data.data));
       })
       .catch(err => {
-        console.log(err);
       });
   };
 };
@@ -189,18 +187,15 @@ export const getGroups = () => {
       }
     })
       .then(response => {
-        console.log('get group', response.data.data);
         dispatch(getGroupSuccess(response.data.data));
       })
       .catch(err => {
-        console.log(err.response);
         dispatch(getGroupFail(err.message));
       });
   };
 };
 
 export const showUser = (id) => {
-  console.log('id show ', id);
   return async dispatch => {
     await dispatch(showUserStart());
     const path = `/users/${id}`;
@@ -216,14 +211,12 @@ export const showUser = (id) => {
       dispatch(showUserSuccess(response.data.info, response.data.message));
     })
     .catch(err => {
-      console.log(err);
       dispatch(showUserFail(err.message));
       });
     };
   }
   
   export const editUser = (id, data) => {
-    console.log('id, data', id, data);
     return async dispatch => {
       dispatch(editUserStart());
       const path = `/users/${id}`;
@@ -239,7 +232,6 @@ export const showUser = (id) => {
           dispatch(editUserSuccess(response.data.message, id, data));
         })
         .catch(err => {
-          console.log(err.response);
           dispatch(editUserFail(err.response.data.message));
         })
   };
@@ -258,19 +250,16 @@ export const deleteUser = id => {
       },
     })
       .then(response => {
-        console.log(response);
         const message = 'Delete successfull';
         dispatch(deleteUserSuccess(id, message));
       })
       .catch(err => {
-        console.log(err.message);
         dispatch(deleteUserFail(err.message));
       })
   };
 };
 
 export const createUser = data => {
-  console.log(data);
   return async dispatch => {
     dispatch(createUserStart());
     const path = '/users';
@@ -288,30 +277,28 @@ export const createUser = data => {
         dispatch(createUserSuccess(message, info));
       })
       .catch(error => {
-        let me = error['errors'];
-        console.log(me);
-        dispatch(createUserFail(error.message));
+        dispatch(createUserFail(error.response.data.message));
       });
   };
 };
 
-export const getUsers = () => {
+export const getUsers = (role) => {
+  let paramRole = role ? role : '';
+
   return async dispatch => {
     await dispatch(getUsersStart());
-    const path = '/users';
+    const path = `/users?role=${paramRole}`;
     await axios.get(path, {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': getAccessToken(),
-      }
+      },
     })
       .then(response => {
-        console.log(response.data);
         dispatch(getUsersSuccess(response.data.data, response.message));
       })
       .catch(err => {
-        console.log(err);
         dispatch(getUsersFail(err.message));
       });
   };
