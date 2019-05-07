@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {renderGender, renderServiceType, formatMoney} from '../../../../shared/utility';
+import { helpers } from '../../../../shared/utility';
 import ContractStatus from '../../../../shared/ContractStatus'
 import styles from './Styles';
 import Grid from '@material-ui/core/Grid';
@@ -17,30 +17,29 @@ const detail = props => {
 
     const schedule = detailContract.schedule ? detailContract.schedule.map(info => {
       return (
-        <Typography>
-          <Typography paragraph>Ngày trong tuần:<span>{info.day_of_week}</span></Typography>
-          <Typography paragraph>Thời gian bắt đầu:<span>{info.start_time}</span></Typography>
-          <Typography paragraph>Thời gian kết thúc:<span>{info.end_time}</span></Typography>
-          <Typography paragraph>Ca làm việc:<span>{info.shift}</span></Typography>
-        </Typography>
+        <ul>
+          <li>
+            <strong>Giờ bắt đầu: </strong> {helpers.formatHour(info.start_time)}
+          </li>
+          <li>
+            <strong>Giờ kết thúc: </strong> {helpers.formatHour(info.end_time)}
+          </li>
+          <li>
+            <strong>Ngày làm việc: </strong> {helpers.renderDayOfWeek(info.day_of_week)}
+          </li>
+          <li>
+            <strong>Ca làm việc: </strong> {info.shift}
+          </li>
+        </ul>
+
       );
     }) : null;
 
     const  contract = detailContract ? (
-      // <Typography>
-      //   <Typography paragraph>Loại dịch vụ:<span>{detailContract.service_type}</span></Typography>
-      //   <Typography paragraph>Địa chỉ:<span>{detailContract.address}</span></Typography>
-      //   <Typography paragraph>Ngày bắt đầu:<span>{detailContract.start_date}</span></Typography>
-      //   <Typography paragraph>Ngày kết thúc:<span>{detailContract.end_date}</span></Typography>
-      //   <Typography paragraph>Tình trạng:<span>{detailContract.status}</span></Typography>
-      //   <Typography paragraph>Giá:<span>{detailContract.fee}</span></Typography>   
-      //   <Typography paragraph>Ngày tạo:<span>{detailContract.created_at}</span></Typography>   
-      //   <Typography paragraph>Ngày cập nhật:<span>{detailContract.updated_at}</span></Typography>   
-      // </Typography>
       <ul>
         <h5>Chi tiết hợp đồng</h5>
         <li>
-          <strong>Loại dịch vụ: </strong> {renderServiceType(detailContract.service_type)}
+          <strong>Loại dịch vụ: </strong> {helpers.renderServiceType(detailContract.service_type)}
         </li>
         <li>
           <strong>Địa chỉ công việc: </strong>{detailContract.address}
@@ -49,7 +48,15 @@ const detail = props => {
           <strong>Trạng thái</strong> <ContractStatus status={detailContract.status}></ContractStatus>
         </li>
         <li>
-          <strong>Giá trị hợp đồng: </strong> { formatMoney(detailContract.fee)}
+          <strong>Giá trị hợp đồng: </strong> { helpers.formatMoney(detailContract.fee)}
+        </li>
+
+        <li>
+          <strong>Ngày băt đầu hợp đồng: </strong> {helpers.formatDate(detailContract.start_date)}
+        </li>
+
+        <li>
+          <strong>Ngày kết thúc hợp đồng: </strong> {helpers.formatDate(detailContract.end_date)}
         </li>
       </ul>
     ) : null;
@@ -67,7 +74,7 @@ const detail = props => {
           <strong>Số điện thoại: </strong> {detailContract.customer.phone}
         </li>
         <li>
-          <strong>Giới tính: </strong> {renderGender(detailContract.customer.gender)}
+          <strong>Giới tính: </strong> {helpers.renderGender(detailContract.customer.gender)}
         </li>
         <li>
           <strong>Địa chỉ: </strong> {detailContract.customer.address}
@@ -88,7 +95,7 @@ const detail = props => {
         <strong>Số điện thoại: </strong> {detailContract.helper.phone}
       </li>
       <li>
-        <strong>Giới tính: </strong> {renderGender(detailContract.helper.gender)}
+        <strong>Giới tính: </strong> {helpers.renderGender(detailContract.helper.gender)}
       </li>
       <li>
         <strong>Địa chỉ: </strong> {detailContract.helper.address}
@@ -118,28 +125,14 @@ const detail = props => {
         <Grid item xs={6}>
           {contract}
         </Grid>
+
+        <Grid item xs={6}>
+          <h5>Lịch làm việc</h5>
+          {schedule}
+        </Grid>
+        
       </Grid>
-        {/* <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Hợp đồng</Typography>
-          {contract}
-        </Typography> */}
-
-      
-      
-      
-
-        {/* <Typography component="div" className={classes.infoContract}>
-          <Typography paragraph>Nguời giúp việc</Typography>
-          {helper}
-          <Typography />
-          <Typography component="div">
-            <Typography>Lịch làm việc</Typography>
-            {schedule}
-            <Typography></Typography>
-          </Typography>
-        </Typography>
-
-        <Typography /> */}
+     
     </Paper>
   );
 };
