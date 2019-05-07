@@ -28,15 +28,23 @@ class DetailContract extends React.Component {
   render() {
     const { classes } = this.props;
     
+    const updateStatus = this.props.detailContract ? 
+      <UpdateStatus
+        idContract={this.props.match.params.id}
+        status={this.props.detailContract.status}
+      />
+      : null;
+
+    const detail = this.props.detailContract ?
+      <Detail 
+        detailContract={this.props.detailContract}
+      />
+      : null;
+
     return (
       <div className={classes.root}>
-        <UpdateStatus
-          idContract={this.props.match.params.id}
-          status={this.props.detailContract.status}
-        />
-        <Detail 
-          detailContract={this.props.detailContract}
-        />
+        {updateStatus}
+        {detail}
       </div>
     );
   }

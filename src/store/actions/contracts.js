@@ -73,7 +73,6 @@ export const updateContractStatus = (id, status) => {
       },
     })
       .then(response => {
-        console.log(response);
         dispatch(updateContractStatusSuccess(response.data.data, response.data.message));
       })
       .catch(err => {
@@ -96,7 +95,6 @@ export const showContract = (id) => {
       },
     })
       .then(response => {
-        console.log(response.data.data);
         dispatch(showContractSuccess(response.data.data));
       })
       .catch(err => {

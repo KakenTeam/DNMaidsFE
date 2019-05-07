@@ -39,11 +39,14 @@ const updateContactStatusStart = (state, action) => updateObject(state, {
 });
 
 const updateContactStatusSuccess = (state, action) => {
+  // console.log('fadf', state.detailContract);
   const newUpdate = {
     ...state.detailContract,
-    ...action.contractUpdate.status,
+    ...action.contractUpdate,
     ...action.contractUpdate.updated_at,
   };
+
+
 
   return updateObject(state, {
     loading: false,
@@ -65,9 +68,9 @@ const contracts = (state = initialState, action) => {
     case actionTypes.SHOW_CONTRACT.START: return showContractStart(state, action);
     case actionTypes.SHOW_CONTRACT.SUCCESS: return showContractSuccess(state, action);
     case actionTypes.SHOW_CONTRACT.FAIL: return showContractFail(state, action);
-    case actionTypes.UPDATE_CONTRACT_STATUS.START: return updateContactStatusStart();
-    case actionTypes.UPDATE_CONTRACT_STATUS.SUCCESS: return updateContactStatusSuccess();
-    case actionTypes.UPDATE_CONTRACT_STATUS.FAIL: return updateContactStatusFail();
+    case actionTypes.UPDATE_CONTRACT_STATUS.START: return updateContactStatusStart(state, action);
+    case actionTypes.UPDATE_CONTRACT_STATUS.SUCCESS: return updateContactStatusSuccess(state, action);
+    case actionTypes.UPDATE_CONTRACT_STATUS.FAIL: return updateContactStatusFail(state, action);
     default: return state;
   }
 };
