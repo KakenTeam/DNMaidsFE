@@ -26,7 +26,7 @@ class TableHeadContract extends React.Component {
   };
 
   render() {
-    const { order, orderBy, rowCount } = this.props;
+    const { order, orderBy } = this.props;
 
     const contracts = rows.map(row => (
       <TableCell

@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import GridList from '@material-ui/core/GridList';
 
 import * as actions from '../../../store/actions/index';
 
@@ -16,10 +12,6 @@ import Detail from './Detail/Detail';
 import styles from './Styles';
 
 class DetailContract extends React.Component {
-
-  componentWillMount = () => {
-    console.log('idadsfad', this.props.detailContract);
-  }
   
   componentDidMount = () => {
     this.props.onShowContract(this.props.match.params.id);

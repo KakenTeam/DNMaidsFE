@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import { withSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import cssStyles from './CreateUser.module.css';
 import styles from './Styles';
 import FormCreate from './FormCreate/FormCreate';
@@ -73,7 +72,6 @@ class CreateUser extends React.Component {
   }
 
   changeUserHandleCreate = event => {
-    console.log(event.target);
     this.setState({
       user: {
         ...this.state.user,
@@ -83,9 +81,6 @@ class CreateUser extends React.Component {
         ...this.state.skills,
         [event.target.name]: event.target,
       },
-    }, () => {
-      console.log(this.state.user);
-      console.log(this.state.skills);
     });
   }
 
@@ -127,7 +122,7 @@ class CreateUser extends React.Component {
   }
 
   render() {
-    const { nameButton, classes, groups, skills }  = this.props;
+    const { nameButton, groups, skills }  = this.props;
     
     const groupsSelect = groups ? groups.map(option => {
       return {
@@ -139,8 +134,6 @@ class CreateUser extends React.Component {
     const skillsSelect = skills ? skills.map(option => {
       return option;
     }) : null;
-
-    console.log('usre cerafdaskjlj', this.props.showUser.skill);
 
     const valueSkills = this.props.showUser.skill ? this.props.showUser.skill.map(skill => {
       return skill.id;

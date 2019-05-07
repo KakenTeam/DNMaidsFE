@@ -52,9 +52,7 @@ class FormCreate extends React.Component {
 
   render() {
 
-    const { classes, toggleCreate, user, genderDefault, roleDefault, groupsDefault, skillsDefault, disableAddButton, changeHandler, changeMuiltipleSkills } = this.props;
-    console.log('role ', roleDefault);
-    console.log('user----data', user);
+    const { classes, toggleCreate, user, genderDefault, roleDefault, groupsDefault, skillsDefault, disableAddButton, changeHandler } = this.props;
     return (
       <Paper className={toggleCreate ? classes.createForm : ''}>
         <ValidatorForm

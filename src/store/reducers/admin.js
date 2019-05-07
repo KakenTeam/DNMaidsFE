@@ -73,7 +73,7 @@ const getUsersStart = (state, action) => updateObject(state, {
 
 const getUsersSuccess = (state, action) => {
   return updateObject(state, {
-    users: [...action.users.users],
+    users: [...action.users],
     // message: action.message,
   });
 };

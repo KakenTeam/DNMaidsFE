@@ -83,7 +83,7 @@ class TableContracts extends React.Component {
 
   render() {
     const { classes, contracts } = this.props;
-    const { order, orderBy, idSelected, rowsPerPage, page } = this.state;
+    const { order, orderBy, rowsPerPage, page } = this.state;
     const totalContracts = contracts.length;
 
     return (

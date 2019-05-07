@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -9,7 +8,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
@@ -36,10 +34,6 @@ class UpdateStatus extends React.Component {
     });
   }
   
-  componentDidMount = () => {
-    console.log('fasdfldslfjj', this.props.status);
-  }
-
   handleToggle = () => {
     this.setState(prevState => ({
       open: !prevState.open,
@@ -52,8 +46,6 @@ class UpdateStatus extends React.Component {
         ...this.state.statusChoose,
         [event.target.name]: event.target.value,
       }
-    }, () => {
-      console.log('states state', this.state.statusChoose);
     });
   };
 
@@ -64,8 +56,6 @@ class UpdateStatus extends React.Component {
 
   render() {
     const { classes } = this.props;
-
-    console.log('staut update', this.state.statusChoose);
 
     const statusItem = this.state.statusDefault.map(item => (
       <MenuItem value={item}>{item}</MenuItem>

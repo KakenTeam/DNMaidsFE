@@ -34,8 +34,6 @@ class FormEdit extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log('data edit dfaallkjj', this.props.user);
-
     // custom rule will have name 'isPasswordMatch'
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       const { formData } = this.state;
@@ -52,8 +50,6 @@ class FormEdit extends React.Component {
         ...this.state.editData,
         [event.target.name]: event.target.value,
       }
-    }, () => {
-      console.log('change edit data', this.state.editData);
     });
   }
 
@@ -74,9 +70,7 @@ class FormEdit extends React.Component {
 
     const { classes, toggleEdit, genderDefault, groupsDefault, skillsDefault, editToggle} = this.props;
     const { editData } = this.state;
-
-    console.log('user slikkfds', this.props.user);
-
+    
     return (
       <Paper className={toggleEdit ? classes.editForm : ''}>
         <ValidatorForm

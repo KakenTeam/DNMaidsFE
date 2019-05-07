@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect, Route, Switch, Link } from 'react-router-dom';
+import { withRouter, Redirect, Route, Switch } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,8 +10,8 @@ import cssStyle from './Aside.module.css';
 
 import * as actions from '../../../store/actions/index';
 
-import Users from '../User/Users';
 import SlideBar from '../SlideBar/SlideBar';
+import Users from '../User/Users';
 import ProfileContainer from '../../Admin/Profile/ProfileContainer';
 import TableContracts from '../../Contracts/TableContracts/TableContracts';
 import DetailContract from '../../Contracts/DetailContract/DetailContract';
@@ -46,7 +46,10 @@ class Aside extends React.Component {
 					<SlideBar />
 					<main className={classes.content}>
 						<Switch>
+							{/* <Route path={`${this.props.match.path}/users${this.props.location.search}`} component={Helpers} /> */}
+							<Route path={`${this.props.match.path}/users${this.props.location.search}`} component={Users} />
 							<Route path={`${this.props.match.path}/users`} component={(Users)} />
+							{/* <Route path={`${this.props.match.path}/users${this.props.location.search}`} component={Users} /> */}
 							<Route path={`${this.props.match.path}/profile`} component={(ProfileContainer)} />
 							<Route path={`${this.props.match.path}/contracts/:id`} component={DetailContract} />
 							<Route path={`${this.props.match.path}/contracts`} component={TableContracts} />

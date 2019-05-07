@@ -53,13 +53,19 @@ class EnhancedTable extends React.Component {
   };
 
   async componentDidMount() {
-    await this.props.getUsers();
+    await this.props.getUsers(this.props.role);
     await this.props.getAdmin();
     await this.props.getSkills();
     await this.props.getGroups();
     setTimeout(() => {
       this.props.onCloseAlert();
     }, 0);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location.search !== prevProps.location.search) {
+      this.props.getUsers(this.props.role);
+    }
   }
 
   setSelected = () => {
@@ -127,14 +133,16 @@ class EnhancedTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes, users } = this.props;
+    const { classes, users, role } = this.props;
     const { order, orderBy, idSelected, rowsPerPage, page } = this.state;
     const totalUsers = this.props.users.length;
+
 
     return (
       <Paper className={classes.root}>
         <EnhancedTableToolbar
           idSelected={idSelected}
+          role={role}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -170,7 +178,7 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="dense" align="right">{user.address}</TableCell>
                       <TableCell padding="dense" align="right">{user.gender}</TableCell>
                       <TableCell padding="dense" align="right">{user.birthday}</TableCell>
-                      <TableCell padding="dense" align="right">{user.permission[0]}</TableCell>
+                      {/* <TableCell padding="dense" align="right">{user.permission[0]}</TableCell> */}
                     </TableRow>
                   );
                 }) : null }
@@ -203,7 +211,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUsers: () => dispatch(actions.getUsers()),
+  getUsers: (role) => dispatch(actions.getUsers(role)),
   getAdmin: () => dispatch(actions.getAdmin()),
   getGroups: () => dispatch(actions.getGroups()),
   getSkills: () => dispatch(actions.getSkills()),
