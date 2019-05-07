@@ -39,7 +39,6 @@ const updateContactStatusStart = (state, action) => updateObject(state, {
 });
 
 const updateContactStatusSuccess = (state, action) => {
-  // console.log('fadf', state.detailContract);
   const newUpdate = {
     ...state.detailContract,
     ...action.contractUpdate,

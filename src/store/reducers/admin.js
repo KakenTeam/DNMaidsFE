@@ -54,16 +54,16 @@ const createUserSuccess = (state, action) => {
 
 const createUserFail = (state, action) => {
   const newErrors = [
-    ...state.errors,
+    ...state.notifications,
     {
-      error: action.errors,
+      notification: action.errors,
       variant: 'error',
     },
   ];
 
   return updateObject(state, {
     loading: action.isFetching,
-    errors: newErrors,
+    notifications: newErrors,
   });
 };
 
@@ -73,7 +73,7 @@ const getUsersStart = (state, action) => updateObject(state, {
 
 const getUsersSuccess = (state, action) => {
   return updateObject(state, {
-    users: [...action.users.users],
+    users: [...action.users],
     // message: action.message,
   });
 };

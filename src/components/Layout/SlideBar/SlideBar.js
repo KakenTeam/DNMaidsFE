@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect, Route, Switch, Link } from 'react-router-dom';
+import { withRouter, Redirect, Link } from 'react-router-dom';
 
 import * as actions from '../../../store/actions/index';
 
@@ -146,19 +146,31 @@ class SlideBar extends Component {
 							<Link to="/admin/users">
 								<ListItem button>
 									<ListItemIcon><GroupAdd /></ListItemIcon>
-									<ListItemText primary="Quản lí nhóm" />
+									<ListItemText primary="Nhóm" />
 								</ListItem>
 							</Link>
-							<Link to="/admin/users">
+							<Link to="/admin/users?role=0">
 								<ListItem button>
 									<ListItemIcon><AccountBox /></ListItemIcon>
-									<ListItemText primary="Quản lí người dùng" />
+									<ListItemText primary="Admin" />
+								</ListItem>
+							</Link>
+							<Link to="/admin/users?role=1">
+								<ListItem button>
+									<ListItemIcon><AccountBox /></ListItemIcon>
+									<ListItemText primary="Nguời giúp việc" />
+								</ListItem>
+							</Link>
+							<Link to="/admin/users?role=2">
+								<ListItem button>
+									<ListItemIcon><AccountBox /></ListItemIcon>
+									<ListItemText primary="Khách hàng" />
 								</ListItem>
 							</Link>
 							<Link to="/admin/contracts">
 								<ListItem button>
 									<ListItemIcon><Assignment /></ListItemIcon>
-									<ListItemText primary="Quản lí hợp đồng" />
+									<ListItemText primary="Hợp đồng" />
 								</ListItem>
 							</Link>
 						</List>

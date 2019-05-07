@@ -3,9 +3,7 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './components/Layout/Layout';
-import Aside from './components/Layout/Aside/Aside';
 import Auth from './containers/Auth/Auth';
-import ProfileContainer from './components/Admin/Profile/ProfileContainer';
 
 import './App.css';
 

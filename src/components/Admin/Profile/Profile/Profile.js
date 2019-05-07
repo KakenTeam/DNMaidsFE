@@ -22,7 +22,6 @@ class Profile extends Component {
 
   render() {
     const { classes, adminInfo } = this.props;
-    console.log('admin info', adminInfo);
     return (
       <div className={classes.root} >
         { adminInfo ?
