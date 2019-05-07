@@ -15,6 +15,8 @@ import * as actions from '../../../store/actions/index';
 import TableHeadContract from './TableHeadContract/TableHeadContract';
 
 import styles from './Styles';
+import { helpers } from '../../../shared/utility';
+import ContractStatus from '../../../shared/ContractStatus';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -92,6 +94,7 @@ class TableContracts extends React.Component {
           idSelected={idSelected}
         /> */}
         <div className={classes.tableWrapper}>
+          <h2>Danh sách hợp đồng</h2>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <TableHeadContract
               order={order}
@@ -120,11 +123,11 @@ class TableContracts extends React.Component {
                         <TableCell padding="dense" align="right">{contract.customer.name}</TableCell>
                         <TableCell padding="dense" align="right">{contract.helper.name}</TableCell>
                         <TableCell padding="dense" align="right">{contract.created_at}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.start_date}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.end_date}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.fee}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.service_type}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.status}</TableCell>
+                        <TableCell padding="dense" align="right">{helpers.formatDate(contract.start_date)}</TableCell>
+                        <TableCell padding="dense" align="right">{helpers.formatDate(contract.end_date)}</TableCell>
+                        <TableCell padding="dense" align="right">{helpers.formatMoney(contract.fee)}</TableCell>
+                        <TableCell padding="dense" align="right">{helpers.renderServiceType(contract.service_type)}</TableCell>
+                        <TableCell padding="dense" align="right"><ContractStatus status={contract.status}/></TableCell>
                         <TableCell padding="dense" align="right">
                           <Link to={`/admin/contracts/${contract.id}`}>
                             <Button variant="contained" color="primary" className={classes.button}>
