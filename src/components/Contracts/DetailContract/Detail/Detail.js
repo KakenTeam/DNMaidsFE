@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import {renderGender} from '../../../../shared/utility';
 import styles from './Styles';
+import Grid from '@material-ui/core/Grid';
 
 const detail = props => {
 
@@ -60,32 +61,55 @@ const detail = props => {
     ) : null;
 
     const helper = detailContract.helper ? (
-      <Typography>
-        <Typography paragraph>Tên:<span>{detailContract.helper.name}</span></Typography>
-        <Typography paragraph>Email:<span>{detailContract.helper.email}</span></Typography>
-        <Typography paragraph>Số điện thoại:<span>{detailContract.helper.phone}</span></Typography>
-        <Typography paragraph>Giới tính:<span>{detailContract.helper.gender}</span></Typography>
-        <Typography paragraph>Địa chỉ:<span>{detailContract.helper.address}</span></Typography>
-      </Typography>
-    ) : null;
+      <ul>
+      <h5>Người giúp việc</h5>
+      <li>
+        <strong>Tên: </strong> {detailContract.helper.name}
+      </li>
+      <li>
+        <strong>Email: </strong>{detailContract.helper.email}
+      </li>
+      <li>
+        <strong>Số điện thoại: </strong> {detailContract.helper.phone}
+      </li>
+      <li>
+        <strong>Giới tính: </strong> {renderGender(detailContract.helper.gender)}
+      </li>
+      <li>
+        <strong>Địa chỉ: </strong> {detailContract.helper.address}
+      </li>
+      <li>
+        <strong>Kỹ năng: </strong> {detailContract.helper.skill}
+      </li>
+    </ul>
+    ) : (
+      <ul>
+        <h5>Người giúp việc</h5>
+        Chưa được giao 
+      </ul>
+    );
 
   return (
     <Paper className={classes.contract}>
-      <GridList className={classes.gridList} cols={4}>
-        <Typography component="div" className={classes.infoContract}>
+      <Grid container spacing={24}>
+        <Grid item xs={6}>
+          {customer}
+        </Grid>
+
+        <Grid item xs={6}>
+          {helper}
+        </Grid>
+      </Grid>
+        {/* <Typography component="div" className={classes.infoContract}>
           <Typography paragraph>Hợp đồng</Typography>
           {contract}
-        </Typography>
+        </Typography> */}
 
-        <Typography />
 
-        <Typography component="div" className={classes.infoContract}>
-          {customer}
-        </Typography>
 
-        <Typography />
+      
 
-        <Typography component="div" className={classes.infoContract}>
+        {/* <Typography component="div" className={classes.infoContract}>
           <Typography paragraph>Nguời giúp việc</Typography>
           {helper}
           <Typography />
@@ -96,8 +120,7 @@ const detail = props => {
           </Typography>
         </Typography>
 
-        <Typography />
-      </GridList>
+        <Typography /> */}
     </Paper>
   );
 };
