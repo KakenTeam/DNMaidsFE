@@ -13,7 +13,7 @@ export function renderServiceType(value) {
   return value == 0 ? "Dùng lẻ" : "Dùng định kỳ"
 }
 
-export function renderContractStatus(value) {
-  let label = value;
-
+export function formatMoney(value) {
+  const priceSplitter = (number) => (number && number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+  return priceSplitter(value) + "₫";
 }

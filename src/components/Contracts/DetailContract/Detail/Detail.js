@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import {renderGender, renderServiceType} from '../../../../shared/utility';
+import {renderGender, renderServiceType, formatMoney} from '../../../../shared/utility';
 import ContractStatus from '../../../../shared/ContractStatus'
 import styles from './Styles';
 import Grid from '@material-ui/core/Grid';
@@ -47,6 +47,9 @@ const detail = props => {
         </li>
         <li>
           <strong>Trạng thái</strong> <ContractStatus status={detailContract.status}></ContractStatus>
+        </li>
+        <li>
+          <strong>Giá trị hợp đồng: </strong> { formatMoney(detailContract.fee)}
         </li>
       </ul>
     ) : null;
