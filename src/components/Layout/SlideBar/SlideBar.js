@@ -25,6 +25,7 @@ import AccountBox from '@material-ui/icons/AccountBox';
 import Assignment from '@material-ui/icons/Assignment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import LoadingBar from 'react-redux-loading-bar'
 
 import styles from './Styles';
 
@@ -76,6 +77,7 @@ class SlideBar extends Component {
 							[classes.appBarShift]: this.state.open,
 						})}
 					>
+						<LoadingBar />
 						<Toolbar disableGutters={!this.state.open}>
 							<IconButton
 								color="inherit"
