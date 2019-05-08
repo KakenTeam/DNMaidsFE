@@ -84,6 +84,7 @@ export const updateContractStatus = (id, status) => {
 export const showContract = (id) => {
   return dispatch => {
     dispatch(showContractStart());
+    dispatch(showLoading());
     const path = `/contracts/${id}`;
     axios.get(path, {
       headers: {
@@ -95,6 +96,7 @@ export const showContract = (id) => {
     })
       .then(response => {
         dispatch(showContractSuccess(response.data.data));
+        dispatch(hideLoading());
       })
       .catch(err => {
         dispatch(showContractFail(err));

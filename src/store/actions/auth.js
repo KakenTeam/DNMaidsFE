@@ -1,5 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../shared/api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+
 
 const getAccessToken = () => {
   const token = localStorage.getItem('accessToken');
@@ -95,6 +97,7 @@ const updatePasswordFail = err => ({
 export const updatePasswordAdmin = (data) => {
 	return dispatch => {
 		dispatch(updatePasswordStart());
+		dispatch(showLoading());
 		const path = 'auth/password';
 		axios.put(path, data, {
 			headers: {
@@ -106,6 +109,7 @@ export const updatePasswordAdmin = (data) => {
 		})
 			.then(response => {
 				dispatch(updatePasswordSuccess(response.data.message));
+				dispatch(hideLoading());
 			})
 			.catch(err => {
 				dispatch(updatePasswordFail(err.response.data.message));
@@ -116,6 +120,7 @@ export const updatePasswordAdmin = (data) => {
 export const updateProfileAdmin = (data) => {
 	return dispatch => {
 		dispatch(updateProfileStart());
+		dispatch(showLoading());
 		const path = 'auth/profile';
 		axios.patch(path, data, {
 			headers: {
@@ -127,6 +132,7 @@ export const updateProfileAdmin = (data) => {
 		})
 			.then(response => {
 				dispatch(updateProfileSuccess(response.data.message, data));
+				dispatch(hideLoading());
 			})
 			.catch(err => {
 				dispatch(updateProfileFail(err));
@@ -137,6 +143,7 @@ export const updateProfileAdmin = (data) => {
 export const getAdmin = () => {
 	return dispatch => {
 		dispatch(getAdminStart());
+		dispatch(showLoading());
 		const path = 'auth/user';
 		axios.get(path, {
 			headers: {
@@ -149,6 +156,7 @@ export const getAdmin = () => {
 			.then(response => {
 				localStorage.setItem('avatar', response.data.info.image);
 				dispatch(getAdminSuccess(response.data.info));
+				dispatch(hideLoading());
 			})
 			.catch(err => {
 				dispatch(getAdminFail(err));
@@ -159,7 +167,7 @@ export const getAdmin = () => {
 export const auth = data => {
   return dispatch => {
     dispatch(authStart());
-
+		dispatch(showLoading());
     const requestData = JSON.stringify(data);
 		let token = null;
 		let path = 'auth/login';
@@ -179,6 +187,7 @@ export const auth = data => {
 				localStorage.setItem('tokenType', tokenType);
 				localStorage.setItem('expirationDate', expirationDate);
 				dispatch(authSuccess(token, message));
+				dispatch(hideLoading());
 			})
 			.catch(err => {
 				dispatch(authFail(err));
