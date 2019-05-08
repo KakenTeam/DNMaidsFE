@@ -5,8 +5,13 @@ const initialState = {
   loading: false,
   contracts: [],
   detailContract: {},
-  notifications: [],
+  notifications: '',
+  variant: '',
 };
+
+const closeAlert = (state, action) => updateObject(state, {
+  notifications: null,
+});
 
 const getContractsStart = (state, action) => updateObject(state, {
   loading: true,
@@ -41,26 +46,26 @@ const updateContactStatusStart = (state, action) => updateObject(state, {
 const updateContactStatusSuccess = (state, action) => {
   const newUpdate = {
     ...state.detailContract,
-    ...action.contractUpdate,
-    ...action.contractUpdate.updated_at,
+    ...action.status,
   };
-
-
 
   return updateObject(state, {
     loading: false,
     notifications: action.message,
     detailContract: newUpdate,
+    variant: 'success',
   });
 };
 
 const updateContactStatusFail = (state, action) => updateObject(state, {
   loading: false,
   notifications: action.error,
+  variant: 'error',
 });
 
 const contracts = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.CLOSE_ALERT: return closeAlert(state, action);
     case actionTypes.GET_CONTRACTS.START: return getContractsStart(state, action);
     case actionTypes.GET_CONTRACTS.SUCCESS: return getContractsSuccess(state, action);
     case actionTypes.GET_CONTRACTS.FAIL: return getContractsFail(state, action);

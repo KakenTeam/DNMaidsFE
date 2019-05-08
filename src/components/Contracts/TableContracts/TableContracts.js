@@ -49,7 +49,7 @@ class TableContracts extends React.Component {
     selected: [],
     idSelected: null,
     page: 0,
-    rowsPerPage: 10,
+    rowsPerPage: 5,
   };
 
   async componentDidMount() {
@@ -98,32 +98,31 @@ class TableContracts extends React.Component {
               { contracts ? stableSort(contracts, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(contract => {
+                  let helperName = contract.helper ? contract.helper.name : '';
                   return (
-                    contract.helper ?
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={contract.id}
-                      >
-                        <TableCell padding="dense" component="th" align="right">{contract.id}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.customer.name}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.helper.name}</TableCell>
-                        <TableCell padding="dense" align="right">{contract.created_at}</TableCell>
-                        <TableCell padding="dense" align="right">{helpers.formatDate(contract.start_date)}</TableCell>
-                        <TableCell padding="dense" align="right">{helpers.formatDate(contract.end_date)}</TableCell>
-                        <TableCell padding="dense" align="right">{helpers.formatMoney(contract.fee)}</TableCell>
-                        <TableCell padding="dense" align="right">{helpers.renderServiceType(contract.service_type)}</TableCell>
-                        <TableCell padding="dense" align="right"><ContractStatus status={contract.status}/></TableCell>
-                        <TableCell padding="dense" align="right">
-                          <Link to={`/admin/contracts/${contract.id}`}>
-                            <Button variant="contained" color="primary" className={classes.button}>
-                              Chi tiết
-                            </Button>
-                          </Link>
-                        </TableCell>
-                      </TableRow>
-                    : null
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={contract.id}
+                    >
+                      <TableCell padding="dense" component="th" align="right">{contract.id}</TableCell>
+                      <TableCell padding="dense" align="right">{contract.customer.name}</TableCell>
+                      <TableCell padding="dense" align="right">{helperName}</TableCell>
+                      <TableCell padding="dense" align="right">{contract.created_at}</TableCell>
+                      <TableCell padding="dense" align="right">{helpers.formatDate(contract.start_date)}</TableCell>
+                      <TableCell padding="dense" align="right">{helpers.formatDate(contract.end_date)}</TableCell>
+                      <TableCell padding="dense" align="right">{helpers.formatMoney(contract.fee)}</TableCell>
+                      <TableCell padding="dense" align="right">{helpers.renderServiceType(contract.service_type)}</TableCell>
+                      <TableCell padding="dense" align="right"><ContractStatus status={contract.status}/></TableCell>
+                      <TableCell padding="dense" align="right">
+                        <Link to={`/admin/contracts/${contract.id}`}>
+                          <Button variant="contained" color="primary" className={classes.button}>
+                            Chi tiết
+                          </Button>
+                        </Link>
+                      </TableCell>
+                    </TableRow>
                   );
                 }) : null }
             </TableBody>
@@ -154,9 +153,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  // onCloseAlert: () => dispatch(actions.closeAlert()),
   getContracts: () => dispatch(actions.getContracts()),
-  onShowContract: (id) => dispatch(actions.showContract(id)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(TableContracts)));
