@@ -77,7 +77,7 @@ class SlideBar extends Component {
 							[classes.appBarShift]: this.state.open,
 						})}
 					>
-						<LoadingBar />
+						<LoadingBar style={{ backgroundColor: 'yellow', height: '5px' }} />
 						<Toolbar disableGutters={!this.state.open}>
 							<IconButton
 								color="inherit"

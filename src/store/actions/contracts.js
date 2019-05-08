@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../shared/api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const getAccessToken = () => {
   const token = localStorage.getItem('accessToken');
@@ -83,6 +84,7 @@ export const updateContractStatus = (id, status) => {
 export const showContract = (id) => {
   return dispatch => {
     dispatch(showContractStart());
+    dispatch(showLoading());
     const path = `/contracts/${id}`;
     axios.get(path, {
       headers: {
@@ -94,6 +96,7 @@ export const showContract = (id) => {
     })
       .then(response => {
         dispatch(showContractSuccess(response.data.data));
+        dispatch(hideLoading());
       })
       .catch(err => {
         dispatch(showContractFail(err));
@@ -104,6 +107,7 @@ export const showContract = (id) => {
 export const getContracts = () => {
   return dispatch => {
     dispatch(getContractsStart());
+    dispatch(showLoading());
     const path = '/contracts';
     axios.get(path, {
       headers: {
@@ -114,6 +118,7 @@ export const getContracts = () => {
       },
     })
       .then(response => {
+        dispatch(hideLoading());
         dispatch(getContractsSuccess(response.data.data));
       })
       .catch(err => {

@@ -6,6 +6,7 @@ import Layout from './components/Layout/Layout';
 import Auth from './containers/Auth/Auth';
 
 import './App.css';
+import { LoadingBar } from 'react-redux-loading-bar';
 
 class App extends Component {
   render() {

@@ -7,11 +7,11 @@ export const updateObject = (oldObject, updatedProperties) => ({
 
 export const helpers = {
   renderGender: function(value) {
-    return value == 1 ? "Nam": "Nữ"
+    return value === 1 ? "Nam": "Nữ"
   },
 
   renderServiceType: function(value) {
-    return value == 0 ? "Dùng lẻ" : "Dùng định kỳ"
+    return value === 0 ? "Dùng lẻ" : "Dùng định kỳ"
   },
 
   formatMoney: function(value) {

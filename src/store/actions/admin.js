@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../shared/api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const getAccessToken = () => {
   const token = localStorage.getItem('accessToken');
@@ -198,6 +199,7 @@ export const getGroups = () => {
 export const showUser = (id) => {
   return async dispatch => {
     await dispatch(showUserStart());
+    dispatch(showLoading());
     const path = `/users/${id}`;
     await axios.get(path, {
       headers: {
@@ -209,6 +211,7 @@ export const showUser = (id) => {
     })
     .then(response => {
       dispatch(showUserSuccess(response.data.info, response.data.message));
+      dispatch(hideLoading());
     })
     .catch(err => {
       dispatch(showUserFail(err.message));
@@ -219,6 +222,7 @@ export const showUser = (id) => {
   export const editUser = (id, data) => {
     return async dispatch => {
       dispatch(editUserStart());
+      dispatch(showLoading());
       const path = `/users/${id}`;
       await axios.patch(path, data, {
         headers: {
@@ -230,6 +234,7 @@ export const showUser = (id) => {
       })
         .then(response => {
           dispatch(editUserSuccess(response.data.message, id, data));
+          dispatch(hideLoading());
         })
         .catch(err => {
           dispatch(editUserFail(err.response.data.message));
@@ -262,6 +267,7 @@ export const deleteUser = id => {
 export const createUser = data => {
   return async dispatch => {
     dispatch(createUserStart());
+    dispatch(showLoading());
     const path = '/users';
     axios.post(path, data,{
       headers: {
@@ -275,6 +281,7 @@ export const createUser = data => {
         const message = response.data.message;
         const info = response.data.info;
         dispatch(createUserSuccess(message, info));
+        dispatch(hideLoading());
       })
       .catch(error => {
         dispatch(createUserFail(error.response.data.message));
@@ -287,6 +294,7 @@ export const getUsers = (role) => {
 
   return async dispatch => {
     await dispatch(getUsersStart());
+    dispatch(showLoading());
     const path = `/users?role=${paramRole}`;
     await axios.get(path, {
       headers: {
@@ -297,6 +305,7 @@ export const getUsers = (role) => {
     })
       .then(response => {
         dispatch(getUsersSuccess(response.data.data, response.message));
+        dispatch(hideLoading());
       })
       .catch(err => {
         dispatch(getUsersFail(err.message));
