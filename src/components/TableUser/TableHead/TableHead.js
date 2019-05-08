@@ -6,7 +6,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const rows = [
@@ -17,7 +16,7 @@ const rows = [
   { id: 'address', numeric: false, label: 'Địa chỉ' },
   { id: 'gender', numeric: true, label: 'Giới tính' },
   { id: 'birthday', numeric: true, label: 'Ngày sinh' },
-  { id: 'permission', numeric: true, label: 'Quyền' },
+  // { id: 'permission', numeric: true, label: 'Quyền' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -26,7 +25,7 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
+    const { order, orderBy } = this.props;
 
     const users = rows.map(row => (
       <TableCell

@@ -43,7 +43,6 @@ class ScrollableTabsButtonPrevent extends React.Component {
   };
 
   componentWillMount = () => {
-    console.log('admindsfadsfa', this.props.adminInfo);
     this.setState({
       dataProfile: {
         name: this.props.adminInfo.name,
@@ -58,7 +57,6 @@ class ScrollableTabsButtonPrevent extends React.Component {
 
   componentDidUpdate() {
     const { notification, variant } = this.props;
-    console.log(notification, variant);
     if (notification) {
       this.props.enqueueSnackbar(notification, {variant: variant});
     }

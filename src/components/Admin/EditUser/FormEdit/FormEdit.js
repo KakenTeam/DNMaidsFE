@@ -34,8 +34,6 @@ class FormEdit extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log('data edit dfaallkjj', this.props.user);
-
     // custom rule will have name 'isPasswordMatch'
     ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
       const { formData } = this.state;
@@ -52,16 +50,14 @@ class FormEdit extends React.Component {
         ...this.state.editData,
         [event.target.name]: event.target.value,
       }
-    }, () => {
-      console.log('change edit data', this.state.editData);
     });
   }
 
   handleEditUser = () => {
-    let open = this.props.toggleEdit;
+    // let open = this.props.toggleEdit;
     this.props.onEditUser(this.props.user.id, this.state.editData);
     if (this.props.isEdit) {
-      this.props.onToggleEdit(!open);
+      this.props.editToggle();
     }
     this.props.getUsers();
     this.props.onRemmoveSelected();
@@ -74,8 +70,7 @@ class FormEdit extends React.Component {
 
     const { classes, toggleEdit, genderDefault, groupsDefault, skillsDefault, editToggle} = this.props;
     const { editData } = this.state;
-
-    console.log('user slikkfds', this.props.user);
+    const role = localStorage.getItem('role');
 
     return (
       <Paper className={toggleEdit ? classes.editForm : ''}>
@@ -121,19 +116,18 @@ class FormEdit extends React.Component {
             type="date"
             margin="normal"
           />
-          <div>
-            <TextValidator
-              required
-              label="Số điện thoại"
-              name="phone"
-              value={editData.phone}
-              onChange={this.changeEditHandle}
-              defaultValue={editData.phone}
-              className={classes.textField}
-              type="number"
-              margin="normal"
-            />
-          </div>
+
+          <TextValidator
+            required
+            label="Số điện thoại"
+            name="phone"
+            value={editData.phone}
+            onChange={this.changeEditHandle}
+            defaultValue={editData.phone}
+            className={classes.textField}
+            type="number"
+            margin="normal"
+          />
 
           <TextValidator
             required
@@ -172,61 +166,65 @@ class FormEdit extends React.Component {
               }
           </TextValidator>
 
-          <TextValidator
-            required
-            select
-            label="Nhóm"
-            name="group"
-            className={classes.textField}
-            value={editData.group}
-            onChange={this.changeEditHandle}
-            SelectProps={{
-              native: false,
-              MenuProps: {
-                className: classes.menu,
-              },
-            }}
-            margin="normal"
-          >
-            { groupsDefault ? groupsDefault.map((option, index) => (
-              <option key={index} value={option.id}>
-                {option.groupName}
-              </option>
-            )) : null }
-          </TextValidator>
-
-          {
-            editData.skill ?
-              <FormControl className={classes.formControl} 
-                // disabled={user.role === 0 || !user.role}
-                >
-                <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
-                <Select
-                  // select
-                  // label="Kỹ năng"
-                  multiple
-                  name="skill"
-                  value={editData.skill ? editData.skill : null}
-                  onChange={this.changeEditHandle}
-                  input={<Input id="select-multiple-chip" />}
-                  renderValue={selected => (
-                    <div className={classes.chips}>
-                      {selected.map(value => (
-                        <Chip key={value} label={value} className={classes.chip} />
-                      ))}
-                    </div>
-                  )}
-                >
-                  { skillsDefault ? skillsDefault.map(skill => (
-                    <MenuItem key={skill.id} value={skill.id}>
-                      {/* {skill.name} */}
-                      <Chip key={skill.id} label={skill.name} className={classes.chip} />
-                    </MenuItem>
-                  )) : null }
-                </Select>
-              </FormControl>
+          {role === '0' ?
+            <TextValidator
+              required
+              select
+              label="Nhóm"
+              name="group"
+              className={classes.textField}
+              value={editData.group}
+              onChange={this.changeEditHandle}
+              SelectProps={{
+                native: false,
+                MenuProps: {
+                  className: classes.menu,
+                },
+              }}
+              margin="normal"
+            >
+              { groupsDefault ? groupsDefault.map((option, index) => (
+                <option key={index} value={option.id}>
+                  {option.groupName}
+                </option>
+              )) : null }
+            </TextValidator>
             : null
           }
+
+          {
+            role === '1' ?
+              (
+                editData.skill ?
+                  <FormControl className={classes.formControl} 
+                    >
+                    <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
+                    <Select
+                      multiple
+                      name="skill"
+                      value={editData.skill ? editData.skill : null}
+                      onChange={this.changeEditHandle}
+                      input={<Input id="select-multiple-chip" />}
+                      renderValue={selected => (
+                        <div className={classes.chips}>
+                          {selected.map(value => (
+                            <Chip key={value} label={value} className={classes.chip} />
+                          ))}
+                        </div>
+                      )}
+                    >
+                      { skillsDefault ? skillsDefault.map(skill => (
+                        <MenuItem key={skill.id} value={skill.id}>
+                          <Chip key={skill.id} label={skill.name} className={classes.chip} />
+                        </MenuItem>
+                      )) : null }
+                    </Select>
+                  </FormControl>
+                : null
+              )
+            : null
+          }
+
 
           <div className={classes.buttonWrapper}>
             <FormControl className={classes.buttons}>
@@ -235,7 +233,6 @@ class FormEdit extends React.Component {
               </Button>
               <Button
                 onClick={this.handleEditUser}
-                // disabled={!disableAddButton}
                 className={classes.submitBtn} variant="contained" type="submit" color="primary">
                 Sửa
               </Button>
@@ -251,7 +248,7 @@ const mapStateToProps = state => ({
   toggleCreate: state.admin.toggleCreate,
   openEdit: state.admin.openEdit,
   toggleEdit: state.admin.toggleEdit,
-  isEdit: state.admin.isEdit,
+  isEdited: state.admin.isEdit,
   // showUser: state.admin.user,
 });
 

@@ -54,12 +54,6 @@ class TableContracts extends React.Component {
 
   async componentDidMount() {
     await this.props.getContracts();
-    // await this.props.getAdmin();
-    // await this.props.getSkills();
-    // await this.props.getGroups();
-    // setTimeout(() => {
-    //   this.props.onCloseAlert();
-    // }, 0);
   }
 
   handleRequestSort = (event, property) => {
@@ -85,14 +79,11 @@ class TableContracts extends React.Component {
 
   render() {
     const { classes, contracts } = this.props;
-    const { order, orderBy, idSelected, rowsPerPage, page } = this.state;
+    const { order, orderBy, rowsPerPage, page } = this.state;
     const totalContracts = contracts.length;
 
     return (
       <Paper className={classes.root}>
-        {/* <EnhancedTableToolbar
-          idSelected={idSelected}
-        /> */}
         <div className={classes.tableWrapper}>
           <h2>Danh sách hợp đồng</h2>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -107,17 +98,13 @@ class TableContracts extends React.Component {
               { contracts ? stableSort(contracts, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(contract => {
-                  // const isSelected = this.isSelected(user.id);
                   return (
                     contract.helper ?
                       <TableRow
                         hover
-                        // onClick={event => this.handleClick(event, contract.id)}
                         role="checkbox"
-                        // aria-checked={isSelected}
                         tabIndex={-1}
                         key={contract.id}
-                        // selected={isSelected}
                       >
                         <TableCell padding="dense" component="th" align="right">{contract.id}</TableCell>
                         <TableCell padding="dense" align="right">{contract.customer.name}</TableCell>
@@ -164,7 +151,6 @@ class TableContracts extends React.Component {
 
 const mapStateToProps = state => ({
   contracts: state.contracts.contracts,
-  // isDeleted: state.admin.isDelete,
 });
 
 const mapDispatchToProps = dispatch => ({

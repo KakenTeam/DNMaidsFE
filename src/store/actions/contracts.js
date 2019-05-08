@@ -61,7 +61,6 @@ const updateContractStatusFail = err => ({
 });
 
 export const updateContractStatus = (id, status) => {
-  console.log('status action', status);
   return dispatch => {
     dispatch(updateContractStatusStart());
     const path = `/contracts/${id}/status`;
@@ -77,7 +76,6 @@ export const updateContractStatus = (id, status) => {
         dispatch(updateContractStatusSuccess(response.data.data, response.data.message));
       })
       .catch(err => {
-        console.log(err);
         dispatch(updateContractStatusFail(err.message));
       });
   };
@@ -99,7 +97,6 @@ export const showContract = (id) => {
         dispatch(showContractSuccess(response.data.data));
       })
       .catch(err => {
-        console.log(err);
         dispatch(showContractFail(err));
       })
   };
@@ -123,7 +120,6 @@ export const getContracts = () => {
         dispatch(getContractsSuccess(response.data.data));
       })
       .catch(err => {
-        console.log(err);
         dispatch(getContractsFail(err));
       });
   };;

@@ -18,7 +18,14 @@ import EditUser from '../../Admin/EditUser/EditUser';
 class EnhancedTableToolbar extends React.Component {
 
   render() {
-    const { numSelected, idSelected, classes } = this.props;
+    const { numSelected, idSelected, classes, role } = this.props;
+
+    let titleTable = 'Người dùng';
+    if (role === '1') {
+      titleTable = 'Người giúp việc';
+    } else if (role === '2') {
+      titleTable = 'Khách hàng';
+    }
 
     return (
       <Toolbar
@@ -33,7 +40,7 @@ class EnhancedTableToolbar extends React.Component {
             </Typography>
           ) : (
             <Typography variant="h6" id="tableTitle">
-              Người dùng
+              {titleTable}
             </Typography>
           )}
         </div>
