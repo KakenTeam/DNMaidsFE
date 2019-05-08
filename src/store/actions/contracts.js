@@ -47,11 +47,11 @@ const updateContractStatusStart = () => ({
   isFetching: true,
 });
 
-const updateContractStatusSuccess = (data, mess) => ({
+const updateContractStatusSuccess = (status, mess) => ({
   type: actionTypes.UPDATE_CONTRACT_STATUS.SUCCESS,
   isFetching: false,
   message: mess,
-  contractUpdate: data,
+  status: status,
 });
 
 const updateContractStatusFail = err => ({
@@ -73,7 +73,7 @@ export const updateContractStatus = (id, status) => {
       },
     })
       .then(response => {
-        dispatch(updateContractStatusSuccess(response.data.data, response.data.message));
+        dispatch(updateContractStatusSuccess(status, response.data.message));
       })
       .catch(err => {
         dispatch(updateContractStatusFail(err.message));

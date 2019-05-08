@@ -81,8 +81,6 @@ class CreateUser extends React.Component {
         ...this.state.skills,
         [event.target.name]: event.target,
       },
-    }, () => {
-      console.log(this.state.user);
     });
   }
 

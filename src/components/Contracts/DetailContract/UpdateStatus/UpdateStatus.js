@@ -25,12 +25,13 @@ class UpdateStatus extends React.Component {
     },
   };
 
-  componentWillMount = () => {
+  componentWillReceiveProps = (nextProps) => {
     this.setState({
       statusChoose: {
         ...this.state.statusChoose,
-        status: this.props.status
+        status: nextProps.status,
       }
+    }, () => {
     });
   }
   
@@ -52,10 +53,14 @@ class UpdateStatus extends React.Component {
   updateContractStatusHandle = () => {
     this.handleToggle();
     this.props.onUpdateStatus(this.props.idContract, this.state.statusChoose);
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 3000);
   }
 
   render() {
     const { classes } = this.props;
+
 
     const statusItem = this.state.statusDefault.map(item => (
       <MenuItem value={item}>{item}</MenuItem>
@@ -100,8 +105,16 @@ class UpdateStatus extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onUpdateStatus: (id, status) => dispatch(actions.updateContractStatus(id, status)),
+const mapStateToProps = state => ({
+  notification: state.contracts.notifications,
+  variant: state.contracts.variant,
+  detailContract: state.contracts.detailContract,
 });
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(UpdateStatus));
+const mapDispatchToProps = dispatch => ({
+  onShowContract: (id) => dispatch(actions.showContract(id)),
+  onUpdateStatus: (id, status) => dispatch(actions.updateContractStatus(id, status)),
+  onCloseAlert: () => dispatch(actions.closeAlert()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(UpdateStatus));
