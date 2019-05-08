@@ -31,7 +31,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <LoadingBar />
         {routes}
       </div>
     );
