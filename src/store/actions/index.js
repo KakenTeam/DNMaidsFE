@@ -26,4 +26,7 @@ export {
   getContracts,
   showContract,
   updateContractStatus,
+  getHelpersContract,
+  updateHelper,
+  closeAlertUpdateHelper,
 } from './contracts';

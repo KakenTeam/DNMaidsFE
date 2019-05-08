@@ -99,6 +99,7 @@ class TableContracts extends React.Component {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(contract => {
                   let helperName = contract.helper ? contract.helper.name : '';
+                  let customerName = contract.customer ? contract.customer.name : '';
                   return (
                     <TableRow
                       hover
@@ -107,7 +108,7 @@ class TableContracts extends React.Component {
                       key={contract.id}
                     >
                       <TableCell padding="dense" component="th" align="right">{contract.id}</TableCell>
-                      <TableCell padding="dense" align="right">{contract.customer.name}</TableCell>
+                      <TableCell padding="dense" align="right">{customerName}</TableCell>
                       <TableCell padding="dense" align="right">{helperName}</TableCell>
                       <TableCell padding="dense" align="right">{contract.created_at}</TableCell>
                       <TableCell padding="dense" align="right">{helpers.formatDate(contract.start_date)}</TableCell>
