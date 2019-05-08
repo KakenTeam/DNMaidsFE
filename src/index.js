@@ -10,11 +10,12 @@ import * as serviceWorker from './serviceWorker';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { SnackbarProvider } from 'notistack';
 import rootReducer from './store/reducers';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(
-  applyMiddleware(thunk)
+  applyMiddleware(thunk),
 ));
 
 const app = (
