@@ -6,8 +6,8 @@ import Layout from './components/Layout/Layout';
 import Aside from './components/Layout/Aside/Aside';
 import Auth from './containers/Auth/Auth';
 import ProfileContainer from './components/Admin/Profile/ProfileContainer';
-
 import './App.css';
+import { LoadingBar } from 'react-redux-loading-bar';
 
 class App extends Component {
   render() {
@@ -32,6 +32,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <LoadingBar />
         {routes}
       </div>
     );
