@@ -15,6 +15,7 @@ import Users from '../User/Users';
 import ProfileContainer from '../../Admin/Profile/ProfileContainer';
 import TableContracts from '../../Contracts/TableContracts/TableContracts';
 import DetailContract from '../../Contracts/DetailContract/DetailContract';
+import FeedbackContainer from '../../Feedback/FeedbackContainer';
 
 class Aside extends React.Component {
 	state = {
@@ -51,6 +52,7 @@ class Aside extends React.Component {
 							<Route path={`${this.props.match.path}/profile`} component={(ProfileContainer)} />
 							<Route path={`${this.props.match.path}/contracts/:id`} component={DetailContract} />
 							<Route path={`${this.props.match.path}/contracts`} component={TableContracts} />
+							<Route path={`${this.props.match.path}/feedbacks`} component={FeedbackContainer} />
 						</Switch>
 					</main>
 				</div>

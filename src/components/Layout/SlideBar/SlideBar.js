@@ -23,6 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import GroupAdd from '@material-ui/icons/GroupAdd';
 import AccountBox from '@material-ui/icons/AccountBox';
 import Assignment from '@material-ui/icons/Assignment';
+import Feedback from '@material-ui/icons/Feedback'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoadingBar from 'react-redux-loading-bar'
@@ -173,6 +174,13 @@ class SlideBar extends Component {
 								<ListItem button>
 									<ListItemIcon><Assignment /></ListItemIcon>
 									<ListItemText primary="Hợp đồng" />
+								</ListItem>
+							</Link>
+
+							<Link to="/admin/feedbacks">
+								<ListItem button>
+									<ListItemIcon><Feedback /></ListItemIcon>
+									<ListItemText primary="Phản hồi" />
 								</ListItem>
 							</Link>
 						</List>

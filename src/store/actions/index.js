@@ -30,3 +30,7 @@ export {
   updateHelper,
   closeAlertUpdateHelper,
 } from './contracts';
+
+export {
+  getFeedbacks
+} from './feedback';

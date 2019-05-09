@@ -46,3 +46,6 @@ export const GET_GROUPS = statusTypes('GET_GROUPS');
 // snackbar
 export const ENQUEUE_SNACKBAR = 'ENQUEUE_SNACKBAR';
 export const REMOVE_SNACKBAR = 'REMOVE_SNACKBAR';
+
+// CRUD feedbacks 
+export const GET_FEEDBACKS = statusTypes('GET_FEEDBACKS');
