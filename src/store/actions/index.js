@@ -27,3 +27,7 @@ export {
   showContract,
   updateContractStatus,
 } from './contracts';
+
+export {
+  getFeedbacks
+} from './feedback';

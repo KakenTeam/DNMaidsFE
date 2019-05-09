@@ -1,6 +1,7 @@
 
 import * as actionTypes from './actionTypes';
 import axios from '../../shared/api';
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 const getAccessToken = () => {
   const token = localStorage.getItem('accessToken');
@@ -16,7 +17,7 @@ const getFeedbacksStart = () => ({
 const getFeedbacksSuccess = (data) => ({
   type: actionTypes.GET_FEEDBACKS.SUCCESS,
   isFetching: false,
-  contracts: data,
+  feedbacks: data,
 });
 
 const getFeedbacksFail = err => ({

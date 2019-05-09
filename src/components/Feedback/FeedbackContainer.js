@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-
-
 import styles from './Styles';
+import FeedbackTable from './FeedbackTable/FeedbackTable';
+
+
 
 class FeedbackContainer extends Component {
   state = {
@@ -21,6 +22,7 @@ class FeedbackContainer extends Component {
         <Paper
         >
           List Feedback
+          <FeedbackTable />
         </Paper>
       </div>
     );
