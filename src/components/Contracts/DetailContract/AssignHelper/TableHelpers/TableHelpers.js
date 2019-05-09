@@ -36,20 +36,23 @@ class TableHelpers extends React.Component {
             <TableBody>
               { helpers ? 
                 helpers.map(helper => {
+                  const helperSkills =  helper.skills.map(element => {
+                    return element.name;
+                  });
+                  const stringSkills = helperSkills.join(', ');
                   return (
                     <TableRow
                       hover
                       key={helper.id}
                     >
-                      <TableCell padding="dense" component="th" align="right">{helper.id}</TableCell>
                       <TableCell padding="dense" align="right">{helper.name}</TableCell>
-                      <TableCell padding="dense" align="right">{helper.email}</TableCell>
                       <TableCell padding="dense" align="right">{helper.phone}</TableCell>
                       <TableCell padding="dense" align="right">{helper.address}</TableCell>
                       <TableCell padding="dense" align="right">{helper.gender}</TableCell>
+                      <TableCell padding="dense" align="right">{stringSkills}</TableCell>
                       <TableCell padding="dense" align="right">
                         <Button onClick={() => this.updateHelperHandle(helper.id)} variant="contained" color="primary" className={classes.button}>
-                          Thêm
+                          Chọn
                         </Button>
                       </TableCell>
                     </TableRow>

@@ -17,7 +17,7 @@ const styles = theme => ({
     margin: 0,
     padding: 0,
     position: 'relative',
-    left: 20,
+    left: 3,
   },
 });
 

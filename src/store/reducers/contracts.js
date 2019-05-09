@@ -92,6 +92,7 @@ const updateHelperSuccess = (state, action) => {
       ...newHelperUpdate[0],
     },
     status: action.statusUpdate,
+    skills: [...newHelperUpdate[0].skills]
   };
 
   const newHelpersContract = state.helpersContract.filter(helper => {

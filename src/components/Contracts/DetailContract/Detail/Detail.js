@@ -11,6 +11,12 @@ const detail = props => {
 
   const { classes, detailContract } = props;
 
+  const skills = detailContract.skills ? detailContract.skills.map(element => {
+    return element.name;
+  }) : null;
+
+  const stringSkill = skills ? skills.join(', ') : null;
+
     const schedule = detailContract.schedule ? detailContract.schedule.map(info => {
       return (
         <ul>
@@ -97,7 +103,7 @@ const detail = props => {
         <strong>Địa chỉ: </strong> {detailContract.helper.address}
       </li>
       <li>
-        <strong>Kỹ năng: </strong> {detailContract.helper.skill}
+        <strong>Kỹ năng: </strong>{stringSkill}
       </li>
     </ul>
     ) : (
