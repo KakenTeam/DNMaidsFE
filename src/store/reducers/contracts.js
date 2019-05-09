@@ -4,6 +4,7 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
   loading: false,
   contracts: [],
+  helpersContract: [],
   detailContract: {},
   notifications: '',
   variant: '',
@@ -23,7 +24,20 @@ const getContractsSuccess = (state, action) => updateObject(state, {
 });
 
 const getContractsFail = (state, action) => updateObject(state, {
-  
+  loading: false,
+});
+
+const getHelpersContractStart = (state, action) => updateObject(state, {
+  loading: true,
+});
+
+const getHelpersContractSuccess = (state, action) => updateObject(state, {
+  helpersContract: [...action.helpers],
+  loading: false,
+});
+
+const getHelpersContractFail = (state, action) => updateObject(state, {
+  loading: false,
 });
 
 const showContractStart = (state, action) => updateObject(state, {
@@ -63,12 +77,54 @@ const updateContactStatusFail = (state, action) => updateObject(state, {
   variant: 'error',
 });
 
+const updateHelperStart = (state, action) => updateObject(state, {
+  loading: true,
+});
+
+const updateHelperSuccess = (state, action) => {
+  let newHelperUpdate = state.helpersContract.filter(helper => {
+    return helper.id === action.idHelper;
+  });
+
+  let newDetailContract = {
+    ...state.detailContract,
+    helper: {
+      ...newHelperUpdate[0],
+    },
+    status: action.statusUpdate,
+  };
+
+  const newHelpersContract = state.helpersContract.filter(helper => {
+    return helper.id !== action.idHelper;
+  });
+
+  return updateObject(state, {
+    detailContract: newDetailContract,
+    helpersContract: newHelpersContract,
+    notifications: action.message,
+    variant: 'success',
+  });
+};
+
+const updateHelperFail = (state, action) => {
+  return updateObject(state, {
+    notifications: action.error,
+    variant: 'error',
+  });
+};
+
 const contracts = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CLOSE_ALERT: return closeAlert(state, action);
     case actionTypes.GET_CONTRACTS.START: return getContractsStart(state, action);
     case actionTypes.GET_CONTRACTS.SUCCESS: return getContractsSuccess(state, action);
     case actionTypes.GET_CONTRACTS.FAIL: return getContractsFail(state, action);
+    case actionTypes.GET_HELPERS_CONTRACT.START: return getHelpersContractStart(state, action);
+    case actionTypes.GET_HELPERS_CONTRACT.SUCCESS: return getHelpersContractSuccess(state, action);
+    case actionTypes.GET_HELPERS_CONTRACT.FAIL: return getHelpersContractFail(state, action);
+    case actionTypes.UPDATE_HELPER.START: return updateHelperStart(state, action);
+    case actionTypes.UPDATE_HELPER.SUCCESS: return updateHelperSuccess(state, action);
+    case actionTypes.UPDATE_HELPER.FAIL: return updateHelperFail(state, action);
     case actionTypes.SHOW_CONTRACT.START: return showContractStart(state, action);
     case actionTypes.SHOW_CONTRACT.SUCCESS: return showContractSuccess(state, action);
     case actionTypes.SHOW_CONTRACT.FAIL: return showContractFail(state, action);

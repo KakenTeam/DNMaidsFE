@@ -60,6 +60,87 @@ const updateContractStatusFail = err => ({
   error: err,
 });
 
+const getHelpersContractStart = () => ({
+  type: actionTypes.GET_HELPERS_CONTRACT.START,
+  isFetching: true,
+});
+
+
+const getHelpersContractSuccess = (data) => ({
+  type: actionTypes.GET_HELPERS_CONTRACT.SUCCESS,
+  isFetching: false,
+  helpers: data,
+});
+
+const getHelpersContractFail = err => ({
+  type: actionTypes.GET_HELPERS_CONTRACT.FAIL,
+  isFetching: false,
+  error: err,
+});
+
+const updateHelperStart = () => ({
+  type: actionTypes.UPDATE_HELPER.START,
+});
+
+const updateHelperSuccess = (mess, idHelper) => ({
+  type: actionTypes.UPDATE_HELPER.SUCCESS,
+  message: mess,
+  idHelper: idHelper,
+  statusUpdate: 'verified',
+});
+
+const updateHelperFail = err => ({
+  type: actionTypes.UPDATE_HELPER.FAIL,
+  error: err,
+});
+
+export const updateHelper = (idContract, idHelper) => {
+  let data = {
+    "helper_id": idHelper,
+    "status" : "verified"
+  };
+
+  return dispatch => {
+    dispatch(updateHelperStart());
+    const path = `/contracts/${idContract}/assign`;
+    axios.patch(path, data, {
+      headers: {
+        'Authorization': getAccessToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(response => {
+        dispatch(updateHelperSuccess(response.data.message, idHelper));
+      })
+      .catch(err => {
+        dispatch(updateHelperFail(err));
+      });
+  };
+};
+
+export const getHelpersContract = id => {
+  return dispatch => {
+    dispatch(getHelpersContractStart());
+    const path = `/find_helpers/${id}`;
+    axios.get(path, {
+      headers: {
+        'Authorization': getAccessToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(response => {
+        dispatch(getHelpersContractSuccess(response.data.data));
+      })
+      .catch(err => {
+        dispatch(getHelpersContractFail(err));
+      })
+  };
+};
+
 export const updateContractStatus = (id, status) => {
   return dispatch => {
     dispatch(updateContractStatusStart());
@@ -126,3 +207,7 @@ export const getContracts = () => {
       });
   };;
 };
+
+export const closeAlertUpdateHelper = () => ({
+  type: actionTypes.CLOSE_ALERT,
+});

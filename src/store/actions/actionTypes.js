@@ -30,6 +30,8 @@ export const TOGGLE_EDIT = 'TOGGLE_EDIT';
 export const GET_CONTRACTS = statusTypes('GET_CONTRACTS');
 export const SHOW_CONTRACT = statusTypes('SHOW_CONTRACT');
 export const UPDATE_CONTRACT_STATUS = statusTypes('UPDATE_CONTRACT_STATUS');
+export const GET_HELPERS_CONTRACT = statusTypes('GET_HELPERS_CONTRACT');
+export const UPDATE_HELPER = statusTypes('UPDATE_HELPER');
 
 // get skills
 export const GET_SKILLS = statusTypes('GET_SKILLS');
