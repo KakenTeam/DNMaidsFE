@@ -10,8 +10,8 @@ class FeedbackChip extends React.Component{
   }
 
   render() {
-    let color = this.props.status == 'resolved' ? 'primary' : 'secondary';
-    let text = this.props.status == 'resolved' ? 'Đã xử lý' : 'Chưa xử lý'
+    let color = this.props.status === 'resolved' ? 'primary' : 'secondary';
+    let text = this.props.status === 'resolved' ? 'Đã xử lý' : 'Chưa xử lý'
 
     return (
       <Chip

@@ -18,7 +18,6 @@ class FeedbackTable extends React.Component {
     const { classes, feedbacks } = this.props;
 
     return (
-      
       <div>
         <MaterialTable
         title="Phản hồi khách hàng"
@@ -28,7 +27,8 @@ class FeedbackTable extends React.Component {
           { title: 'Phản hồi', field: 'feedback' },
           { 
             title: 'Trạng thái', field: 'status',
-            render: rowData => <FeedbackChip status={rowData.status} />
+            render: rowData => <FeedbackChip status={rowData.status} />,
+            lookup: { 'resolved': 'Đã xử lý', 'unresolved': 'Chưa xử lý' },
           },
           { title: 'Thời gian gửi', field: 'created_at'}
         ]}
@@ -36,6 +36,7 @@ class FeedbackTable extends React.Component {
         options={{
           sorting: true,
           pageSize: 10,
+          filtering: true,
         }}
       />
       </div>
