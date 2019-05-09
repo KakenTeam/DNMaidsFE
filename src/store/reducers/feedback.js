@@ -4,7 +4,7 @@ import { updateObject } from '../../shared/utility';
 const initialState = {
   loading: false,
   feedbacks: [],
-  detailFeeback: {},
+  detailFeedback: {},
   notifications: '',
   variant: '',
 };
@@ -26,19 +26,12 @@ const updateFeedbackStatusStart = (state, action) => updateObject(state, {
   loading: true,
 });
 
-const updateFeedbackStatusSuccess = (state, action) => {
-  const newUpdate = {
-    ...state.detailFeeback,
-    ...action.status,
-  };
-
-  return updateObject(state, {
-    loading: false,
-    notifications: action.message,
-    detailFeeback: newUpdate,
-    variant: 'success',
+const updateFeedbackStatusSuccess = (state, action) => updateObject(state, { 
+    feedbacks: state.feedbacks.map(
+      (feedback, i) => feedback === state.detailFeedback.id ? { ...feedback, status: action.status.status} 
+                        : feedback
+    )
   });
-};
 
 const updateFeedbackStatusFail = (state, action) => updateObject(state, {
   loading: false,
@@ -46,15 +39,21 @@ const updateFeedbackStatusFail = (state, action) => updateObject(state, {
   variant: 'error',
 });
 
+const showFeedbackSuccess = (state, action) => updateObject(state, {
+  detailFeedback: action.detailFeedback,
+  loading: false,
+})
+
 
 const feedbacks = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_FEEDBACKS.START: return getFeedbacksStart(state, action);
     case actionTypes.GET_FEEDBACKS.SUCCESS: return getFeedbacksSuccess(state, action);
     case actionTypes.GET_FEEDBACKS.FAIL: return getFeedbacksFail(state, action);
-    case actionTypes.GET_FEEDBACKS.START: return updateFeedbackStatusStart(state, action);
-    case actionTypes.GET_FEEDBACKS.SUCCESS: return updateFeedbackStatusSuccess(state, action);
-    case actionTypes.GET_FEEDBACKS.FAIL: return updateFeedbackStatusFail(state, action);
+    case actionTypes.UPDATE_FEEDBACK_STATUS.START: return updateFeedbackStatusStart(state, action);
+    case actionTypes.UPDATE_FEEDBACK_STATUS.SUCCESS: return updateFeedbackStatusSuccess(state, action);
+    case actionTypes.UPDATE_FEEDBACK_STATUS.FAIL: return updateFeedbackStatusFail(state, action);
+    case actionTypes.SHOW_FEEDBACK.SUCCESS: return showFeedbackSuccess(state, action);
     default: return state;
   }
 }

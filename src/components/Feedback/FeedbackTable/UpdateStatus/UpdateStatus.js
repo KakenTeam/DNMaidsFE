@@ -9,12 +9,13 @@ import styles from './Styles';
 import classNames from 'classnames';
 
 class UpdateStatus extends React.Component {
-  state = {
-    feedback: this.props.feedback
+
+  componentDidMount() {
+    
   }
 
   updateFeedbackStatusHandle = () => {
-    
+    this.props.showFeedback(this.props.feedback)
     this.props.onUpdateStatus(this.props.feedbackId, { status: 'resolved' })
   }
 
@@ -34,10 +35,11 @@ class UpdateStatus extends React.Component {
 
 
 const mapStateToProps = state => ({
-  detailContract: state.contracts.detailContract,
+  // detailFeedback: state.feedback.detailFeedback,
 });
 
 const mapDispatchToProps = dispatch => ({
+  showFeedback: (feedback) => dispatch(action.showFeedback(feedback)),
   onUpdateStatus: (id, status) => dispatch(action.updateFeedbackStatus(id, status)),
 });
 

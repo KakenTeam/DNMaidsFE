@@ -34,4 +34,5 @@ export {
 export {
   getFeedbacks,
   updateFeedbackStatus,
+  showFeedback,
 } from './feedback';

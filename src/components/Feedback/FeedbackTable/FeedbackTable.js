@@ -41,7 +41,7 @@ class FeedbackTable extends React.Component {
           { title: 'Thời gian gửi', field: 'created_at'},
           {
             title: 'Hành động', 
-            render: rowData => <UpdateStatus feedbackId={rowData.id} />
+            render: rowData => <UpdateStatus feedbackId={rowData.id} feedback={rowData} />
           }
         ]}
         data={this.getFeedbacks()}        

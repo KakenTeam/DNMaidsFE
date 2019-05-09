@@ -45,6 +45,15 @@ const updateFeedbackStatusFail = err => ({
   error: err,
 });
 
+const showFeedbackStart = () => ({
+  type: actionTypes.SHOW_FEEDBACK.START
+})
+
+const showFeedbackSuccess = (data) => ({
+  type: actionTypes.SHOW_FEEDBACK.SUCCESS,
+  detailFeedback: data,
+})
+
 export const getFeedbacks = () => {
   return dispatch => {
     dispatch(getFeedbacksStart());
@@ -88,3 +97,9 @@ export const updateFeedbackStatus = (id, status) => {
       });
   };
 };
+
+export const showFeedback = (feedback) => {
+  return dispatch => {
+    dispatch(showFeedbackSuccess(feedback))
+  }
+}
