@@ -8,6 +8,7 @@ import styles from './Styles';
 import { helpers } from '../../../shared/utility';
 import MaterialTable from 'material-table';
 import FeedbackChip from './FeedbackChip';
+import UpdateStatus from './UpdateStatus/UpdateStatus';
 
 class FeedbackTable extends React.Component {
   async componentDidMount() {
@@ -37,7 +38,11 @@ class FeedbackTable extends React.Component {
             render: rowData => <FeedbackChip status={rowData.status} />,
             lookup: { 'resolved': 'Đã xử lý', 'unresolved': 'Chưa xử lý' },
           },
-          { title: 'Thời gian gửi', field: 'created_at'}
+          { title: 'Thời gian gửi', field: 'created_at'},
+          {
+            title: 'Hành động', 
+            render: rowData => <UpdateStatus feedbackId={rowData.id} />
+          }
         ]}
         data={this.getFeedbacks()}        
         options={{

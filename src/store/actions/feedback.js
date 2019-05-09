@@ -68,7 +68,7 @@ export const getFeedbacks = () => {
   };;
 };
 
-export const updateContractStatus = (id, status) => {
+export const updateFeedbackStatus = (id, status) => {
   return dispatch => {
     dispatch(updateFeedbackStatusStart());
     const path = `/feedbacks/${id}`;
