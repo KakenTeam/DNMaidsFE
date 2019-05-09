@@ -6,6 +6,8 @@ import { withStyles } from '@material-ui/core/styles';
 import * as actions from '../../../store/actions/index';
 import styles from './Styles';
 import { helpers } from '../../../shared/utility';
+import MaterialTable from 'material-table';
+import FeedbackChip from './FeedbackChip';
 
 class FeedbackTable extends React.Component {
   async componentDidMount() {
@@ -18,7 +20,24 @@ class FeedbackTable extends React.Component {
     return (
       
       <div>
-        Thuan
+        <MaterialTable
+        title="Phản hồi khách hàng"
+        columns={[
+          { title: 'Tên khách hàng', field: 'user.name' },
+          { title: 'Số điện thoại ', field: 'user.phone' },
+          { title: 'Phản hồi', field: 'feedback' },
+          { 
+            title: 'Trạng thái', field: 'status',
+            render: rowData => <FeedbackChip status={rowData.status} />
+          },
+          { title: 'Thời gian gửi', field: 'created_at'}
+        ]}
+        data={feedbacks}        
+        options={{
+          sorting: true,
+          pageSize: 10,
+        }}
+      />
       </div>
     )
   }
