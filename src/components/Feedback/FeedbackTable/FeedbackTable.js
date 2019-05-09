@@ -14,6 +14,13 @@ class FeedbackTable extends React.Component {
     await this.props.getFeedbacks();
   }
 
+  getFeedbacks = () => {
+    return this.props.feedbacks.sort(function(a, b) {
+      return a.status > b.status;
+    })
+
+  }
+
   render() {
     const { classes, feedbacks } = this.props;
 
@@ -32,7 +39,7 @@ class FeedbackTable extends React.Component {
           },
           { title: 'Thời gian gửi', field: 'created_at'}
         ]}
-        data={feedbacks}        
+        data={this.getFeedbacks()}        
         options={{
           sorting: true,
           pageSize: 10,
