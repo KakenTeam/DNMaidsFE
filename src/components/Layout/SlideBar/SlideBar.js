@@ -175,6 +175,13 @@ class SlideBar extends Component {
 									<ListItemText primary="Hợp đồng" />
 								</ListItem>
 							</Link>
+
+							<Link to="/admin/feedbacks">
+								<ListItem button>
+									<ListItemIcon><Assignment /></ListItemIcon>
+									<ListItemText primary="Phản hồi" />
+								</ListItem>
+							</Link>
 						</List>
 					</Drawer>
       </div>
