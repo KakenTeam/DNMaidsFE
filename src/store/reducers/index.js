@@ -11,5 +11,6 @@ export default combineReducers({
   admin,
   contracts,
   feedbacks,
+  homepage,
   loadingBar: loadingBarReducer,
 });
