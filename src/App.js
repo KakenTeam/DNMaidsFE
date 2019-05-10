@@ -21,7 +21,7 @@ class App extends Component {
       routes = (
         <Switch>
           <Route path="/admin" component={Layout} />
-          <Redirect to="/admin" />
+          <Redirect to="/admin/homepage" />
           <Redirect to="/" />
           {/* <Route path="/" exact render={() => <Redirect to="/admin" />} /> */}
           {/* <Route path="/admin/profile" exact component={} /> */}
