@@ -51,3 +51,5 @@ export const REMOVE_SNACKBAR = 'REMOVE_SNACKBAR';
 export const GET_FEEDBACKS = statusTypes('GET_FEEDBACKS');
 export const UPDATE_FEEDBACK_STATUS = statusTypes('UPDATE_FEEDBACK_STATUS');
 export const SHOW_FEEDBACK = statusTypes('SHOW_FEEDBACK');
+
+export const GET_STATISTIC = statusTypes("GET_STATISTIC");

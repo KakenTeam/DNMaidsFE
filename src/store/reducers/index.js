@@ -4,6 +4,7 @@ import auth from './auth';
 import admin from './admin';
 import contracts from './contracts';
 import feedbacks from './feedback';
+import homepage from './homepage';
 import { loadingBarReducer } from 'react-redux-loading-bar'
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   admin,
   contracts,
   feedbacks,
+  homepage,
   loadingBar: loadingBarReducer,
 });

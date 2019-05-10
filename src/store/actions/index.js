@@ -36,3 +36,5 @@ export {
   updateFeedbackStatus,
   showFeedback,
 } from './feedback';
+
+export { getStatistic } from './homepage';

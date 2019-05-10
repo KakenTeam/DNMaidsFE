@@ -16,6 +16,7 @@ import ProfileContainer from '../../Admin/Profile/ProfileContainer';
 import TableContracts from '../../Contracts/TableContracts/TableContracts';
 import DetailContract from '../../Contracts/DetailContract/DetailContract';
 import FeedbackContainer from '../../Feedback/FeedbackContainer';
+import HomePage from '../../Homepage/homepage';
 
 class Aside extends React.Component {
 	state = {
@@ -47,6 +48,7 @@ class Aside extends React.Component {
 					<SlideBar />
 					<main className={classes.content}>
 						<Switch>
+							<Route path={`${this.props.match.path}/homepage`} component={HomePage} />
 							<Route path={`${this.props.match.path}/users${this.props.location.search}`} component={Users} />
 							<Route path={`${this.props.match.path}/users`} component={(Users)} />
 							<Route path={`${this.props.match.path}/profile`} component={(ProfileContainer)} />
