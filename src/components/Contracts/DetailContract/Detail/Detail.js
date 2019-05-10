@@ -102,9 +102,6 @@ const detail = props => {
       <li>
         <strong>Giới tính: </strong> {helpers.renderGender(detailContract.helper.gender)}
       </li>
-      <li>
-        <strong>Địa chỉ: </strong> {detailContract.helper.address}
-      </li>
     </ul>
     ) : (
       <ul>
