@@ -23,11 +23,12 @@ class UpdateStatus extends React.Component {
     const { classes } = this.props;
 
     return (
+      this.props.feedback.status !== 'resolved' ? 
       <Button 
         onClick={this.updateFeedbackStatusHandle}
         variant="contained" size="small" color="primary" className={classNames(classes.margin, classes.bootstrapRoot)}>
         Đã đọc
-      </Button>
+      </Button> : null
     )
   }
 
