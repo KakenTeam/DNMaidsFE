@@ -49,7 +49,7 @@ class Profile extends Component {
                       </TableRow>
                       <TableRow>
                         <TableCell >Giới tính</TableCell>
-                        <TableCell align="right">{adminInfo.gender}</TableCell>
+                        <TableCell align="right">{adminInfo.gender === 0 ? 'Nữ' : 'Nam'}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Ngày sinh</TableCell>

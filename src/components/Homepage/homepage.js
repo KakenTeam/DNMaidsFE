@@ -52,7 +52,6 @@ class HomePage extends Component {
   }
 
   getStatistic = () => {
-    console.log(this.props.statistic);
     let statistic = [...this.props.statistic.statistic]
     statistic = statistic.map(statis => ({
       time: statis.time,

@@ -2,55 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+import PropTypes from 'prop-types';
+import MaterialTable from 'material-table';
 
 import * as actions from '../../store/actions/index';
-import EnhancedTableHead from './TableHead/TableHead';
-import EnhancedTableToolbar from './TableToolbar/TableToolbar';
+import AlertMessage from '../Admin/DeleteUser/AlertDelete';
 
 import styles from './Style';
-import {helpers} from '../../shared/utility';
-
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function stableSort(array, cmp) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = cmp(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map(el => el[0]);
-}
-
-function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
-}
 
 class EnhancedTable extends React.Component {
   state = {
-    order: 'asc',
-    orderBy: 'calories',
-    selected: [],
-    idSelected: null,
-    page: 0,
-    rowsPerPage: 5,
+    openDelete: false,
+    idDelete: null,
   };
 
   async componentDidMount() {
@@ -69,139 +33,83 @@ class EnhancedTable extends React.Component {
     }
   }
 
-  setSelected = () => {
-    this.setState({ selected: [] });
+  onToggleDelete = (id) => {
+    this.setState(prevState => ({
+      openDelete: !prevState.openDelete,
+      idDelete: id,
+    }), () => {
+    });
   }
 
-  handleRequestSort = (event, property) => {
-    const orderBy = property;
-    let order = 'desc';
-
-    if (this.state.orderBy === property && this.state.order === 'desc') {
-      order = 'asc';
-    }
-
-    this.setState({ order, orderBy });
-  };
-
-  handleSelectAllClick = event => {
-    if (event.target.checked) {
-      this.setState(state => ({ selected: this.props.users.map(n => n.id) }));
-      return;
-    }
-    this.setState({ selected: [] });
-  };
-
-  handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-      
-    this.setState({ 
-      selected: newSelected, 
-      idSelected: id,
-
-    });
-
-    if (event.target.checked) {
-      this.props.onAddSelected();
-    } else {
-      this.props.onRemmoveSelected();
-    }
-  };
-
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ rowsPerPage: event.target.value });
-  };
-
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  toggleEdit = async (id) => {
+    await this.props.onShowUser(id);
+    let open = this.props.toggleEdit;
+    await this.props.onToggleEdit(!open);
+    setTimeout(() => {
+      this.props.onCloseAlert();
+    }, 1000); 
+	}
 
   render() {
-    const { classes, users, role } = this.props;
-    const { order, orderBy, idSelected, rowsPerPage, page } = this.state;
-    const totalUsers = this.props.users.length;
+    const { classes, users, nameTable } = this.props;
 
+    const title = [
+      {title: 'STT', field: 'id'},
+      {title: 'Email', field: 'email'},
+      {title: 'Tên', field: 'name'},
+      {title: 'Số điện thoại', field: 'phone'},
+      {title: 'Địa chỉ', field: 'address'},
+      {title: 'Giới tính', field: 'gender'},
+      {title: 'Ngày sinh', field: 'birthday'},
+    ];
+
+    const data = users ? users.map(user => {
+      return {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+        address: user.address,
+        gender: user.gender === 0 ? 'Nữ' : 'Nam',
+        birthday: user.birthday,
+      };
+    }) : null;
+
+    const deleteAlert = this.state.openDelete ? (
+      <AlertMessage 
+        id={this.state.idDelete}
+        open={this.state.openDelete}
+      />
+    ) : null;
 
     return (
-      <Paper className={classes.root}>
-        <EnhancedTableToolbar
-          idSelected={idSelected}
-          role={role}
-        />
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={this.handleSelectAllClick}
-              onRequestSort={this.handleRequestSort}
-              rowCount={totalUsers}
-            />
-            <TableBody>
-              { users ? stableSort(users, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(user => {
-                  let isSelected = this.isSelected(user.id);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={event => this.handleClick(event, user.id)}
-                      role="checkbox"
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={user.id}
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox checked={isSelected} />
-                      </TableCell>
-                      <TableCell padding="dense" component="th" align="right">{user.id}</TableCell>
-                      <TableCell padding="dense" align="right">{user.email}</TableCell>
-                      <TableCell padding="dense" align="right">{user.name}</TableCell>
-                      <TableCell padding="dense" align="right">{user.phone}</TableCell>
-                      <TableCell padding="dense" align="right">{user.address}</TableCell>
-                      <TableCell padding="dense" align="right">{helpers.renderGender(user.gender)}</TableCell>
-                      <TableCell padding="dense" align="right">{user.birthday}</TableCell>
-                      {/* <TableCell padding="dense" align="right">{user.permission[0]}</TableCell> */}
-                    </TableRow>
-                  );
-                }) : null }
-            </TableBody>
-          </Table>
+      <div className={classes.root}>
+        <div>
+          {deleteAlert}
         </div>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={totalUsers}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
+        <MaterialTable
+          title={nameTable}
+          columns={title}
+          data={data}
+          options={{
+            sorting: true,
+            pageSize: 10,
+            filtering: true,
           }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          actions={[
+            {
+              icon: 'edit',
+              tooltip: 'Cập nhật',
+              onClick: (event, rowData) => this.toggleEdit(rowData.id),
+            },
+            {
+              icon: 'delete',
+              tooltip: 'Xóa',
+              onClick: (event, rowData) => this.onToggleDelete(rowData.id),
+            },
+          ]}
         />
-      </Paper>
+      </div>
     );
   }
 }
@@ -220,6 +128,8 @@ const mapDispatchToProps = dispatch => ({
   onAddSelected: () => dispatch(actions.addSelected()),
   onRemmoveSelected: () => dispatch(actions.removeSelected()),
   onCloseAlert: () => dispatch(actions.closeAlert()),
+  onToggleEdit: open => dispatch(actions.toggleEdit(open)),
+  onShowUser: (id) => dispatch(actions.showUser(id)),
 });
 
 EnhancedTable.propTypes = {

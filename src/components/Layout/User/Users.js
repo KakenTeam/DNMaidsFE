@@ -34,6 +34,13 @@ class Users extends Component {
     } else if (parsed.role === '2') {
       nameButton = 'Thêm khách hàng';
     }
+    
+    let nameTable = 'Người dùng';
+    if (parsed.role === '1') {
+      nameTable = 'Người giúp việc';
+    } else if (parsed.role === '2') {
+      nameTable = 'Khách hàng';
+    }
 
     return (
       <div>
@@ -47,6 +54,7 @@ class Users extends Component {
         <Paper className={toggleCreate || toggleEdit ? classes.tableWrapperEdit : classes.tableWrapper}>
           <EnhancedTable
             role={parsed.role}
+            nameTable={nameTable}
             paramsRole={parsed}
           />
         </Paper>

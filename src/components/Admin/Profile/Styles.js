@@ -9,7 +9,7 @@ const styles = theme => ({
   updateProfileBtn: {
     position: 'relative',
     top: 43,
-    left: -200,
+    left: -155,
   },
   updatePasswordBtn: {
     position: 'relative',

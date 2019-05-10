@@ -49,7 +49,7 @@ class TableContracts extends React.Component {
     selected: [],
     idSelected: null,
     page: 0,
-    rowsPerPage: 5,
+    rowsPerPage: 10,
   };
 
   async componentDidMount() {

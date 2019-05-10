@@ -73,173 +73,175 @@ class FormEdit extends React.Component {
     const role = localStorage.getItem('role');
 
     return (
-      <Paper className={toggleEdit ? classes.editForm : ''}>
-        <ValidatorForm
-          onSubmit={this.props.handleEdit}
-          className={classes.container}
-          autoComplete="off">
-          <TextValidator
-            required
-            label="Tên"
-            name="name"
-            className={classes.textField}
-            onChange={this.changeEditHandle}
-            value={editData.name}
-            validators={['required']}
-            errorMessages={['this field is required']}
-            margin="normal"
-            type="text"
-            fullWidth
-          />
-
-          <TextValidator
-            required
-            label="Mật khẩu"
-            className={classes.textField}
-            margin="normal"
-            onChange={this.changeEditHandle}
-            name="password"
-            type="password"
-            value={editData.password}
-            validators={['required']}
-            errorMessages={['this field is required']}
-          />
-
-          <TextValidator
-            required
-            label="Ngày sinh"
-            name="birthday"
-            value={editData.birthday}
-            onChange={this.changeEditHandle}
-            defaultValue={editData.birthday}
-            className={classes.textField}
-            type="date"
-            margin="normal"
-          />
-
-          <TextValidator
-            required
-            label="Số điện thoại"
-            name="phone"
-            value={editData.phone}
-            onChange={this.changeEditHandle}
-            defaultValue={editData.phone}
-            className={classes.textField}
-            type="number"
-            margin="normal"
-          />
-
-          <TextValidator
-            required
-            label="Địa chỉ"
-            name="address"
-            value={editData.address}
-            onChange={this.changeEditHandle}
-            className={classNames(classes.textField)}
-            type="text"
-            margin="normal"
-          />
-
-          <TextValidator
-            select
-            required
-            label="Giới tính"
-            name="gender"
-            className={classes.textField}
-            value={editData.gender}
-            onChange={this.changeEditHandle}
-            SelectProps={{
-              native: false,
-              MenuProps: {
-                  className: classes.menu,
-              },
-            }}
-            margin="normal"
-            >
-            { 
-              genderDefault ? 
-              genderDefault.map((option, index) => (
-                <option key={index} value={option.value}>
-                    {option.label}
-                  </option>
-                )) : null 
-              }
-          </TextValidator>
-
-          {role === '0' ?
+      editData ?
+        <Paper className={toggleEdit ? classes.editForm : ''}>
+          <ValidatorForm
+            onSubmit={this.props.handleEdit}
+            className={classes.container}
+            autoComplete="off">
             <TextValidator
               required
-              select
-              label="Nhóm"
-              name="group"
+              label="Tên"
+              name="name"
               className={classes.textField}
-              value={editData.group}
+              onChange={this.changeEditHandle}
+              value={editData.name}
+              validators={['required']}
+              errorMessages={['this field is required']}
+              margin="normal"
+              type="text"
+              fullWidth
+            />
+
+            <TextValidator
+              // required
+              label="Mật khẩu"
+              className={classes.textField}
+              margin="normal"
+              onChange={this.changeEditHandle}
+              name="password"
+              type="password"
+              value={editData.password}
+              validators={['required']}
+              errorMessages={['this field is required']}
+            />
+
+            <TextValidator
+              required
+              label="Ngày sinh"
+              name="birthday"
+              value={editData.birthday}
+              onChange={this.changeEditHandle}
+              defaultValue={editData.birthday}
+              className={classes.textField}
+              type="date"
+              margin="normal"
+            />
+
+            <TextValidator
+              required
+              label="Số điện thoại"
+              name="phone"
+              value={editData.phone}
+              onChange={this.changeEditHandle}
+              defaultValue={editData.phone}
+              className={classes.textField}
+              type="number"
+              margin="normal"
+            />
+
+            <TextValidator
+              required
+              label="Địa chỉ"
+              name="address"
+              value={editData.address}
+              onChange={this.changeEditHandle}
+              className={classNames(classes.textField)}
+              type="text"
+              margin="normal"
+            />
+
+            <TextValidator
+              select
+              required
+              label="Giới tính"
+              name="gender"
+              className={classes.textField}
+              value={editData.gender}
               onChange={this.changeEditHandle}
               SelectProps={{
                 native: false,
                 MenuProps: {
-                  className: classes.menu,
+                    className: classes.menu,
                 },
               }}
               margin="normal"
-            >
-              { groupsDefault ? groupsDefault.map((option, index) => (
-                <option key={index} value={option.id}>
-                  {option.groupName}
-                </option>
-              )) : null }
+              >
+              { 
+                genderDefault ? 
+                genderDefault.map((option, index) => (
+                  <option key={index} value={option.value}>
+                      {option.label}
+                    </option>
+                  )) : null 
+                }
             </TextValidator>
-            : null
-          }
 
-          {
-            role === '1' ?
-              (
-                editData.skill ?
-                  <FormControl className={classes.formControl} 
-                    >
-                    <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
-                    <Select
-                      multiple
-                      name="skill"
-                      value={editData.skill ? editData.skill : null}
-                      onChange={this.changeEditHandle}
-                      input={<Input id="select-multiple-chip" />}
-                      renderValue={selected => (
-                        <div className={classes.chips}>
-                          {selected.map(value => (
-                            <Chip key={value} label={value} className={classes.chip} />
-                          ))}
-                        </div>
-                      )}
-                    >
-                      { skillsDefault ? skillsDefault.map(skill => (
-                        <MenuItem key={skill.id} value={skill.id}>
-                          <Chip key={skill.id} label={skill.name} className={classes.chip} />
-                        </MenuItem>
-                      )) : null }
-                    </Select>
-                  </FormControl>
-                : null
-              )
-            : null
-          }
+            {role === '0' ?
+              <TextValidator
+                required
+                select
+                label="Nhóm"
+                name="group"
+                className={classes.textField}
+                value={editData.group}
+                onChange={this.changeEditHandle}
+                SelectProps={{
+                  native: false,
+                  MenuProps: {
+                    className: classes.menu,
+                  },
+                }}
+                margin="normal"
+              >
+                { groupsDefault ? groupsDefault.map((option, index) => (
+                  <option key={index} value={option.id}>
+                    {option.groupName}
+                  </option>
+                )) : null }
+              </TextValidator>
+              : null
+            }
+
+            {
+              role === '1' ?
+                (
+                  editData.skill ?
+                    <FormControl className={classes.formControl} 
+                      >
+                      <InputLabel htmlFor="select-multiple-chip">Kỹ năng</InputLabel>
+                      <Select
+                        multiple
+                        name="skill"
+                        value={editData.skill ? editData.skill : null}
+                        onChange={this.changeEditHandle}
+                        input={<Input id="select-multiple-chip" />}
+                        renderValue={selected => (
+                          <div className={classes.chips}>
+                            {selected.map(value => (
+                              <Chip key={value} label={value} className={classes.chip} />
+                            ))}
+                          </div>
+                        )}
+                      >
+                        { skillsDefault ? skillsDefault.map(skill => (
+                          <MenuItem key={skill.id} value={skill.id}>
+                            <Chip key={skill.id} label={skill.name} className={classes.chip} />
+                          </MenuItem>
+                        )) : null }
+                      </Select>
+                    </FormControl>
+                  : null
+                )
+              : null
+            }
 
 
-          <div className={classes.buttonWrapper}>
-            <FormControl className={classes.buttons}>
-              <Button onClick={editToggle} color="primary">
-                Hủy
-              </Button>
-              <Button
-                onClick={this.handleEditUser}
-                className={classes.submitBtn} variant="contained" type="submit" color="primary">
-                Sửa
-              </Button>
-            </FormControl>
-          </div>
-        </ValidatorForm>
-      </Paper>
+            <div className={classes.buttonWrapper}>
+              <FormControl className={classes.buttons}>
+                <Button onClick={editToggle} color="primary">
+                  Hủy
+                </Button>
+                <Button
+                  onClick={this.handleEditUser}
+                  className={classes.submitBtn} variant="contained" type="submit" color="primary">
+                  Sửa
+                </Button>
+              </FormControl>
+            </div>
+          </ValidatorForm>
+        </Paper>
+      : null
     );
   }
 };

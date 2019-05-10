@@ -34,11 +34,11 @@ class CreateUser extends React.Component {
     },
     genderDefault: [
       {
-        label: 'men',
+        label: 'Nam',
         value: '1',
       },
       {
-        label: 'women',
+        label: 'Nữ',
         value: '0',
       },
     ],
@@ -125,7 +125,6 @@ class CreateUser extends React.Component {
     const { nameButton, groups, skills }  = this.props;
     const { user } = this.state;
 
-    
     const groupsSelect = groups ? groups.map(option => {
       return {
         id: option.id,
@@ -166,7 +165,7 @@ class CreateUser extends React.Component {
           : null
         }
         {
-          this.props.toggleEdit ?
+          this.props.toggleEdit && this.props.showUser ?
             <div>
               <FormEdit
                 groupsDefault={groupsSelect}

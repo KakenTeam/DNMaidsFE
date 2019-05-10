@@ -19,7 +19,7 @@ import * as actions from '../../../store/actions/index';
 
 class AlertDelete extends React.Component {
   state = {
-    open: false,
+    open: this.props.open,
   };
 
   componentDidMount() {
@@ -49,14 +49,14 @@ class AlertDelete extends React.Component {
   }
 
   render() {
-    const { id, classes } = this.props;
+    const { id, open, classes } = this.props;
     return (
       <div className={classes.deleteButton}>
-        <Tooltip title="Xóa" placement="left">
+        {/* <Tooltip title="Xóa" placement="left">
           <IconButton aria-label="Delete" color="secondary" onClick={this.handleClickOpen}>
             <DeleteIcon />
           </IconButton>
-        </Tooltip>
+        </Tooltip> */}
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

@@ -32,11 +32,11 @@ class ScrollableTabsButtonPrevent extends React.Component {
     },
     genderDefault: [
       {
-        label: 'men',
+        label: 'Nam',
         value: '1',
       },
       {
-        label: 'women',
+        label: 'Nữ',
         value: '0',
       },
     ],  
