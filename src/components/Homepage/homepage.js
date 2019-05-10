@@ -10,6 +10,10 @@ import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
 
+import * as actions from '../../store/actions/index';
+import homepage from '../../store/reducers/homepage';
+
+
 const data = [
   {
     name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
@@ -41,34 +45,63 @@ class HomePage extends Component {
 		anchorEl: null,
 		openEdit: false,
   };
+
+  async componentDidMount() {
+    await this.props.getStatistic('2019-05-03', '2019-05-10', 'day');
+  }
+
+  getStatistic = () => {
+    console.log(this.props.statistic);
+    let statistic = [...this.props.statistic.statistic]
+    statistic = statistic.map(statis => ({
+      time: statis.time,
+      contract_count: statis.contract.single.count + statis.contract.longterm.count,
+      contract_sum: statis.contract.single.sum + statis.contract.longterm.sum, 
+      contract_canceled: statis.contract.single.canceled + statis.contract.longterm.canceled
+    }))
+    return statistic;
+  }
   
   render() {
     return (
       <div>
-        <Paper
-        >
-          <BarChart
-        width={1000}
-        height={500}
-        data={data}
-        margin={{
-          top: 50, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
-        <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
-        <Tooltip />
-        <Legend />
-        <Bar yAxisId="left" dataKey="pv" fill="#8884d8" />
-        <Bar yAxisId="right" dataKey="uv" fill="#82ca9d" />
-      </BarChart>
-    );
-        </Paper>
+        <h1>{'This will always render'}</h1>
+            { this.props && this.props.statistic && this.props.statistic.statistic &&
+                 <Paper
+                 >
+                   <BarChart
+                 width={1000}
+                 height={500}
+                 data={this.getStatistic()}
+                 margin={{
+                   top: 50, right: 30, left: 20, bottom: 5,
+                 }}
+               >
+                 <CartesianGrid strokeDasharray="3 3" />
+                 <XAxis dataKey="time" />
+                 <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
+                 <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
+                 <Tooltip />
+                 <Legend />
+                 <Bar yAxisId="left" dataKey="contract_count" fill="#8884d8" />
+                 <Bar yAxisId="right" dataKey="contract_sum" fill="#82ca9d" />
+               </BarChart>
+             );
+                 </Paper>
+            }
+        {/* */}
       </div>
     );
   }
 }
 
-export default withRouter(connect(null, null)(withStyles(styles, { withTheme: true })(HomePage)));
+const mapStateToProps = state => ({
+  statistic: state.homepage.statistic,
+});
+
+const mapDispatchToProps = dispatch => ({
+  getStatistic: (start_date, end_date, filter) => dispatch(actions.getStatistic(start_date, end_date, filter)),
+});
+
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles, { withTheme: true })(HomePage)));

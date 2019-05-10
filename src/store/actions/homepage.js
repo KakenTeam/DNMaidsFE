@@ -1,6 +1,14 @@
 
-import { GET_STATISTIC } from './actionTypes';
+import * as actionTypes from './actionTypes';
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import axios from '../../shared/api';
+
+const getAccessToken = () => {
+  const token = localStorage.getItem('accessToken');
+  const tokenType = localStorage.getItem('tokenType');
+  return `${tokenType} ${token}`;
+};
+
 
 const getStatisticStart = () => ({
   type: actionTypes.GET_STATISTIC.START,
@@ -24,7 +32,7 @@ export const getStatistic = (start_date, end_date, filter) => {
   return dispatch => {
     dispatch(getStatisticStart())
     dispatch(showLoading());
-    const path = `statistic/summary?start_date=${start_date}&end_data=${end_date}&filter=${filter}`
+    const path = `statistic/summary?start_date=${start_date}&end_date=${end_date}&filter=${filter}`
     axios.get(path, {
       headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -35,7 +43,6 @@ export const getStatistic = (start_date, end_date, filter) => {
     })
       .then(response => {
         dispatch(hideLoading());
-        
         dispatch(getStatisticSuccess(response.data.data));
       })
       .catch(err => {

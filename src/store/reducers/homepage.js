@@ -3,7 +3,7 @@ import { updateObject } from '../../shared/utility'
 
 const initialState = {
   loading: false,
-  statistic: [],
+  statistic: {},
 };
 
 const getStatisticStart = (state, action) => updateObject(state, {
@@ -11,7 +11,7 @@ const getStatisticStart = (state, action) => updateObject(state, {
 })
 
 const getStatisticSuccess = (state, action) => updateObject(state, {
-  statistic: [...action.statistic],
+  statistic: action.statistic,
   loading: false,
 })
 
@@ -27,3 +27,5 @@ const homepage = (state = initialState, action) => {
     default: return state;
   }
 }
+
+export default homepage;
