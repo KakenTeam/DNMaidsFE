@@ -69,7 +69,9 @@ export const getFeedbacks = () => {
     })
       .then(response => {
         dispatch(hideLoading());
-        dispatch(getFeedbacksSuccess(response.data.data));
+        let listFeedbacks = [...response.data.data];
+        listFeedbacks.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))    
+        dispatch(getFeedbacksSuccess(listFeedbacks));
       })
       .catch(err => {
         dispatch(getFeedbacksFail(err));

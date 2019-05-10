@@ -16,9 +16,9 @@ class FeedbackTable extends React.Component {
   }
 
   getFeedbacks = () => {
-    return this.props.feedbacks.sort(function(a, b) {
-      return a.status > b.status;
-    })
+    let listFeedbacks = [...this.props.feedbacks];
+    listFeedbacks.sort((a, b) => b.created_at - a.created_at)
+    return listFeedbacks;
 
   }
 
