@@ -80,6 +80,7 @@ export const getFeedbacks = () => {
 export const updateFeedbackStatus = (id, status) => {
   return dispatch => {
     dispatch(updateFeedbackStatusStart());
+    dispatch(showLoading());
     const path = `/feedbacks/${id}`;
     axios.patch(path, status, {
       headers: {
@@ -90,6 +91,7 @@ export const updateFeedbackStatus = (id, status) => {
       },
     })
       .then(response => {
+        dispatch(hideLoading());
         dispatch(updateFeedbackStatusSuccess(status, response.data.message));
       })
       .catch(err => {

@@ -28,7 +28,7 @@ const updateFeedbackStatusStart = (state, action) => updateObject(state, {
 
 const updateFeedbackStatusSuccess = (state, action) => updateObject(state, { 
     feedbacks: state.feedbacks.map(
-      (feedback, i) => feedback === state.detailFeedback.id ? { ...feedback, status: action.status.status} 
+      (feedback, i) => feedback.id === state.detailFeedback.id ? { ...feedback, status: action.status.status} 
                         : feedback
     )
   });
