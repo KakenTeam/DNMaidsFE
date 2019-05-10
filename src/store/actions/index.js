@@ -32,5 +32,7 @@ export {
 } from './contracts';
 
 export {
-  getFeedbacks
+  getFeedbacks,
+  updateFeedbackStatus,
+  showFeedback,
 } from './feedback';

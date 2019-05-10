@@ -26,6 +26,34 @@ const getFeedbacksFail = err => ({
   error: err,
 });
 
+
+const updateFeedbackStatusStart = () => ({
+  type: actionTypes.UPDATE_FEEDBACK_STATUS.START,
+  isFetching: true,
+});
+
+const updateFeedbackStatusSuccess = (status, mess) => ({
+  type: actionTypes.UPDATE_FEEDBACK_STATUS.SUCCESS,
+  isFetching: false,
+  message: mess,
+  status: status,
+});
+
+const updateFeedbackStatusFail = err => ({
+  type: actionTypes.UPDATE_FEEDBACK_STATUS.FAIL,
+  isFetching: false,
+  error: err,
+});
+
+const showFeedbackStart = () => ({
+  type: actionTypes.SHOW_FEEDBACK.START
+})
+
+const showFeedbackSuccess = (data) => ({
+  type: actionTypes.SHOW_FEEDBACK.SUCCESS,
+  detailFeedback: data,
+})
+
 export const getFeedbacks = () => {
   return dispatch => {
     dispatch(getFeedbacksStart());
@@ -48,3 +76,32 @@ export const getFeedbacks = () => {
       });
   };;
 };
+
+export const updateFeedbackStatus = (id, status) => {
+  return dispatch => {
+    dispatch(updateFeedbackStatusStart());
+    dispatch(showLoading());
+    const path = `/feedbacks/${id}`;
+    axios.patch(path, status, {
+      headers: {
+        'Authorization': getAccessToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(response => {
+        dispatch(hideLoading());
+        dispatch(updateFeedbackStatusSuccess(status, response.data.message));
+      })
+      .catch(err => {
+        dispatch(updateFeedbackStatusFail(err.message));
+      });
+  };
+};
+
+export const showFeedback = (feedback) => {
+  return dispatch => {
+    dispatch(showFeedbackSuccess(feedback))
+  }
+}
