@@ -33,16 +33,16 @@ class FormEdit extends React.Component {
     isEdit: false,
   }
 
-  componentDidMount = () => {
-    // custom rule will have name 'isPasswordMatch'
-    ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-      const { formData } = this.state;
-      if (value !== formData.password) {
-        return false;
-      }
-      return true;
-    });
-  }
+  // componentDidMount = () => {
+  //   // custom rule will have name 'isPasswordMatch'
+  //   ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+  //     const { formData } = this.state;
+  //     if (value !== formData.password) {
+  //       return false;
+  //     }
+  //     return true;
+  //   });
+  // }
   
   changeEditHandle = event => {
     this.setState({
@@ -55,6 +55,10 @@ class FormEdit extends React.Component {
 
   handleEditUser = () => {
     // let open = this.props.toggleEdit;
+    let temp = this.state.editData;
+    if (!temp.password) {
+      delete temp.password;
+    }
     this.props.onEditUser(this.props.user.id, this.state.editData);
     if (this.props.isEdit) {
       this.props.editToggle();
@@ -72,11 +76,12 @@ class FormEdit extends React.Component {
     const { editData } = this.state;
     const role = localStorage.getItem('role');
 
+
     return (
       editData ?
         <Paper className={toggleEdit ? classes.editForm : ''}>
           <ValidatorForm
-            onSubmit={this.props.handleEdit}
+            // onSubmit={this.props.handleEdit}
             className={classes.container}
             autoComplete="off">
             <TextValidator
@@ -214,9 +219,9 @@ class FormEdit extends React.Component {
                           </div>
                         )}
                       >
-                        { skillsDefault ? skillsDefault.map(skill => (
+                        { skillsDefault ? skillsDefault.map((skill, index) => (
                           <MenuItem key={skill.id} value={skill.id}>
-                            <Chip key={skill.id} label={skill.name} className={classes.chip} />
+                            <Chip key={skill.id} label={`${index}: ${skill.name}`} className={classes.chip} />
                           </MenuItem>
                         )) : null }
                       </Select>
