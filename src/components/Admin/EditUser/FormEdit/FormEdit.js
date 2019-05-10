@@ -11,6 +11,7 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import * as actions from '../../../../store/actions/index';
@@ -56,9 +57,14 @@ class FormEdit extends React.Component {
   handleEditUser = () => {
     // let open = this.props.toggleEdit;
     let temp = this.state.editData;
+    let tempGroup = this.state.editData;
     if (!temp.password) {
       delete temp.password;
     }
+    if (!tempGroup.group) {
+      delete tempGroup.group;
+    }
+
     this.props.onEditUser(this.props.user.id, this.state.editData);
     if (this.props.isEdit) {
       this.props.editToggle();
@@ -75,7 +81,6 @@ class FormEdit extends React.Component {
     const { classes, toggleEdit, genderDefault, groupsDefault, skillsDefault, editToggle} = this.props;
     const { editData } = this.state;
     const role = localStorage.getItem('role');
-
 
     return (
       editData ?
@@ -98,7 +103,7 @@ class FormEdit extends React.Component {
               fullWidth
             />
 
-            <TextValidator
+            <TextField
               // required
               label="Mật khẩu"
               className={classes.textField}
