@@ -11,8 +11,7 @@ import {
 } from 'recharts';
 
 import * as actions from '../../store/actions/index';
-import homepage from '../../store/reducers/homepage';
-
+import * as moment from 'moment'; 
 
 const data = [
   {
@@ -47,7 +46,9 @@ class HomePage extends Component {
   };
 
   async componentDidMount() {
-    await this.props.getStatistic('2019-05-03', '2019-05-10', 'day');
+    let now = moment().format('YYYY-MM-DD')
+    let nowBefore = moment().subtract(7, 'days').format('YYYY-MM-DD')
+    await this.props.getStatistic(nowBefore, now, 'day');
   }
 
   getStatistic = () => {
@@ -63,9 +64,9 @@ class HomePage extends Component {
   }
   
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <h1>{'This will always render'}</h1>
             { this.props && this.props.statistic && this.props.statistic.statistic &&
                  <Paper
                  >
@@ -74,22 +75,23 @@ class HomePage extends Component {
                  height={500}
                  data={this.getStatistic()}
                  margin={{
-                   top: 50, right: 30, left: 20, bottom: 5,
+                   top: 100, right: 30, left: 20, bottom: 5,
                  }}
+                 title="Biểu đồ doanh thu và số hợp đồng 7 ngày gần nhất"
                >
                  <CartesianGrid strokeDasharray="3 3" />
-                 <XAxis dataKey="time" />
+                 <XAxis dataKey="time"  />
                  <YAxis yAxisId="left" orientation="left" stroke="#8884d8" />
                  <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
                  <Tooltip />
                  <Legend />
-                 <Bar yAxisId="left" dataKey="contract_count" fill="#8884d8" />
-                 <Bar yAxisId="right" dataKey="contract_sum" fill="#82ca9d" />
+                 <Bar yAxisId="left" dataKey="contract_count" fill="#8884d8" name="Số hợp đồng tạo mới" />
+                 <Bar yAxisId="left" dataKey="contract_canceled" fill="#dc3545" name="Số hợp đồng bị hủy" />
+                 <Bar yAxisId="right" dataKey="contract_sum" fill="#82ca9d" name="Doanh thu" />
                </BarChart>
-             );
+               <h5 style={{textAlignVertical: "center",textAlign: "center",}}>Biểu đồ doanh thu và số hợp đồng 7 ngày gần nhất</h5>
                  </Paper>
             }
-        {/* */}
       </div>
     );
   }
