@@ -30,7 +30,7 @@ const detail = props => {
             <strong>Ngày làm việc: </strong> {helpers.renderDayOfWeek(info.day_of_week)}
           </li>
           <li>
-            <strong>Ca làm việc: </strong> {info.shift}
+            <strong>Ca làm việc: </strong> {helpers.renderShift(info.shift)}
           </li>
         </ul>
 
@@ -40,6 +40,9 @@ const detail = props => {
     const  contract = detailContract ? (
       <ul>
         <h5>Chi tiết hợp đồng</h5>
+        <li>
+          <strong>Yêu cầu công việc: </strong>{stringSkill}
+        </li>
         <li>
           <strong>Loại dịch vụ: </strong> {helpers.renderServiceType(detailContract.service_type)}
         </li>
@@ -101,9 +104,6 @@ const detail = props => {
       </li>
       <li>
         <strong>Địa chỉ: </strong> {detailContract.helper.address}
-      </li>
-      <li>
-        <strong>Kỹ năng: </strong>{stringSkill}
       </li>
     </ul>
     ) : (

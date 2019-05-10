@@ -24,6 +24,11 @@ export const helpers = {
     return days[value];
   },
 
+  renderShift: function(value) {
+    let shifts = ["Ca sáng", "Ca chiều", "Ca tối"]
+    return shifts[value];
+  },
+
   formatHour: function(value) {
     return moment(value,'hh:mm:ss').format('h:mm a')
   },
@@ -32,4 +37,5 @@ export const helpers = {
     
     return moment(value).format('ll', 'vi');
   }
+
 }

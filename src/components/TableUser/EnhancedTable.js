@@ -17,6 +17,7 @@ import EnhancedTableHead from './TableHead/TableHead';
 import EnhancedTableToolbar from './TableToolbar/TableToolbar';
 
 import styles from './Style';
+import {helpers} from '../../shared/utility';
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -176,7 +177,7 @@ class EnhancedTable extends React.Component {
                       <TableCell padding="dense" align="right">{user.name}</TableCell>
                       <TableCell padding="dense" align="right">{user.phone}</TableCell>
                       <TableCell padding="dense" align="right">{user.address}</TableCell>
-                      <TableCell padding="dense" align="right">{user.gender}</TableCell>
+                      <TableCell padding="dense" align="right">{helpers.renderGender(user.gender)}</TableCell>
                       <TableCell padding="dense" align="right">{user.birthday}</TableCell>
                       {/* <TableCell padding="dense" align="right">{user.permission[0]}</TableCell> */}
                     </TableRow>
