@@ -27,6 +27,7 @@ import Feedback from '@material-ui/icons/Feedback'
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LoadingBar from 'react-redux-loading-bar'
+import BarChart from '@material-ui/icons/BarChart'
 
 import styles from './Styles';
 
@@ -146,6 +147,12 @@ class SlideBar extends Component {
 						</div>
 						<Divider />
 						<List>
+							<Link to="/admin/homepage">
+								<ListItem button>
+									<ListItemIcon><BarChart /></ListItemIcon>
+									<ListItemText primary="Trang chủ" />
+								</ListItem>
+							</Link>
 							<Link to="/admin/users">
 								<ListItem button>
 									<ListItemIcon><GroupAdd /></ListItemIcon>
