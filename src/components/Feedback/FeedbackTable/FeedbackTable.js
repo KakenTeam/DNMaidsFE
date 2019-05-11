@@ -9,6 +9,7 @@ import { helpers } from '../../../shared/utility';
 import MaterialTable from 'material-table';
 import FeedbackChip from './FeedbackChip';
 import UpdateStatus from './UpdateStatus/UpdateStatus';
+import Button from '@material-ui/core/Button';
 
 class FeedbackTable extends React.Component {
   async componentDidMount() {
@@ -30,7 +31,13 @@ class FeedbackTable extends React.Component {
         <MaterialTable
         title="Phản hồi khách hàng"
         columns={[
-          { title: 'Tên khách hàng', field: 'user.name' },
+          { title: 'Tên khách hàng', field: 'user.name', 
+            render: rowData =>  <Link to={"/admin/contracts/" + rowData.contract_id}>
+            <Button>
+              {rowData.user.name}
+            </Button>
+          </Link>
+          },
           { title: 'Số điện thoại ', field: 'user.phone' },
           { title: 'Phản hồi', field: 'feedback' },
           { 
@@ -41,7 +48,11 @@ class FeedbackTable extends React.Component {
           { title: 'Thời gian gửi', field: 'created_at'},
           {
             title: 'Hành động', 
-            render: rowData => <UpdateStatus feedbackId={rowData.id} feedback={rowData} />
+            render: rowData => 
+              <div>
+                <UpdateStatus feedbackId={rowData.id} feedback={rowData} />
+               
+              </div>
           }
         ]}
         data={this.getFeedbacks()}        
